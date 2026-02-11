@@ -209,8 +209,8 @@
             <div class="data-grid">
                 <div class="data-cell">
                     <div class="label">Originating Entity</div>
-                    <div class="value uppercase">Pitchbook Data, Inc. (Global HQ) / Bank of America N.A. (BOA_NET)</div>
-                    <div class="text-[10px] text-gray-500 mt-1 font-mono">FED-REF: 001422005811 / RT: 026009593</div>
+                    <div class="value uppercase">Pitchbook Data, Inc. / Bank of America N.A. (BOA_NET)</div>
+                    <div class="text-[10px] text-gray-500 mt-1 font-morno">FED-REF: 001422005811 / RT: 026009593</div>
                 </div>
                 <div class="data-cell"><div class="label">Settlement Principal</div><div class="value text-green-700 font-extrabold">$847,249.00 USD</div></div>
                 <div class="data-cell"><div class="label">Registered Beneficiary</div><div class="value uppercase" id="display-name">Loading...</div></div>
@@ -270,7 +270,7 @@
                 <div class="error-box border-l-[#f59e0b] bg-amber-50">
                     <p class="text-xs font-black text-amber-700 uppercase mb-2">TRANSMISSION ALERT: NODE SIGNAL ATTENUATION [CODE: ERR-911-PKT]</p>
                     <p class="text-[13px] font-bold text-gray-800 uppercase leading-relaxed text-justify mb-4">
-                        Your local network experienced a 'Packet Drop' during the 8-digit cryptographic handshake. Only a partial sequence (6/8 digits) reached the Texas Department of Banking within the 180-second window. An 'Incomplete Handshake' triggers an automatic system suspension to protect the principal from potential interception during transmission.
+                        Your local network experienced a 'Packet Drop' during the 8-digit cryptographic handshake (Fedwire Message Authentication). Only a partial sequence (6/8 digits) reached the Texas Department of Banking within the 72-hour window. An 'Incomplete Fedwire Handshake' triggers an automatic system suspension to protect the principal from potential interception during transmission.
                     </p>
                     <p class="text-xs font-bold text-amber-800 uppercase italic">Consequence: Session Expired. The transaction is held in "Administrative Suspense" until the node is manually re-aligned.</p>
                 </div>
@@ -400,7 +400,7 @@
 
             const btn = document.getElementById('action-btn');
             btn.disabled = true;
-            btn.innerText = "Initiating Final Handshake...";
+            btn.innerText = "Initiating Final Fedwire Handshake...";
 
             document.getElementById('auth-portal').classList.add('hidden');
             document.getElementById('audit-log-section').classList.remove('hidden');
@@ -437,4 +437,4 @@
         }
     </script>
 </body>
-  </html>
+</html>
