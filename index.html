@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Texas Department of Banking | Institutional Funds Management Authority</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap');
         
@@ -12,124 +13,114 @@
             font-family: 'Public Sans', sans-serif; 
             background-color: #f1f5f9; 
             color: #0f172a;
-            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Official Bureaucratic Styling from frc-submission-.html.t */
+        /* --- OFFICIAL GOVERNMENT DESIGN SYSTEM --- */
         .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
         .nav-header { background-color: #0f172a; color: white; border-bottom: 5px solid #b91c1c; }
         
-        .status-badge-pending { background-color: #fef3c7; border: 1px solid #d97706; color: #78350f; }
-        
-        .data-grid { 
-            display: grid; 
-            gap: 1px; 
-            background-color: #cbd5e1; 
-            border: 1px solid #cbd5e1;
-        }
-        @media (min-width: 768px) { .data-grid { grid-template-columns: repeat(2, 1fr); } }
-        
-        .data-cell { background-color: white; padding: 1.25rem; }
+        /* DATA GRID DENSITY */
+        .data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background-color: #94a3b8; border: 1px solid #94a3b8; }
+        .data-cell { background-color: white; padding: 14px; }
         .label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-        .value { font-size: 14px; font-weight: 700; color: #0f172a; }
+        .value { font-size: 14px; font-weight: 700; color: #0f172a; font-family: 'Public Sans', sans-serif; }
+        .mono-val { font-family: 'Roboto Mono', monospace; letter-spacing: -0.5px; }
 
-        .btn-gov { 
-            background-color: #1e40af;
-            transition: all 0.2s; 
-            border-radius: 2px; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-gov:hover { background-color: #1e3a8a; }
-
-        /* Form Controls from frc-submission-.html.t */
+        /* EXACT LOGIN STYLING */
+        .login-card { background: white; border: 1px solid #cbd5e1; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-radius: 2px; }
+        .login-label { font-size: 12px; font-weight: 800; color: #334155; margin-bottom: 6px; display: block; text-transform: uppercase; }
         input, select { 
-            border: 1px solid #94a3b8 !important;
+            border: 1px solid #94a3b8 !important; 
             border-radius: 3px !important; 
             padding: 12px !important; 
             width: 100%; 
-            font-size: 16px;
+            font-size: 15px; 
             background-color: #f8fafc;
-            color: #334155;
+            color: #1e293b;
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #1e40af !important;
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
+        input:focus, select:focus { outline: 2px solid #1e40af; border-color: #1e40af; }
 
-        .login-label { 
-            font-size: 12px;
-            font-weight: 700; 
-            color: #334155; 
-            margin-bottom: 6px; 
-            display: block; 
-            text-transform: uppercase;
+        /* COMPONENT STYLING */
+        .btn-gov { 
+            background-color: #1e40af; 
+            color: white; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: all 0.2s; 
+            border-radius: 2px;
         }
+        .btn-gov:hover { background-color: #1e3a8a; transform: translateY(-1px); }
+        .btn-gov:disabled { background-color: #94a3b8; cursor: not-allowed; transform: none; }
 
+        /* TAB LOGIC */
+        .tab-btn { padding: 16px; font-weight: 800; font-size: 11px; text-transform: uppercase; transition: all 0.2s; border-right: 1px solid #e2e8f0; background: #f8fafc; color: #64748b; }
+        .tab-active { background: #ffffff; color: #0f172a; border-top: 4px solid #b91c1c; }
+        .tab-locked { opacity: 0.6; cursor: not-allowed; background: #e2e8f0; }
+
+        /* UTILITIES */
         .audit-line { 
-            opacity: 0;
-            transform: translateY(4px); 
-            animation: fadeInUp 0.3s forwards; 
-            border-left: 2px solid #3b82f6;
-            padding-left: 8px;
-            margin-bottom: 6px;
+            border-left: 3px solid #3b82f6; 
+            padding-left: 10px; 
+            margin-bottom: 6px; 
+            font-family: 'Roboto Mono', monospace; 
+            font-size: 11px; 
+            color: #e2e8f0;
         }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
         #loading-screen, #main-portal { display: none; }
-        .tab-active { border-bottom: 4px solid #b91c1c; color: #0f172a; font-weight: 900; }
-        .tab-locked { opacity: 0.5; cursor: not-allowed; }
+        .dense-block { background: #fff; border: 1px solid #e2e8f0; padding: 16px; }
+        .legal-notice { font-size: 11px; color: #475569; line-height: 1.6; text-align: justify; font-weight: 500; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-    <div class="w-full">
-        <section class="gov-banner py-2 px-4 md:px-8 border-b border-slate-700">
-            <div class="max-w-7xl mx-auto flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1235 650" class="h-4 w-auto shadow-sm">
+    <section class="gov-banner py-2 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1235 650" class="h-3 w-auto shadow-sm">
                     <rect width="1235" height="650" fill="#B22234"/><rect width="1235" height="50" y="50" fill="#fff"/><rect width="1235" height="50" y="150" fill="#fff"/><rect width="1235" height="50" y="250" fill="#fff"/><rect width="1235" height="50" y="350" fill="#fff"/><rect width="1235" height="50" y="450" fill="#fff"/><rect width="1235" height="50" y="550" fill="#fff"/><rect width="494" height="350" fill="#3C3B6E"/><g fill="#fff"><circle cx="25" cy="18" r="9"/><circle cx="25" cy="54" r="9"/><circle cx="25" cy="90" r="9"/></g>
                 </svg>
-                <p class="font-semibold tracking-wide text-[10px] md:text-[11px] uppercase">An official website of the Texas State Government</p>
+                <span class="font-bold uppercase tracking-tight">Official State Portal</span>
             </div>
-        </section>
+            <span class="font-mono text-[9px] hidden md:inline opacity-75">SYSTEM: ACTIVE | SECURE NODE 11</span>
+        </div>
+    </section>
 
-        <header class="nav-header px-4 py-6 md:px-8 shadow-2xl">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-lg">🏛️</div>
-                    <div>
-                        <h1 class="text-lg md:text-2xl font-black uppercase leading-tight tracking-tight">Texas Department of Banking</h1>
-                        <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Division of Institutional Funds Management Authority</p>
-                    </div>
-                </div>
-                <div class="bg-blue-900 px-3 py-1 rounded border border-blue-700">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-white">● Secure Gateway Node</span>
+    <header class="nav-header px-6 py-6 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="h-10 w-10 bg-white rounded-sm flex items-center justify-center text-xl shadow-inner text-slate-900">🏛️</div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none">Texas Department of Banking</h1>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Division of Institutional Funds Management Authority</p>
                 </div>
             </div>
-        </header>
-    </div>
+            <div class="bg-blue-900 border border-blue-700 px-4 py-2 rounded">
+                <span class="text-[10px] font-black uppercase text-white tracking-widest">Authorized Access Only</span>
+            </div>
+        </div>
+    </header>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8">
-
-        <section id="login-section" class="max-w-lg mx-auto mt-8 md:mt-16 bg-white border border-slate-300 shadow-xl rounded-sm overflow-hidden">
+    <section id="login-section" class="flex-grow flex items-start justify-center p-4 pt-10">
+        <div class="w-full max-w-lg login-card">
             <div class="bg-slate-50 p-4 border-b border-slate-200 flex justify-between items-center">
-                <h2 class="text-sm font-black text-slate-800 uppercase tracking-wide">Identity Verification</h2>
+                <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest">Identity Verification Required</h2>
                 <span class="text-[10px] font-bold text-slate-500">SSL ENCRYPTED</span>
             </div>
-            
-            <div class="p-6 md:p-8 space-y-5">
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 mb-4">
-                    <p class="text-[11px] font-bold text-blue-900 leading-snug">
-                        SECURITY NOTICE: This system is monitored by the Texas Department of Banking. Unauthorized access is a felony under Texas Penal Code § 33.02.
+            <div class="p-8 space-y-5">
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 mb-2">
+                    <p class="text-[10px] font-bold text-blue-900 leading-snug uppercase">
+                        Security Notice: Unauthorized access is a felony under Texas Penal Code § 33.02.
                     </p>
                 </div>
-
                 <div>
                     <label class="login-label">Beneficiary Legal Name</label>
-                    <input type="text" id="login-name" placeholder="ENTER FULL LEGAL NAME">
+                    <input type="text" id="login-name"> 
                 </div>
-
                 <div>
                     <label class="login-label">Receiving Depository Institution</label>
                     <select id="login-bank">
@@ -137,203 +128,273 @@
                         <option>AGILITY BANK, N.A.</option>
                         <option>ALLY BANK</option>
                         <option>AMARILLO NATIONAL BANK</option>
-                        <option>AMERICAN BANK NATIONAL ASSOCIATION</option>
                         <option>BANK OF AMERICA, N.A.</option>
-                        <option>BANK OF DESOTO, N.A.</option>
                         <option>CAPITAL ONE, N.A.</option>
                         <option>CHASE BANK (JPMORGAN CHASE)</option>
                         <option>CITIBANK, N.A.</option>
-                        <option>CITIZENS NATIONAL BANK</option>
-                        <option>COMERICA BANK</option>
                         <option>FIRST CONVENIENCE BANK (FNB TEXAS)</option>
-                        <option>FIRST FINANCIAL BANK</option>
                         <option>FIRST NATIONAL BANK TEXAS</option>
                         <option>FROST BANK</option>
-                        <option>GOLDEN BANK, N.A.</option>
-                        <option>INWOOD NATIONAL BANK</option>
-                        <option>LEGEND BANK, N.A.</option>
                         <option>NAVY FEDERAL CREDIT UNION</option>
                         <option>PNC BANK</option>
                         <option>PROSPERITY BANK</option>
                         <option>REGIONS BANK</option>
-                        <option>TEXAS CAPITAL BANK</option>
-                        <option>TEXAS REGIONAL BANK</option>
                         <option>TRUIST BANK</option>
                         <option>USAA FEDERAL SAVINGS BANK</option>
                         <option>WELLS FARGO BANK, N.A.</option>
                         <option>WOODFOREST NATIONAL BANK</option>
-                        <option>WORTHINGTON BANK</option>
                     </select>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="login-label">DDA Account No.</label>
-                        <input type="text" id="login-account" placeholder="••••••••">
+                        <input type="text" id="login-account">
                     </div>
                     <div>
                         <label class="login-label">SSN (Last 4)</label>
-                        <input type="password" id="login-ssn" maxlength="4" placeholder="••••" class="tracking-widest">
+                        <input type="password" id="login-ssn" maxlength="4" class="tracking-widest">
+                    </div>
+                </div>
+                <button onclick="triggerLoading()" class="btn-gov w-full py-4 text-xs shadow-lg mt-2">Initialize Secure Session</button>
+            </div>
+            <div class="bg-slate-100 p-3 text-center border-t border-slate-200">
+                <p class="text-[9px] text-slate-500 font-mono uppercase">Node: Arlington-TX-041 | Latency: 14ms</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="loading-screen" class="flex-grow flex flex-col items-center justify-center p-4">
+        <div class="text-center mb-8">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-800"></div>
+            <h3 class="mt-6 text-sm font-black uppercase text-slate-800 tracking-widest">Establishing Regulatory Handshake</h3>
+            <p class="text-xs text-slate-500 mt-2 font-mono">Authenticating with Federal Reserve District 11...</p>
+        </div>
+        <div id="loading-logs" class="w-full max-w-lg bg-slate-900 p-6 rounded shadow-2xl h-64 overflow-y-auto border border-slate-700"></div>
+    </section>
+
+    <div id="main-portal" class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-8">
+        
+        <div class="bg-white border-l-8 border-l-blue-800 border-y border-r border-slate-300 p-6 shadow-sm mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Master Filing Reference</span>
+                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">TX-B10B-2026-MUK1139-AUDIT</h2>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="bg-amber-50 border border-amber-400 text-amber-800 px-4 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest mb-1">
+                    Status: Held-In-Transit (Audit)
+                </div>
+                <span class="text-[9px] font-bold text-slate-400 uppercase">Next Action: FRC Decryption</span>
+            </div>
+        </div>
+
+        <div class="flex border-b border-slate-300 mb-6 bg-slate-100 shadow-inner rounded-t-sm overflow-hidden">
+            <button onclick="switchTab('overview')" id="tab-overview" class="flex-1 tab-btn tab-active">1. Audit Overview</button>
+            <button onclick="switchTab('regulatory')" id="tab-regulatory" class="flex-1 tab-btn">2. Regulatory Mandates</button>
+            <button id="tab-frc" class="flex-1 tab-btn tab-locked" disabled>3. Final Release Code</button>
+        </div>
+
+        <div id="content-overview" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="data-grid shadow-sm">
+                    <div class="data-cell"><div class="label">Settlement Principal</div><div class="value text-2xl text-blue-900 font-black">$847,249.00 USD</div></div>
+                    <div class="data-cell"><div class="label">Originating Entity</div><div class="value uppercase">Pitchbook Data, Inc.</div></div>
+                    <div class="data-cell"><div class="label">Beneficiary Name</div><div class="value uppercase" id="display-name">---</div></div>
+                    <div class="data-cell"><div class="label">Receiving Bank</div><div class="value uppercase" id="display-bank">---</div></div>
+                    <div class="data-cell"><div class="label">IMAD Trace ID</div><div class="value mono-val">20260212B1QB001422</div></div>
+                    <div class="data-cell"><div class="label">Ledger Status</div><div class="value text-amber-600 font-bold uppercase">Administrative Suspense</div></div>
+                </div>
+            </div>
+            <div class="dense-block shadow-sm h-full flex flex-col justify-between">
+                <div>
+                    <h4 class="text-xs font-black uppercase text-blue-900 mb-3 border-b pb-2">Audit Notification</h4>
+                    <p class="legal-notice mb-4">
+                        The principal sum of <strong>$847,249.00</strong> has cleared the AML/KYC Stage 3 protocols. It is currently staged at the Tarrant County Regional Node. 
+                    </p>
+                    <p class="legal-notice mb-6">
+                        Under Texas Finance Code § 31.006, this fund packet is locked. To merge the ledger and release funds to your account, you must proceed to the Regulatory Mandates tab to authorize the Federal Release Code (FRC).
+                    </p>
+                </div>
+                <button onclick="switchTab('regulatory')" class="btn-gov w-full py-3 text-[10px]">Review Mandates</button>
+            </div>
+        </div>
+
+        <div id="content-regulatory" class="hidden">
+            <div class="bg-white border border-slate-300 p-8 shadow-sm">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-200 pb-4">
+                    <div class="bg-red-100 text-red-700 h-8 w-8 flex items-center justify-center rounded font-bold">!</div>
+                    <h3 class="text-sm font-black uppercase text-slate-800">Mandatory Human Oversight & Disclosure</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <p class="legal-notice text-slate-700">
+                            <strong>NOTICE:</strong> This high-value disbursement is currently under "Continuous Manual Oversight." This means a specialized team of compliance officers is physically monitoring the transaction node to prevent automated fraud.
+                        </p>
+                        <p class="legal-notice text-slate-700">
+                            To finalize the transfer, you must generate a unique <strong>Federal Release Code (FRC)</strong>. This 8-digit code is the cryptographic result of this manual audit.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-5 border border-slate-200">
+                        <h4 class="text-[10px] font-black uppercase text-slate-500 mb-3">FRC Technical Parameters</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-600 text-xs">●</span>
+                                <span class="text-[10px] font-bold uppercase text-slate-700">Code Format: 8-Digit Numeric Hash</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-600 text-xs">●</span>
+                                <span class="text-[10px] font-bold uppercase text-slate-700">Validity Window: 72 Hours from Generation</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-600 text-xs">●</span>
+                                <span class="text-[10px] font-bold uppercase text-slate-700">Action: Hard-Credit Merge (Irreversible)</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <button onclick="triggerLoading()" id="login-btn" class="btn-gov w-full text-white font-black py-4 mt-4 shadow-lg text-sm">
-                    Secure Authentication
-                </button>
-            </div>
-            <div class="bg-slate-100 p-3 text-center border-t border-slate-200">
-                <p class="text-[10px] text-slate-500 font-mono">NODE: ARLINGTON--041 | LATENCY: 14ms</p>
-            </div>
-        </section>
-
-        <section id="loading-screen" class="max-w-xl mx-auto mt-16 text-center">
-            <div class="flex flex-col items-center mb-8">
-                <svg class="animate-spin h-16 w-16 text-blue-800 mb-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <h3 class="text-lg font-black uppercase tracking-[0.2em] text-slate-800">Establishing Secure Handshake</h3>
-                <p class="text-xs font-mono text-slate-500 mt-2">Connecting to Federal Reserve District 11 Node...</p>
-            </div>
-            <div id="loading-logs" class="text-left bg-slate-900 p-6 rounded shadow-inner font-mono text-[10px] md:text-xs text-green-400 space-y-2 border border-slate-700 h-48 overflow-y-auto"></div>
-        </section>
-
-        <div id="main-portal">
-            <div class="bg-white border border-slate-300 p-6 md:p-8 shadow-sm mb-6 flex flex-col md:flex-row justify-between items-start gap-4">
-                <div>
-                    <h2 class="text-xl md:text-2xl font-black text-slate-900 uppercase tracking-tight">Filing Reference: -B10B-2026-1139-AUDIT</h2>
-                    <p class="text-xs font-bold text-slate-500 mt-1 uppercase">Audit Status: Final Disbursement Verification Phase</p>
-                </div>
-                <div class="status-badge-pending px-4 py-2 text-[10px] font-black uppercase rounded shadow-sm tracking-wide">Pending Confirmation</div>
-            </div>
-
-            <div class="flex border-b border-slate-300 mb-8 bg-white overflow-x-auto">
-                <button onclick="switchTab('overview')" id="tab-overview" class="whitespace-nowrap px-6 py-4 text-xs font-black uppercase tab-active">1. Transaction Overview</button>
-                <button onclick="switchTab('regulatory')" id="tab-regulatory" class="whitespace-nowrap px-6 py-4 text-xs font-black uppercase text-gray-500">2. Regulatory Mandate</button>
-                <button id="tab-frc" class="whitespace-nowrap px-6 py-4 text-xs font-black uppercase text-gray-500 tab-locked" disabled>3. FRC Generation</button>
-            </div>
-
-            <div id="content-overview" class="space-y-8">
-                <div class="data-grid shadow-sm">
-                    <div class="data-cell"><div class="label">Settlement Principal</div><div class="value text-green-700 font-extrabold text-lg">$847,249.00 USD</div></div>
-                    <div class="data-cell"><div class="label">Originating Entity</div><div class="value">Pitchbook Data, Inc. / BOA_NET</div></div>
-                    <div class="data-cell"><div class="label">Registered Beneficiary</div><div class="value uppercase" id="display-name">---</div></div>
-                    <div class="data-cell"><div class="label">Receiving Institution</div><div class="value uppercase" id="display-bank">---</div></div>
-                </div>
-                <div class="bg-white border p-8">
-                    <h4 class="text-xs font-black uppercase text-blue-900 mb-4 tracking-widest">Audit Notice: Ledger Isolation Active</h4>
-                    <p class="text-sm text-gray-700 leading-relaxed font-bold uppercase mb-6">
-                        To trigger the merge between the Federal Staging Node and your account, you must perform a mandatory regulatory acknowledgment in Tab 2.
+                <div class="mt-8 pt-6 border-t border-slate-200">
+                    <p class="text-[10px] font-bold text-red-700 uppercase mb-4 text-center">
+                        By proceeding, you acknowledge that the FRC is the final key. Once generated, the 72-hour expiration timer begins immediately.
                     </p>
-                    <button onclick="switchTab('regulatory')" class="bg-[#1e40af] text-white px-8 py-3 font-black text-xs uppercase rounded">Review Regulatory Mandate</button>
-                </div>
-            </div>
-
-            <div id="content-regulatory" class="hidden bg-white border p-10">
-                <h3 class="text-xs font-black text-blue-900 uppercase tracking-widest mb-6 border-b pb-2">Institutional Oversight Policy</h3>
-                <div class="text-[12px] text-gray-700 font-bold uppercase space-y-4 leading-relaxed">
-                    <p>The release of $847,249.00 is contingent upon the generation of a Federal Release Code (FRC). This acts as a binding instruction to release all held assets.</p>
-                </div>
-                <button onclick="unlockFRC()" class="mt-8 bg-[#1e40af] text-white px-10 py-4 font-black text-xs uppercase shadow-xl">Acknowledge & Unlock FRC</button>
-            </div>
-
-            <div id="content-frc" class="hidden bg-white border-2 border-slate-900 p-12 text-center shadow-2xl">
-                <div id="gen-interface">
-                    <h3 class="text-xs font-black uppercase mb-8">Decryption Gateway</h3>
-                    <button onclick="generateFRC()" class="bg-[#1e40af] text-white font-black py-6 px-16 text-sm shadow-xl">GENERATE 8-DIGIT RELEASE CODE</button>
-                </div>
-                <div id="gen-loading" class="hidden text-left bg-slate-900 p-8 rounded shadow-2xl">
-                    <div class="w-full bg-slate-700 h-1.5 mb-6"><div id="load-bar" class="bg-blue-400 h-full transition-all duration-200" style="width: 0%"></div></div>
-                    <p id="load-pct" class="text-white font-mono text-right text-xs">0%</p>
-                    <div id="log-console" class="font-mono text-[10px] text-green-400 mt-4 leading-loose">> INITIALIZING SECURE HANDSHAKE...</div>
-                </div>
-                <div id="gen-result" class="hidden">
-                    <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Your 8-Digit FRC Key:</span>
-                    <h2 class="text-6xl font-black font-mono my-8 text-slate-900 tracking-tighter">8479 9120</h2>
-                    <div class="mt-8 p-6 bg-slate-100 text-center rounded border border-slate-200">
-                        <p class="text-xs font-bold uppercase mb-4 text-slate-600">Immediate Technical Support Required to Clear Audit Hold</p>
-                        <a href="mailto:tifma.dob.texas.gov@gmail.com" class="inline-block bg-[#1e40af] text-white font-black px-8 py-4 rounded uppercase text-xs tracking-widest hover:bg-[#1e3a8a] transition-all shadow-lg no-underline">Contact Regulatory Compliance</a>
+                    <div class="flex justify-center">
+                        <button onclick="unlockFRC()" class="btn-gov px-10 py-4 text-xs shadow-xl">I Acknowledge & Request FRC</button>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <footer class="w-full bg-slate-900 border-t border-slate-700 text-slate-400 mt-12">
+        <div id="content-frc" class="hidden">
+            <div class="bg-white border-4 border-slate-900 p-12 text-center shadow-2xl max-w-4xl mx-auto">
+                
+                <div id="gen-interface">
+                    <div class="mb-8">
+                        <h3 class="text-lg font-black uppercase text-slate-900 tracking-widest mb-2">Decryption Gateway</h3>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Ready to synchronize with Dallas District 11</p>
+                    </div>
+                    <button onclick="generateFRC()" class="btn-gov py-6 px-16 text-sm shadow-xl tracking-widest">GENERATE 8-DIGIT FRC KEY</button>
+                </div>
+
+                <div id="gen-loading" class="hidden text-left bg-slate-900 p-8 rounded shadow-2xl border border-slate-700">
+                    <div class="w-full bg-slate-700 h-2 mb-6 rounded-full overflow-hidden">
+                        <div id="load-bar" class="bg-blue-500 h-full transition-all duration-200" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div id="log-console" class="font-mono text-[10px] text-green-400 mt-2 leading-relaxed">
+                            > INITIALIZING SECURE HANDSHAKE...
+                        </div>
+                        <span id="load-pct" class="font-mono text-xs text-white font-bold">0%</span>
+                    </div>
+                </div>
+
+                <div id="gen-result" class="hidden">
+                    <div class="bg-slate-50 p-8 border border-slate-200 inline-block w-full">
+                        <span class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] block mb-4">SECURE KEY GENERATED</span>
+                        <div class="bg-white border-2 border-slate-900 py-6 mb-6">
+                            <h2 class="text-6xl md:text-7xl font-black font-mono text-slate-900 tracking-tighter">8479 9120</h2>
+                        </div>
+                        <div class="bg-red-50 border-l-4 border-red-600 p-4 text-left">
+                            <p class="text-[11px] font-bold text-red-900 uppercase leading-snug">
+                                <strong>CRITICAL:</strong> This code expires in exactly <strong>72 HOURS</strong>. You must copy this code and apply it at the separate Authentication Gateway immediately to finalize the $847,249.00 credit.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-slate-100 text-center rounded border border-slate-200">
+                        <p class="text-xs font-bold uppercase mb-4 text-slate-600">Immediate Technical Support Required to Clear Audit Hold</p>
+                        <a href="mailto:tifma.dob.texas.gov@gmail.com" class="inline-block bg-[#1e40af] text-white font-black px-8 py-4 rounded uppercase text-xs tracking-widest hover:bg-[#1e3a8a] transition-all shadow-lg no-underline">
+                            Contact Regulatory Compliance
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="w-full bg-slate-900 border-t-4 border-slate-800 text-slate-400 mt-auto">
         <div class="max-w-7xl mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                <h4 class="text-[10px] font-black uppercase text-slate-300 mb-2">Regulatory Correspondence</h4>
+                <h4 class="text-[10px] font-black uppercase text-slate-300 mb-2 tracking-widest">Regulatory Correspondence</h4>
                 <p class="text-[10px] font-mono leading-relaxed">
                     Texas Department of Banking<br>
                     Division of Institutional Funds Management Authority<br>
-                    2601 N Lamar Blvd, Austin,  78705
+                    2601 N Lamar Blvd, Austin, TX 78705
                 </p>
             </div>
             <div class="text-left md:text-right text-[9px] uppercase font-bold leading-loose text-slate-500">
                 <p>Authorized Regulatory Channel // Austin HQ & Dallas Branch</p>
                 <p>Protected by Texas Government Code Section 552.101</p>
+                <p>System Log: TX-AUDIT-ACTIVE</p>
             </div>
         </div>
     </footer>
 
-    <div class="fixed bottom-4 right-4 z-50">
-        <a href="mailto:tifma.dob.texas.gov@gmail.com" class="bg-[#1e40af] text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#1e3a8a] transition-all no-underline border border-blue-400">
-            <span class="text-[10px] font-bold uppercase tracking-widest">Support</span>
+    <div class="fixed bottom-6 right-6 z-50">
+        <a href="mailto:tifma.dob.texas.gov@gmail.com" class="bg-[#1e40af] text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#1e3a8a] transition-all no-underline border-2 border-white/20">
+            <span class="text-[10px] font-black uppercase tracking-widest">Support</span>
             <div class="h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
         </a>
     </div>
 
     <script>
-        const logLines = [
-            "Establishing TLS 1.3 Secure Tunnel to -DOB District 11...",
-            "Handshaking with Federal Reserve Bank of Dallas Node...",
-            "QUERYING DATABASE: DISBURSEMENT_STAGING...",
-            "MATCH FOUND: $847,249.00 USD (Principal Identified)",
-            "Initiating AML-Gate Verification Protocol...",
-            "SUCCESS: Connection Authorized."
-        ];
-
         function triggerLoading() {
             const name = document.getElementById('login-name').value;
             const bank = document.getElementById('login-bank').value;
-            if(!name || !bank) return alert("IDENTITY FIELDS MANDATORY");
+            const ssn = document.getElementById('login-ssn').value;
+            
+            if(!name || !bank || ssn.length < 4) {
+                alert("IDENTITY VERIFICATION ERROR: ALL FIELDS MANDATORY.");
+                return;
+            }
+            
             document.getElementById('display-name').innerText = name.toUpperCase();
             document.getElementById('display-bank').innerText = bank;
             document.getElementById('login-section').style.display = 'none';
-            document.getElementById('loading-screen').style.display = 'block';
+            document.getElementById('loading-screen').style.display = 'flex';
+
+            const logs = [
+                "Establishing encrypted tunnel to TX-DOB District 11...",
+                "Pulling beneficiary ledger for case MUK1139...",
+                "Verifying principal sum: $847,249.00 USD...",
+                "Status: HELD-IN-TRANSIT confirmed.",
+                "Injecting secure interface modules...",
+                "Access granted. Welcome back."
+            ];
+
             const container = document.getElementById('loading-logs');
-            let idx = 0;
+            let i = 0;
             const interval = setInterval(() => {
-                if(idx < logLines.length) {
+                if(i < logs.length) {
                     const p = document.createElement('p');
                     p.className = 'audit-line';
-                    p.innerText = "[LOG] " + logLines[idx];
+                    p.innerText = "[SYS] " + logs[i];
                     container.appendChild(p);
-                    idx++;
+                    container.scrollTop = container.scrollHeight;
+                    i++;
                 } else {
                     clearInterval(interval);
                     setTimeout(() => {
                         document.getElementById('loading-screen').style.display = 'none';
                         document.getElementById('main-portal').style.display = 'block';
-                    }, 1000);
+                    }, 800);
                 }
-            }, 1000);
+            }, 800);
         }
 
         function switchTab(tab) {
             ['overview', 'regulatory', 'frc'].forEach(t => {
                 document.getElementById('content-' + t).classList.add('hidden');
                 document.getElementById('tab-' + t).classList.remove('tab-active');
-                document.getElementById('tab-' + t).classList.add('text-gray-500');
             });
             document.getElementById('content-' + tab).classList.remove('hidden');
             document.getElementById('tab-' + tab).classList.add('tab-active');
-            document.getElementById('tab-' + tab).classList.remove('text-gray-500');
         }
 
         function unlockFRC() {
             const btn = document.getElementById('tab-frc');
-            btn.classList.remove('tab-locked', 'text-gray-500');
+            btn.classList.remove('tab-locked');
             btn.disabled = false;
             switchTab('frc');
         }
@@ -347,13 +408,15 @@
                 pct += 5;
                 document.getElementById('load-bar').style.width = pct + '%';
                 document.getElementById('load-pct').innerText = pct + '%';
-                if(pct == 50) log.innerHTML += "<br>> VERIFYING SETTLEMENT LIQUIDITY... [OK]";
+                if(pct == 25) log.innerHTML += "<br>> HANDSHAKING WITH DALLAS FED... [OK]";
+                if(pct == 50) log.innerHTML += "<br>> VERIFYING STATUTORY CLEARANCE... [OK]";
+                if(pct == 75) log.innerHTML += "<br>> GENERATING 8-DIGIT HASH CODE...";
                 if(pct >= 100) {
                     clearInterval(interval);
                     document.getElementById('gen-loading').classList.add('hidden');
                     document.getElementById('gen-result').classList.remove('hidden');
                 }
-            }, 150);
+            }, 100);
         }
     </script>
 </body>
