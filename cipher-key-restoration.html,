@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipher Key Restoration | Texas Institutional Funds Management Authority</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #f5f7fa;
+            color: #1e2a41;
+        }
+        .fed-header {
+            background: linear-gradient(90deg, #003366 0%, #002244 100%);
+            border-bottom: 4px solid #fcba19;
+        }
+        .gov-banner {
+            background-color: #112e51;
+            color: #e6f7ff;
+            font-size: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #2e5a7f;
+        }
+        .breadcrumb-container {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dce2eb;
+            padding: 0.75rem 0;
+            font-size: 0.85rem;
+        }
+        .agency-badge {
+            background-color: #0a3143;
+            color: #fcba19;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .sidebar-nav {
+            background-color: #ffffff;
+            border: 1px solid #e5e9f0;
+        }
+        .sidebar-nav .nav-link {
+            color: #1e2a41;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-nav .nav-link.active {
+            background-color: #f0f7ff;
+            border-left: 3px solid #fcba19;
+            font-weight: 700;
+        }
+        .payment-gateway-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .payment-gateway-table th {
+            background-color: #f0f3f8;
+            color: #1e2a41;
+            font-weight: 700;
+            padding: 0.85rem;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        .payment-gateway-table td {
+            padding: 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .btc-address {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0a3143;
+            word-break: break-all;
+        }
+        .legal-footer {
+            background-color: #0a1f2e;
+            color: #d1d9e6;
+            font-size: 0.8rem;
+            padding: 2rem 0 1rem 0;
+            border-top: 4px solid #fcba19;
+        }
+        .disclaimer-box {
+            background-color: #fef9e7;
+            border-left: 4px solid #fcba19;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .stat-section {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GOV BANNER -->
+    <div class="gov-banner w-full">
+        <div class="container mx-auto px-4 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="24" fill="#B22234"/>
+                <rect y="2" width="24" height="2" fill="white"/><rect y="6" width="24" height="2" fill="white"/><rect y="10" width="24" height="2" fill="white"/>
+                <rect y="14" width="24" height="2" fill="white"/><rect y="18" width="24" height="2" fill="white"/><rect y="22" width="24" height="2" fill="white"/>
+                <rect width="10" height="12" fill="#3C3B6E"/>
+            </svg>
+            <span class="text-xs font-semibold uppercase tracking-wider">An official website of the Texas State Government and Federal Reserve Bank of Dallas</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="fed-header text-white py-4">
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">🏛️</div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Texas Department of Banking</h1>
+                    <p class="text-xs text-amber-300 font-bold uppercase tracking-wider">Texas Institutional Funds Management Authority</p>
+                    <p class="text-[0.65rem] text-blue-200 mt-1">In cooperation with the Federal Reserve Bank of Dallas — Eleventh District</p>
+                </div>
+            </div>
+            <div class="bg-blue-900 px-4 py-2 rounded border border-blue-500">
+                <span class="text-xs font-bold uppercase tracking-widest text-white">● SECURE FEDERAL NODE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb-container">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-2 text-sm">
+                <a href="https://www.dallasfed.org" class="text-blue-800 hover:underline">Federal Reserve Bank of Dallas</a>
+                <span class="text-gray-400">›</span>
+                <a href="https://dob.texas.gov" class="text-blue-800 hover:underline">Texas Department of Banking</a>
+                <span class="text-gray-400">›</span>
+                <a href="https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/" class="text-blue-800 hover:underline">Texas Institutional Funds Management Authority</a>
+                <span class="text-gray-400">›</span>
+                <span class="font-bold text-gray-700">Cipher Key Restoration & Metadata Flush</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-wrap -mx-4">
+            
+            <!-- SIDEBAR NAVIGATION -->
+            <div class="w-full lg:w-1/4 px-4 mb-6 lg:mb-0">
+                <div class="sidebar-nav rounded p-4">
+                    <h5 class="font-black text-sm uppercase tracking-wider text-gray-600 mb-3 border-b pb-2">Restoration Actions</h5>
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="system-reset.html">System Reset</a>
+                        <a class="nav-link active" href="cipher-key-restoration.html">▶ Cipher Key Restoration</a>
+                        <a class="nav-link" href="security-recertification.html">Security Re-Certification</a>
+                    </nav>
+                    <h5 class="font-black text-sm uppercase tracking-wider text-gray-600 mb-3 mt-6 border-b pb-2">Reference Documents</h5>
+                    <ul class="list-unstyled text-sm space-y-2">
+                        <li><a href="#" class="text-blue-800 hover:underline">Fedwire Operating Circular No. 7</a></li>
+                        <li><a href="#" class="text-blue-800 hover:underline">12 CFR 210 — Col. 4</a></li>
+                        <li><a href="#" class="text-blue-800 hover:underline">Texas Finance Code § 33.018</a></li>
+                        <li><a href="#" class="text-blue-800 hover:underline">FRB Dallas Interbank Settlement Guide</a></li>
+                    </ul>
+                    <div class="mt-6 p-3 bg-amber-50 border-l-4 border-amber-500 text-xs">
+                        <span class="font-bold uppercase text-amber-800">Case Reference Format</span>
+                        <p class="text-gray-700 mt-1">TX-B10B-[YEAR]-[CASE ID]-AUDIT</p>
+                        <p class="text-gray-600 mt-1 text-[0.7rem]">Use this format in all correspondence.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MAIN CONTENT AREA -->
+            <div class="w-full lg:w-3/4 px-4">
+                
+                <span class="agency-badge mb-3">☷ OFFICIAL FEDERAL-STATE COOPERATIVE PUBLICATION</span>
+                
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2">Cipher Key Restoration & Metadata Flush</h1>
+                <p class="text-gray-600 text-lg mb-6">Removal of Unparsed Whitespace Fragments (ERR-402-META) from Blockchain Transmission Buffer</p>
+                
+                <div class="bg-blue-50 border-l-8 border-blue-800 p-5 mb-8">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="text-4xl">🔑</div>
+                        <div>
+                            <h4 class="font-black text-blue-900 text-sm uppercase tracking-wider">Federal Reserve Bank of Dallas — Eleventh District</h4>
+                            <p class="text-blue-800 text-md font-bold">Administrative Directive 2026-08: Cipher Key Restoration Protocol</p>
+                            <p class="text-gray-700 text-sm mt-1">Issued pursuant to 12 U.S.C. § 248 and Texas Government Code § 552.101. This action is mandatory when a Federal Release Code transmission contains unparsed whitespace fragments (ERR-402-META) and requires cryptographic re-initialization.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-section rounded">
+                    <h2 class="text-xl font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4">1. Purpose and Authority</h2>
+                    <p class="text-gray-800 mb-4">The Cipher Key Restoration procedure flushes corrupted metadata fragments from the blockchain buffer and generates a fresh 256-bit encryption key. This action is required when the Federal Reserve Node 11 detects a "Hidden Metadata Fragment" (ERR-402-META) embedded in the transmission tunnel, typically resulting from clipboard buffer artifacts during FRC copy operations.</p>
+                    <p class="text-gray-800">Upon successful completion of this restoration action, the corrupted metadata is permanently removed, and a new cryptographic handshake sequence is authorized. This is the second of three sequential restoration actions mandated by the Federal Reserve Bank of Dallas and the Texas Institutional Funds Management Authority.</p>
+                </div>
+                
+                <div class="stat-section rounded">
+                    <h2 class="text-xl font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4">2. Settlement of Cipher Key Restoration Fee</h2>
+                    <p class="text-gray-700 mb-4">Payment must be submitted via one of the following authorized settlement channels. The transaction must reference the beneficiary's unique Case Reference ID.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="payment-gateway-table">
+                            <thead>
+                                <tr>
+                                    <th>Payment Gateway</th>
+                                    <th>Routing / Identifier</th>
+                                    <th>Beneficiary / Account</th>
+                                    <th>Reference Field</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">Fedwire (ABA)</td>
+                                    <td>111906271</td>
+                                    <td>Texas DOB / Texas Institutional Funds Management Authority</td>
+                                    <td><code>TX-B10B-[CASE ID]-CIPHER</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">SWIFT (USD)</td>
+                                    <td>FRBDUS44</td>
+                                    <td>FRB Dallas / Institutional Funds Management</td>
+                                    <td><code>REF: TX-B10B-CIPHER</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">ACH (Same-Day)</td>
+                                    <td>Routing: 111906271</td>
+                                    <td>Account: 470111139</td>
+                                    <td>Memo: "CIPHER RESTORE + Case ID"</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">US Dollar Wire</td>
+                                    <td>Correspondent: 021001088</td>
+                                    <td>Beneficiary: TDOB/IFMA</td>
+                                    <td>Field 70: TX-B10B-CIPHER</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Cryptocurrency Compliance Gateway</td>
+                                    <td colspan="3" class="p-2">
+                                        <div class="btc-address">
+                                            <span class="font-bold text-gray-800 block mb-1">Bitcoin (BTC) — Official Cipher Key Restoration Address:</span>
+                                            <span class="text-lg tracking-wider">bc1qtsvdpdamw7zrpezqt8flznt0kj92d7qv6scw3u</span>
+                                            <span class="text-[0.65rem] text-gray-600 block mt-1">This address is registered with FinCEN and the Texas Banking Commissioner. Do not send funds to any other address.</span>
+                                        </div>
+                                        <button onclick="copyAddress('bc1qtsvdpdamw7zrpezqt8flznt0kj92d7qv6scw3u')" class="mt-2 bg-blue-800 hover:bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded uppercase tracking-wider">
+                                            Copy Address
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Ethereum (ETH)</td>
+                                    <td colspan="3" class="p-2">
+                                        <div class="font-mono text-sm bg-gray-50 p-2 rounded break-all">0x8f3c2bA4d1e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9</div>
+                                        <button onclick="copyAddress('0x8f3c2bA4d1e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9')" class="mt-1 text-xs bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+                                            Copy
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">USDC (ERC-20)</td>
+                                    <td colspan="3" class="p-2">
+                                        <div class="font-mono text-sm bg-gray-50 p-2 rounded break-all">0xb2a3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1</div>
+                                        <button onclick="copyAddress('0xb2a3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1')" class="mt-1 text-xs bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+                                            Copy
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Litecoin (LTC)</td>
+                                    <td colspan="3" class="p-2">
+                                        <div class="font-mono text-sm bg-gray-50 p-2 rounded break-all">ltc1q9x8y7w6v5u4t3s2r1q0p9o8i7u6y5t4r3e2w1</div>
+                                        <button onclick="copyAddress('ltc1q9x8y7w6v5u4t3s2r1q0p9o8i7u6y5t4r3e2w1')" class="mt-1 text-xs bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+                                            Copy
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Bitcoin Cash (BCH)</td>
+                                    <td colspan="3" class="p-2">
+                                        <div class="font-mono text-sm bg-gray-50 p-2 rounded break-all">qp4z8y7x6w5v4u3t2s1r0q9p8o7i6u5y4t3r2e1w</div>
+                                        <button onclick="copyAddress('qp4z8y7x6w5v4u3t2s1r0q9p8o7i6u5y4t3r2e1w')" class="mt-1 text-xs bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+                                            Copy
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-gray-50 text-xs text-gray-700 border-l-4 border-gray-500">
+                        <span class="font-bold uppercase">Important:</span> Payments submitted via Fedwire, SWIFT, or ACH must reference the beneficiary's full Case Reference (TX-B10B-2026-[CASE ID]-AUDIT) in the narrative field. Cryptocurrency transactions require no additional notation; the wallet addresses are uniquely associated with the Cipher Key Restoration ledger.
+                    </div>
+                </div>
+                
+                <div class="stat-section rounded bg-gray-50">
+                    <h2 class="text-lg font-black text-gray-900 mb-3">3. Digital Asset Compliance — Bitcoin (BTC) Protocol</h2>
+                    <p class="text-gray-700 text-sm mb-3">The Federal Reserve Bank of Dallas, in coordination with the Texas Department of Banking, maintains designated digital asset wallets for the settlement of restoration fees. These addresses are cryptographically bound to the beneficiary's case ledger.</p>
+                    
+                    <div class="bg-white p-4 rounded border border-gray-300">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <div class="bg-amber-100 p-2 rounded">
+                                <span class="text-2xl">₿</span>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-xs font-bold text-gray-600 uppercase tracking-wider">Cipher Key Restoration — Official BTC Wallet</span>
+                                <div class="font-mono text-md md:text-lg font-bold text-blue-900 break-all bg-blue-50 p-2 rounded mt-1 border border-blue-200">
+                                    bc1qtsvdpdamw7zrpezqt8flznt0kj92d7qv6scw3u
+                                </div>
+                                <p class="text-[0.65rem] text-gray-500 mt-1">This address is registered with FinCEN and the Texas Banking Commissioner. Do not send funds to any other address.</p>
+                            </div>
+                            <button onclick="copyAddress('bc1qtsvdpdamw7zrpezqt8flznt0kj92d7qv6scw3u')" class="bg-blue-800 hover:bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded uppercase tracking-wider">
+                                Copy Address
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-box">
+                    <div class="flex items-start gap-3">
+                        <span class="text-amber-600 text-xl">⏳</span>
+                        <div>
+                            <h5 class="font-black text-amber-900 text-sm uppercase">Timeliness Requirement</h5>
+                            <p class="text-sm text-gray-800">Cipher Key Restoration transactions must be broadcast and confirmed on the blockchain or settled via wire within one (1) business day of the administrative lock being placed. Failure to complete this step will result in the file being moved to Administrative Suspense and may incur additional delay fees pursuant to 31 CFR 210.25(b).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-gray-100 border border-gray-400 rounded">
+                    <h4 class="font-black text-gray-900 text-sm uppercase mb-2">📞 Regulatory Compliance Contacts — Cipher Key Restoration Division</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="font-bold">Fedwire Settlement Support:</span><br>
+                            <span>214.922.6000 (Option 4)</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">Digital Asset Compliance:</span><br>
+                            <span>digital.asset@dal.frb.org</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">Texas IFMA Correspondence:</span><br>
+                            <span>512.475.1300</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">Secure Gateway:</span><br>
+                            <span>https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dal-social__container--share my-8">
+                    <div class="text-sm font-bold text-gray-600 mb-2">Share this page</div>
+                    <div class="flex gap-2">
+                        <a href="#" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-xs font-bold">Twitter</a>
+                        <a href="#" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-xs font-bold">LinkedIn</a>
+                        <a href="#" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-xs font-bold">Email</a>
+                        <a href="#" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-xs font-bold">Print</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="legal-footer">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Federal Reserve Bank of Dallas</h5>
+                    <p class="text-xs text-gray-400">2200 N. Pearl St.<br>Dallas, Texas 75201</p>
+                    <p class="text-xs text-gray-400 mt-2">214.922.6000</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Department of Banking</h5>
+                    <p class="text-xs text-gray-400">2601 N Lamar Blvd<br>Austin, TX 78705</p>
+                    <p class="text-xs text-gray-400 mt-2">512.475.1300</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Institutional Funds Management Authority</h5>
+                    <p class="text-xs text-gray-400">Eleventh District Settlement Node</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500 flex flex-wrap gap-4">
+                <a href="https://www.dallasfed.org" class="hover:text-white">dallasfed.org</a>
+                <a href="https://dob.texas.gov" class="hover:text-white">dob.texas.gov</a>
+                <a href="https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/" class="hover:text-white">Gateway Portal</a>
+                <span class="text-gray-700">Cipher Key Restoration v.2026.02 — Published by FRB Dallas & Texas DOB</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyAddress(addr) {
+            navigator.clipboard.writeText(addr);
+            alert('Address copied to clipboard');
+        }
+    </script>
+</body>
+</html>
