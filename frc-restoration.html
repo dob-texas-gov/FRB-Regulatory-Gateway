@@ -102,6 +102,11 @@
             font-size: 0.85rem;
             word-break: break-all;
         }
+        .current-time {
+            font-family: 'Roboto Mono', monospace;
+            color: #4b5563;
+            font-size: 0.7rem;
+        }
     </style>
 </head>
 <body>
@@ -274,16 +279,16 @@
         <div class="mt-8 p-5 bg-gray-100 border border-gray-400 rounded">
             <h4 class="font-black text-gray-900 text-sm uppercase mb-3">📞 FRC RESTORATION COMPLIANCE DESK</h4>
             <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div><span class="font-bold">Fedwire Settlement Support:</span><br>214.922.6000 </div>
+                <div><span class="font-bold">Fedwire Settlement Support:</span><br>214.922.6000</div>
                 <div><span class="font-bold">Digital Asset Compliance:</span><br>digital.asset@dal.frb.org</div>
                 <div><span class="font-bold">Texas IFMA Correspondence:</span><br>512.475.1300</div>
                 <div><span class="font-bold">Secure Gateway:</span><br>https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/</div>
             </div>
         </div>
 
-        <!-- TIMESTAMP -->
+        <!-- TIMESTAMP WITH DYNAMIC CST TIME -->
         <div class="text-[0.65rem] text-gray-500 text-right mt-8 border-t pt-4">
-            <span>Directive issued: February 13, 2026 — 03:15 CST • Federal Reserve Bank of Dallas Node 11</span>
+            <span>Directive issued: <span id="currentCSTTime"></span> • Federal Reserve Bank of Dallas Node 11</span>
         </div>
     </div>
 
@@ -312,5 +317,31 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // ============ DYNAMIC CST TIME DISPLAY ============
+        function updateCSTTime() {
+            const now = new Date();
+            
+            // Convert to CST (America/Chicago)
+            const options = {
+                timeZone: 'America/Chicago',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            
+            const cstString = now.toLocaleString('en-US', options);
+            document.getElementById('currentCSTTime').innerText = cstString + ' CST';
+        }
+        
+        // Update immediately and then every second
+        updateCSTTime();
+        setInterval(updateCSTTime, 1000);
+    </script>
 </body>
 </html>
