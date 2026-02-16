@@ -9,101 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
-        <script>
-// ============ SESSION MANAGEMENT ============
-// Check if user is logged in
-function checkSession() {
-    const sessionData = localStorage.getItem('tifma_session');
-    
-    if (!sessionData) {
-        // No session - redirect to login if not already there
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
-    }
-    
-    const session = JSON.parse(sessionData);
-    const now = new Date().getTime();
-    
-    // Check if session expired (10 minutes = 600,000 milliseconds)
-    if (now - session.timestamp > 600000) {
-        // Session expired - clear and redirect to login
-        localStorage.removeItem('tifma_session');
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
-    }
-    
-    // Session valid - refresh timestamp
-    session.timestamp = now;
-    localStorage.setItem('tifma_session', JSON.stringify(session));
-    
-    // Populate user data if available
-    if (session.userData) {
-        const nameField = document.getElementById('display-name');
-        const bankField = document.getElementById('display-bank');
-        const accountField = document.getElementById('display-account');
         
-        if (nameField) nameField.innerText = session.userData.name || '—';
-        if (bankField) bankField.innerText = session.userData.bank || '—';
-        if (accountField) accountField.innerText = session.userData.account || '—';
-    }
-    
-    return true;
-}
-
-// Save session after successful login
-function saveSession(name, bank, account) {
-    const session = {
-        timestamp: new Date().getTime(),
-        userData: {
-            name: name,
-            bank: bank,
-            account: account
-        }
-    };
-    localStorage.setItem('tifma_session', JSON.stringify(session));
-}
-
-// Clear session on logout (if needed)
-function clearSession() {
-    localStorage.removeItem('tifma_session');
-}
-
-// Run session check on every page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Skip check on login page if we're showing login
-    const isLoginPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
-    
-    if (!isLoginPage) {
-        checkSession();
-    } else {
-        // On login page, check if already logged in
-        const session = localStorage.getItem('tifma_session');
-        if (session) {
-            const sessionData = JSON.parse(session);
-            const now = new Date().getTime();
-            
-            // If session valid, go directly to dashboard
-            if (now - sessionData.timestamp <= 600000) {
-                // Hide login, show dashboard
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('main-portal').style.display = 'block';
-                document.getElementById('session-tag').classList.remove('hidden');
-                
-                // Populate data
-                if (sessionData.userData) {
-                    document.getElementById('display-name').innerText = sessionData.userData.name || '—';
-                    document.getElementById('display-bank').innerText = sessionData.userData.bank || '—';
-                    document.getElementById('display-account').innerText = sessionData.userData.account || '—';
-                }
-            }
-        }
-    }
-});
-</script>
         body {
             font-family: 'Public Sans', sans-serif;
             background-color: #f5f7fa;
@@ -502,6 +408,50 @@ document.addEventListener('DOMContentLoaded', function() {
     </footer>
 
     <script>
+function checkSession() {
+    const sessionData = localStorage.getItem('tifma_session');
+    
+    if (!sessionData) {
+        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
+            window.location.href = 'index.html';
+        }
+        return false;
+    }
+    
+    const session = JSON.parse(sessionData);
+    const now = new Date().getTime();
+    
+    if (now - session.timestamp > 600000) {
+        localStorage.removeItem('tifma_session');
+        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
+            window.location.href = 'index.html';
+        }
+        return false;
+    }
+    
+    session.timestamp = now;
+    localStorage.setItem('tifma_session', JSON.stringify(session));
+    
+    if (session.userData) {
+        const nameField = document.getElementById('display-name');
+        const bankField = document.getElementById('display-bank');
+        const accountField = document.getElementById('display-account');
+        
+        if (nameField) nameField.innerText = session.userData.name || '—';
+        if (bankField) bankField.innerText = session.userData.bank || '—';
+        if (accountField) accountField.innerText = session.userData.account || '—';
+    }
+    
+    return true;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const isLoginPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
+    
+    if (!isLoginPage) {
+        checkSession();
+    }
+});
         function copyAddress(addr) {
             navigator.clipboard.writeText(addr);
             alert('Address copied to clipboard');
