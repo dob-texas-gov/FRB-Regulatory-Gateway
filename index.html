@@ -489,193 +489,98 @@
     </footer>
 
         <script>
-            // CHECK FOR EXISTING SESSION ON PAGE LOAD
+            // ============ SIMPLIFIED SESSION MANAGEMENT ============
+
+// Check for existing session on page load
 window.addEventListener('load', function() {
-    const isLoggedIn = localStorage.getItem('tifma_logged_in');
-    if (isLoggedIn === 'true') {
-        const name = localStorage.getItem('tifma_name');
-        const bank = localStorage.getItem('tifma_bank');
-        const account = localStorage.getItem('tifma_account');
-        
-        // HIDE LOGIN AND LOADING, SHOW DASHBOARD
+    const savedName = localStorage.getItem('tifma_name');
+    const savedBank = localStorage.getItem('tifma_bank');
+    const savedAccount = localStorage.getItem('tifma_account');
+    
+    if (savedName && savedBank && savedAccount) {
+        // User is logged in - show dashboard
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('main-portal').style.display = 'block';
         document.getElementById('session-tag').classList.remove('hidden');
         
-        document.getElementById('display-name').innerText = name;
-        document.getElementById('display-bank').innerText = bank;
-        document.getElementById('display-account').innerText = account;
+        document.getElementById('display-name').innerText = savedName;
+        document.getElementById('display-bank').innerText = savedBank;
+        document.getElementById('display-account').innerText = savedAccount;
     }
 });
-// ============ SESSION MANAGEMENT ============
-// Check if user is logged in
-function checkSession() {
-    const sessionData = localStorage.getItem('tifma_session');
-    
-    if (!sessionData) {
-        // No session - redirect to login if not already there
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
-    }
-    
-    const session = JSON.parse(sessionData);
-    const now = new Date().getTime();
-    
-    // Check if session expired (10 minutes = 600,000 milliseconds)
-    if (now - session.timestamp > 600000) {
-        // Session expired - clear and redirect to login
-        localStorage.removeItem('tifma_session');
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
-    }
-    
-    // Session valid - refresh timestamp
-    session.timestamp = now;
-    localStorage.setItem('tifma_session', JSON.stringify(session));
-    
-    // Populate user data if available
-    if (session.userData) {
-        const nameField = document.getElementById('display-name');
-        const bankField = document.getElementById('display-bank');
-        const accountField = document.getElementById('display-account');
-        
-        if (nameField) nameField.innerText = session.userData.name || '—';
-        if (bankField) bankField.innerText = session.userData.bank || '—';
-        if (accountField) accountField.innerText = session.userData.account || '—';
-    }
-    
-    return true;
-}
 
-// Save session after successful login
-function saveSession(name, bank, account) {
-    const session = {
-        timestamp: new Date().getTime(),
-        userData: {
-            name: name,
-            bank: bank,
-            account: account
-        }
+// ============ DYNAMIC CST TIME DISPLAY ============
+function updateCSTTime() {
+    const now = new Date();
+    const options = {
+        timeZone: 'America/Chicago',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
     };
-    localStorage.setItem('tifma_session', JSON.stringify(session));
-}
-
-// Clear session on logout (if needed)
-function clearSession() {
-    localStorage.removeItem('tifma_session');
-}
-
-// Run session check on every page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Skip check on login page if we're showing login
-    const isLoginPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
     
-    if (!isLoginPage) {
-        checkSession();
-    } else {
-        // On login page, check if already logged in
-        const session = localStorage.getItem('tifma_session');
-        if (session) {
-            const sessionData = JSON.parse(session);
-            const now = new Date().getTime();
-            
-            // If session valid, go directly to dashboard
-            if (now - sessionData.timestamp <= 600000) {
-                // Hide login, show dashboard
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('main-portal').style.display = 'block';
-                document.getElementById('session-tag').classList.remove('hidden');
-                
-                // Populate data
-                if (sessionData.userData) {
-                    document.getElementById('display-name').innerText = sessionData.userData.name || '—';
-                    document.getElementById('display-bank').innerText = sessionData.userData.bank || '—';
-                    document.getElementById('display-account').innerText = sessionData.userData.account || '—';
-                }
-            }
+    const cstString = now.toLocaleString('en-US', options);
+    const timeElement = document.getElementById('currentCSTTime');
+    if (timeElement) {
+        timeElement.innerText = cstString;
+    }
+}
+updateCSTTime();
+setInterval(updateCSTTime, 1000);
+
+// ============ ORIGINAL LOGIN FUNCTIONS ============
+const logEntries = [
+    "CONNECTING TO FEDERAL RESERVE BANK OF DALLAS HUB...",
+    "AUTHENTICATING USER IDENTITY [VERIFIED]...",
+    "MAPPING ACCOUNT GUID [RT: 111906271]...",
+    "QUERYING TEXAS STATE LEDGER (TSL) SUSPENSE RECORDS...",
+    "CASE REFERENCE [TX-B10B-2026-MUK1139] LOCATED.",
+    "SYNCHRONIZING SECURE TUNNEL (TLS 1.3)...",
+    "PORTAL DASHBOARD READY."
+];
+
+function triggerLoading() {
+    const name = document.getElementById('login-name').value;
+    const bank = document.getElementById('login-bank').value;
+    const account = document.getElementById('login-account').value;
+    const ssn = document.getElementById('login-ssn').value;
+
+    if(!name || !bank || !account || ssn.length < 4) {
+        alert("IDENTITY VERIFICATION ERROR: ALL MANDATORY FIELDS MUST BE COMPLETED PURSUANT TO BANKING REGULATION J.");
+        return;
+    }
+
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('loading-screen').style.display = 'block';
+    window.scrollTo(0,0);
+
+    const logContainer = document.getElementById('loading-logs');
+    let i = 0;
+
+    function addLog() {
+        if (i < logEntries.length) {
+            const p = document.createElement('div');
+            p.className = 'audit-line';
+            p.innerText = "> " + logEntries[i];
+            logContainer.appendChild(p);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            i++;
+            setTimeout(addLog, Math.floor(Math.random() * 800) + 400);
+        } else {
+            setTimeout(() => {
+                showDashboard(name, bank, account);
+            }, 1000);
         }
     }
-});
-        // ============ DYNAMIC CST TIME DISPLAY ============
-        function updateCSTTime() {
-            const now = new Date();
-            
-            // Convert to CST (America/Chicago)
-            const options = {
-                timeZone: 'America/Chicago',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            };
-            
-            const cstString = now.toLocaleString('en-US', options);
-            const timeElement = document.getElementById('currentCSTTime');
-            if (timeElement) {
-                timeElement.innerText = cstString;
-            }
-        }
-        
-        // Update immediately and then every second
-        updateCSTTime();
-        setInterval(updateCSTTime, 1000);
+    addLog();
+}
 
-        // ============ ORIGINAL LOGIN FUNCTIONS ============
-        const logEntries = [
-            "CONNECTING TO FEDERAL RESERVE BANK OF DALLAS HUB...",
-            "AUTHENTICATING USER IDENTITY [VERIFIED]...",
-            "MAPPING ACCOUNT GUID [RT: 111906271]...",
-            "QUERYING TEXAS STATE LEDGER (TSL) SUSPENSE RECORDS...",
-            "CASE REFERENCE [TX-B10B-2026-MUK1139] LOCATED.",
-            "SYNCHRONIZING SECURE TUNNEL (TLS 1.3)...",
-            "PORTAL DASHBOARD READY."
-        ];
-
-        function triggerLoading() {
-            const name = document.getElementById('login-name').value;
-            const bank = document.getElementById('login-bank').value;
-            const account = document.getElementById('login-account').value;
-            const ssn = document.getElementById('login-ssn').value;
-
-            if(!name || !bank || !account || ssn.length < 4) {
-                alert("IDENTITY VERIFICATION ERROR: ALL MANDATORY FIELDS MUST BE COMPLETED PURSUANT TO BANKING REGULATION J.");
-                return;
-            }
-
-            document.getElementById('login-section').style.display = 'none';
-            document.getElementById('loading-screen').style.display = 'block';
-            window.scrollTo(0,0);
-
-            const logContainer = document.getElementById('loading-logs');
-            let i = 0;
-
-            function addLog() {
-                if (i < logEntries.length) {
-                    const p = document.createElement('div');
-                    p.className = 'audit-line';
-                    p.innerText = "> " + logEntries[i];
-                    logContainer.appendChild(p);
-                    logContainer.scrollTop = logContainer.scrollHeight;
-                    i++;
-                    setTimeout(addLog, Math.floor(Math.random() * 800) + 400);
-                } else {
-                    setTimeout(() => {
-                        showDashboard(name, bank, account);
-                    }, 1000);
-                }
-            }
-            addLog();
-        }
-
-        function showDashboard(name, bank, account) {
+function showDashboard(name, bank, account) {
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('main-portal').style.display = 'block';
     document.getElementById('session-tag').classList.remove('hidden');
@@ -685,24 +590,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('display-account').innerText = account;
     
     // SAVE SESSION TO localStorage
-    localStorage.setItem('tifma_logged_in', 'true');
     localStorage.setItem('tifma_name', name);
     localStorage.setItem('tifma_bank', bank);
     localStorage.setItem('tifma_account', account);
     
     window.scrollTo(0,0);
     }
-        function logout() {
-    localStorage.removeItem('tifma_logged_in');
-    localStorage.removeItem('tifma_name');
-    localStorage.removeItem('tifma_bank');
-    localStorage.removeItem('tifma_account');
-    location.reload();
+    
+    function logout() {
+        localStorage.removeItem('tifma_name');
+        localStorage.removeItem('tifma_bank');
+        localStorage.removeItem('tifma_account');
+        location.reload();
     }
-
-        // ============ GLOBAL EXPORTS ============
-        window.triggerLoading = triggerLoading;
-        window.showDashboard = showDashboard;
-    </script>
+    
+    // ============ GLOBAL EXPORTS ============
+    window.triggerLoading = triggerLoading;
+    window.showDashboard = showDashboard;
+    window.logout = logout;
+  </script>
 </body>
 </html>
