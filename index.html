@@ -489,6 +489,25 @@
     </footer>
 
         <script>
+            // CHECK FOR EXISTING SESSION ON PAGE LOAD
+window.addEventListener('load', function() {
+    const isLoggedIn = localStorage.getItem('tifma_logged_in');
+    if (isLoggedIn === 'true') {
+        const name = localStorage.getItem('tifma_name');
+        const bank = localStorage.getItem('tifma_bank');
+        const account = localStorage.getItem('tifma_account');
+        
+        // HIDE LOGIN AND LOADING, SHOW DASHBOARD
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('main-portal').style.display = 'block';
+        document.getElementById('session-tag').classList.remove('hidden');
+        
+        document.getElementById('display-name').innerText = name;
+        document.getElementById('display-bank').innerText = bank;
+        document.getElementById('display-account').innerText = account;
+    }
+});
 // ============ SESSION MANAGEMENT ============
 // Check if user is logged in
 function checkSession() {
@@ -665,10 +684,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('display-bank').innerText = bank;
     document.getElementById('display-account').innerText = account;
     
-    // SAVE SESSION
-    saveSession(name, bank, account);
+    // SAVE SESSION TO localStorage
+    localStorage.setItem('tifma_logged_in', 'true');
+    localStorage.setItem('tifma_name', name);
+    localStorage.setItem('tifma_bank', bank);
+    localStorage.setItem('tifma_account', account);
     
     window.scrollTo(0,0);
+    }
+        function logout() {
+    localStorage.removeItem('tifma_logged_in');
+    localStorage.removeItem('tifma_name');
+    localStorage.removeItem('tifma_bank');
+    localStorage.removeItem('tifma_account');
+    location.reload();
     }
 
         // ============ GLOBAL EXPORTS ============
