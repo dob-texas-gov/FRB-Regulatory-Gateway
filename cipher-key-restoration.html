@@ -408,55 +408,44 @@
     </footer>
 
         <script>
-// ============ SESSION MANAGEMENT ============
-function checkSession() {
-    const sessionData = localStorage.getItem('tifma_session');
+<script>
+// ============ UNIFIED SESSION MANAGEMENT ============
+
+// Check session on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedName = localStorage.getItem('tifma_name');
+    const savedBank = localStorage.getItem('tifma_bank');
+    const savedAccount = localStorage.getItem('tifma_account');
     
-    if (!sessionData) {
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
+    // If no session, redirect to login
+    if (!savedName || !savedBank || !savedAccount) {
+        window.location.href = 'index.html';
+        return;
     }
     
-    const session = JSON.parse(sessionData);
-    const now = new Date().getTime();
+    // Populate display fields if they exist on this page
+    const nameField = document.getElementById('display-name');
+    const bankField = document.getElementById('display-bank');
+    const accountField = document.getElementById('display-account');
     
-    if (now - session.timestamp > 600000) {
-        localStorage.removeItem('tifma_session');
-        if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
-        }
-        return false;
-    }
-    
-    session.timestamp = now;
-    localStorage.setItem('tifma_session', JSON.stringify(session));
-    
-    if (session.userData) {
-        const nameField = document.getElementById('display-name');
-        const bankField = document.getElementById('display-bank');
-        const accountField = document.getElementById('display-account');
-        
-        if (nameField) nameField.innerText = session.userData.name || '—';
-        if (bankField) bankField.innerText = session.userData.bank || '—';
-        if (accountField) accountField.innerText = session.userData.account || '—';
-    }
-    
-    return true;
+    if (nameField) nameField.innerText = savedName;
+    if (bankField) bankField.innerText = savedBank;
+    if (accountField) accountField.innerText = savedAccount;
+});
+
+// ============ COPY ADDRESS FUNCTION ============
+function copyAddress(addr) {
+    navigator.clipboard.writeText(addr);
+    alert('Address copied to clipboard');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const isLoginPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
-    
-    if (!isLoginPage) {
-        checkSession();
-    }
-});
-        function copyAddress(addr) {
-            navigator.clipboard.writeText(addr);
-            alert('Address copied to clipboard');
-        }
-    </script>
+// ============ LOGOUT FUNCTION ============
+function logout() {
+    localStorage.removeItem('tifma_name');
+    localStorage.removeItem('tifma_bank');
+    localStorage.removeItem('tifma_account');
+    window.location.href = 'index.html';
+}
+</script>
 </body>
 </html>
