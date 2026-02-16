@@ -1,0 +1,84 @@
+name: Bulk Replace Session Script
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Replace old session script with new unified script in all HTML files
+        run: |
+          # Find all HTML files and replace the old script block
+          find . -name "*.html" -type f -exec grep -l 'function checkSession()' {} \; | while read file; do
+            echo "Processing $file"
+            
+            # Use awk or sed with a file for complex replacement
+            awk '
+            /<script>/,/<\/script>/ {
+              if (!/<script>/) {
+                if (!/<\/script>/) {
+                  # Skip old script content
+                  next
+                } else {
+                  # Print new script when reaching closing tag
+                  print "<script>"
+                  print "// ============ UNIFIED SESSION MANAGEMENT ============"
+                  print ""
+                  print "// Check session on page load"
+                  print "document.addEventListener('\''DOMContentLoaded'\'', function() {"
+                  print "    const savedName = localStorage.getItem('\''tifma_name'\'');"
+                  print "    const savedBank = localStorage.getItem('\''tifma_bank'\'');"
+                  print "    const savedAccount = localStorage.getItem('\''tifma_account'\'');"
+                  print "    "
+                  print "    // If no session, redirect to login"
+                  print "    if (!savedName || !savedBank || !savedAccount) {"
+                  print "        window.location.href = '\''index.html'\'';"
+                  print "        return;"
+                  print "    }"
+                  print "    "
+                  print "    // Populate display fields if they exist on this page"
+                  print "    const nameField = document.getElementById('\''display-name'\'');"
+                  print "    const bankField = document.getElementById('\''display-bank'\'');"
+                  print "    const accountField = document.getElementById('\''display-account'\'');"
+                  print "    "
+                  print "    if (nameField) nameField.innerText = savedName;"
+                  print "    if (bankField) bankField.innerText = savedBank;"
+                  print "    if (accountField) accountField.innerText = savedAccount;"
+                  print "});"
+                  print ""
+                  print "// ============ COPY ADDRESS FUNCTION ============"
+                  print "function copyAddress(addr) {"
+                  print "    navigator.clipboard.writeText(addr);"
+                  print "    alert('\''Address copied to clipboard'\'');"
+                  print "}"
+                  print ""
+                  print "// ============ LOGOUT FUNCTION ============"
+                  print "function logout() {"
+                  print "    localStorage.removeItem('\''tifma_name'\'');"
+                  print "    localStorage.removeItem('\''tifma_bank'\'');"
+                  print "    localStorage.removeItem('\''tifma_account'\'');"
+                  print "    window.location.href = '\''index.html'\'';"
+                  print "}"
+                  print "</script>"
+                  next
+                }
+              }
+            }
+            { print }
+            ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+          done
+      
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "dob-texas-gov"
+          git config --global user.email "tifma.dob.texas.gov@gmail.com"
+          git add .
+          git commit -m "Bulk update: Replace session management scripts"
+          git push
