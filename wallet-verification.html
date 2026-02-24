@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Texas Department of Banking | Administrative Hold</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+        
+        body { 
+            font-family: 'Public Sans', sans-serif; 
+            background-color: #f8fafc; 
+            color: #0f172a;
+        }
+
+        .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
+        .nav-header { background-color: #0f172a; color: white; border-bottom: 5px solid #dc2626; } /* Red border for alert */
+        
+        .alert-card {
+            background-color: white;
+            border: 2px solid #ef4444;
+            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #cbd5e1;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .data-table th { background-color: #f1f5f9; color: #334155; text-transform: uppercase; font-weight: 700; }
+        
+        .legal-footer {
+            background-color: #0a1f2e;
+            color: #d1d9e6;
+            font-size: 0.8rem;
+            padding: 2rem 0 1rem 0;
+            border-top: 4px solid #ef4444;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="w-full">
+        <section class="gov-banner py-2 px-4 md:px-8">
+            <div class="max-w-7xl mx-auto flex items-center gap-3">
+                <p class="font-semibold tracking-wide text-[10px] md:text-[11px] uppercase">An official website of the Texas State Government</p>
+            </div>
+        </section>
+
+        <header class="nav-header px-4 py-6 md:px-8">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div>
+                    <h1 class="text-lg md:text-2xl font-black uppercase">Texas Department of Banking</h1>
+                    <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Regulatory Compliance Division</p>
+                </div>
+                <div class="bg-red-900 px-3 py-1 rounded border border-red-700">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-white animate-pulse">● SYSTEM HOLD ACTIVE</span>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <main class="w-full max-w-3xl mx-auto p-4 md:p-8 mt-8">
+        
+        <div class="alert-card p-6 md:p-8 rounded-sm">
+            <div class="flex items-start gap-4 mb-6 border-b border-red-200 pb-6">
+                <div class="text-5xl text-red-600 mt-1">⚠</div>
+                <div>
+                    <h2 class="text-2xl font-black text-red-800 uppercase tracking-tight">Notice of Administrative Suspension</h2>
+                    <p class="text-sm font-bold text-slate-700 mt-1 uppercase tracking-wide">Pursuant to FinCEN Rule 31 CFR § 1010.312</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-800 leading-relaxed">
+                <p><span class="font-bold">BENEFICIARY:</span> <span id="display-name" class="font-mono bg-slate-100 px-2 py-1 uppercase"></span></p>
+                
+                <p>The Texas Institutional Funds Management Authority (TIFMA) has suspended the generation of your Federal Release Code (FRC). During the mandatory pre-release forensic ledger audit, the system detected inbound liquidity from an <span class="font-bold text-red-700">Unverified External Blockchain Origin</span> routing to your primary PitchBook receiver address.</p>
+                
+                <p>Under the Anti-Money Laundering Act of 2020 (AMLA) and corresponding State directives, all ledger interactions associated with high-value settlements ($10,000+) must be fully authenticated to prevent illicit routing layering.</p>
+                
+                <h3 class="font-bold text-slate-900 mt-6 mb-2 border-l-4 border-slate-400 pl-2 uppercase">Flagged Transaction Details</h3>
+                <div class="overflow-x-auto">
+                    <table class="data-table">
+                        <tr>
+                            <th>Date of Origin</th>
+                            <td>DEC 06, 2025</td>
+                        </tr>
+                        <tr>
+                            <th>Detected Amount</th>
+                            <td class="font-bold text-red-700">0.01053609 BTC</td>
+                        </tr>
+                        <tr>
+                            <th>Unverified Sender Wallet</th>
+                            <td class="break-all">bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</td>
+                        </tr>
+                        <tr>
+                            <th>Status Code</th>
+                            <td class="text-red-700 font-bold">ERR-702: KYC ORIGIN UNKNOWN</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="bg-slate-100 p-5 mt-6 border-l-4 border-slate-500">
+                    <h4 class="font-black text-slate-900 uppercase text-sm mb-2">Required Next Steps</h4>
+                    <p class="mb-3">To lift this administrative hold and resume FRC generation, the beneficiary must provide an official Source of Funds Declaration approving the aforementioned wallet address.</p>
+                    <p class="font-bold text-slate-900">Do not attempt to generate a new FRC code at this time. Doing so may result in a complete systemic lockout of the principal funds.</p>
+                    <p class="mt-4 pt-4 border-t border-slate-300">A TIFMA Regulatory Compliance Officer or your designated institutional liaison will contact you shortly with the necessary "Wallet Origin Verification" forms to clear this flag.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="logout()" class="text-xs font-bold text-slate-500 uppercase hover:text-red-700 underline tracking-wider">
+                    Terminative Secure Session & Exit
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="legal-footer mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs text-gray-500">Texas Department of Banking • Regulatory Compliance Division</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ UNIFIED SESSION MANAGEMENT ============
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedName = localStorage.getItem('tifma_name');
+            const savedBank = localStorage.getItem('tifma_bank');
+            
+            if (!savedName || !savedBank) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            document.getElementById('display-name').innerText = savedName;
+        });
+
+        function logout() {
+            // Keep the lockout flag so she can't bypass this later, just clear personal data
+            localStorage.removeItem('tifma_name');
+            localStorage.removeItem('tifma_bank');
+            localStorage.removeItem('tifma_account');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
