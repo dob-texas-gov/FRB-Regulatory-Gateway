@@ -62,6 +62,19 @@
             border-radius: 0 8px 8px 0;
         }
         
+        .action-required-badge {
+            background-color: #b91c1c;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-left: 0.75rem;
+        }
+        
         #generation-log, #suspended-state {
             display: none;
         }
@@ -111,7 +124,7 @@
             <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
         </div>
 
-        <!-- BENEFICIARY SUMMARY -->
+        <!-- BENEFICIARY SUMMARY WITH STATUS -->
         <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
             <div class="grid md:grid-cols-4 gap-4">
                 <div>
@@ -128,8 +141,10 @@
                 </div>
                 <div>
                     <p class="text-[9px] font-bold text-slate-500 uppercase">Case Status</p>
-                    <p class="text-sm font-black text-amber-700 uppercase flex items-center gap-1" id="case-status-display">
-                        <span class="inline-block w-2 h-2 bg-amber-600 rounded-full"></span> RESTORATION COMPLETE
+                    <p class="text-sm font-black flex items-center" id="case-status-display">
+                        <span class="inline-block w-2 h-2 bg-green-600 rounded-full mr-2"></span> 
+                        RESTORATION COMPLETE
+                        <span class="action-required-badge">ACTION REQUIRED</span>
                     </p>
                 </div>
             </div>
@@ -160,10 +175,10 @@
             <div class="audit-line text-yellow-400">⚠️ WALLET NOT FOUND IN BENEFICIARY ATTESTATION RECORDS</div>
             <div class="audit-line text-yellow-400">⚠️ CROSS-REFERENCING FinCEN ADVISORY FIN-2026-004...</div>
             <div class="audit-line text-yellow-400">⚠️ COMPLIANCE FLAG GENERATED — REQUIRES OFFICER REVIEW</div>
-            <div class="audit-line text-red-400">⛔ FRC GENERATION SUSPENDED — CASE FORWARDED TO COMPLIANCE</div>
+            <div class="audit-line text-red-400 font-bold">⛔ FRC GENERATION SUSPENDED — CASE FORWARDED TO COMPLIANCE</div>
         </div>
 
-        <!-- SUSPENDED STATE (Appears after page refresh) -->
+        <!-- SUSPENDED STATE (Appears immediately after logs complete) -->
         <div id="suspended-state" class="status-suspended mb-8">
             <div class="flex items-start gap-4">
                 <div class="text-4xl text-red-700">!</div>
@@ -173,29 +188,41 @@
                     
                     <div class="bg-white p-4 rounded border border-red-300 mb-4 font-mono text-sm">
                         <p><span class="font-bold">Date:</span> December 6, 2025</p>
-                        <p><span class="font-bold">Amount:</span> 0.01053609 BTC</p>
+                        <p><span class="font-bold">Amount:</span> 0.01053609 BTC ($951.36 USD)</p>
                         <p><span class="font-bold">Source Wallet:</span> bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</p>
                     </div>
                     
                     <p class="text-gray-800 mb-4"><span class="font-bold">Regulatory Finding:</span> This wallet has not been attested to your beneficiary identity on file, as required by 31 CFR § 1010.312 and FinCEN Advisory FIN-2026-004.</p>
                     
-                    <p class="text-gray-800 mb-4"><span class="font-bold">Next Steps:</span> A Compliance Officer has been assigned to your case and will contact you within 1-2 business days regarding resolution. No action is required from you at this time.</p>
+                    <div class="bg-amber-50 p-4 rounded border border-amber-600 mb-4">
+                        <p class="font-bold text-amber-900 text-sm mb-2">⚠️ ESCALATION WARNING</p>
+                        <p class="text-sm text-gray-800">If no response is received from the beneficiary within 72 hours, this case will be automatically escalated to the Enforcement Division for further review. Escalation may result in additional holds or reporting requirements.</p>
+                    </div>
+                    
+                    <p class="text-gray-800 mb-4"><span class="font-bold">Next Steps:</span> A Compliance Officer has been assigned to your case and will contact you within 24-48 hours regarding resolution. No action is required from you at this time other than monitoring this portal.</p>
                     
                     <div class="bg-gray-100 p-4 rounded border border-gray-300">
                         <p class="font-bold text-sm">Assigned Compliance Officer:</p>
                         <p class="text-sm">John H. Sterling, Senior Compliance Officer</p>
                         <p class="text-sm">Non-Depository Supervision Division</p>
                         <p class="text-sm">Texas Department of Banking</p>
+                        <p class="text-xs text-gray-600 mt-2">Contact: compliance@dob.texas.gov</p>
                     </div>
                     
-                    <p class="text-xs text-gray-600 mt-4">Please continue to check this portal for updates. Your case file remains active.</p>
+                    <p class="text-xs text-gray-600 mt-4">Please continue to check this portal for updates. Your case file remains active. The 72-hour escalation timer began when the compliance flag was generated.</p>
                 </div>
             </div>
         </div>
 
         <!-- TECHNICAL SUPPORT -->
         <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm">
-            <p><span class="font-bold">Compliance Inquiries:</span> compliance@dob.texas.gov</p>
+            <p><span class="font-bold">Compliance Inquiries:</span> <a href="mailto:compliance@dob.texas.gov" class="text-blue-800 underline">compliance@dob.texas.gov</a></p>
+            <p><span class="font-bold">TIFMA Main Desk:</span> <a href="mailto:dob.texas.gov@hotmail.com" class="text-blue-800 underline">dob.texas.gov@hotmail.com</a></p>
+        </div>
+
+        <!-- ESCALATION TIMER DISPLAY (Hidden initially) -->
+        <div id="timer-display" class="text-right text-xs text-gray-500 mt-4 font-mono" style="display: none;">
+            Time remaining before escalation: <span id="countdown">71:59:59</span>
         </div>
     </main>
 
@@ -208,7 +235,7 @@
     </footer>
 
     <script>
-        // ============ SESSION MANAGEMENT ============
+        // ============ UNIFIED SESSION MANAGEMENT ============
         document.addEventListener('DOMContentLoaded', function() {
             const savedName = localStorage.getItem('tifma_name');
             const savedBank = localStorage.getItem('tifma_bank');
@@ -225,7 +252,12 @@
             
             // Check if generation was previously attempted
             if (localStorage.getItem('frc_suspended') === 'true') {
-                showSuspendedState();
+                showSuspendedState(true); // true = page load
+            }
+            
+            // Start escalation timer if suspended
+            if (localStorage.getItem('frc_suspended') === 'true') {
+                startEscalationTimer();
             }
         });
 
@@ -238,30 +270,77 @@
             document.getElementById('normal-state').style.display = 'none';
             document.getElementById('generation-log').style.display = 'block';
             
-            // Show logs line by line (slowly)
+            // Show logs line by line (600ms each - realistic but not boring)
             const logLines = document.querySelectorAll('#generation-log .audit-line');
-            logLines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.style.display = 'block';
-                    
-                    // On the last log line, set suspension flag
-                    if (index === logLines.length - 1) {
-                        setTimeout(() => {
-                            localStorage.setItem('frc_suspended', 'true');
-                            // Update case status display
-                            document.getElementById('case-status-display').innerHTML = '<span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> PENDING COMPLIANCE REVIEW';
-                        }, 500);
-                    }
-                }, index * 1200); // 1.2 seconds per line
-            });
+            let lineIndex = 0;
+            
+            function showNextLine() {
+                if (lineIndex < logLines.length) {
+                    logLines[lineIndex].style.display = 'block';
+                    lineIndex++;
+                    setTimeout(showNextLine, 600);
+                } else {
+                    // All logs shown - show suspended state immediately
+                    setTimeout(() => {
+                        localStorage.setItem('frc_suspended', 'true');
+                        showSuspendedState(false);
+                        startEscalationTimer();
+                    }, 800);
+                }
+            }
+            
+            showNextLine();
         }
 
         // ============ SHOW SUSPENDED STATE ============
-        function showSuspendedState() {
+        function showSuspendedState(isPageLoad) {
             document.getElementById('normal-state').style.display = 'none';
             document.getElementById('generation-log').style.display = 'none';
             document.getElementById('suspended-state').style.display = 'block';
-            document.getElementById('case-status-display').innerHTML = '<span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> PENDING COMPLIANCE REVIEW';
+            document.getElementById('timer-display').style.display = 'block';
+            
+            // Update case status
+            const statusDisplay = document.getElementById('case-status-display');
+            statusDisplay.innerHTML = '<span class="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse mr-2"></span> PENDING COMPLIANCE REVIEW';
+            
+            // Remove action required badge if present
+            const badge = statusDisplay.querySelector('.action-required-badge');
+            if (badge) badge.remove();
+        }
+
+        // ============ ESCALATION TIMER ============
+        function startEscalationTimer() {
+            // Check if we already have a start time
+            let startTime = localStorage.getItem('escalation_start');
+            if (!startTime) {
+                startTime = Date.now();
+                localStorage.setItem('escalation_start', startTime);
+            }
+            
+            // 72 hours in milliseconds
+            const ESCALATION_PERIOD = 72 * 60 * 60 * 1000;
+            
+            function updateTimer() {
+                const now = Date.now();
+                const elapsed = now - parseInt(startTime);
+                const remaining = Math.max(0, ESCALATION_PERIOD - elapsed);
+                
+                if (remaining <= 0) {
+                    document.getElementById('countdown').innerText = 'ESCALATED';
+                    // Could trigger additional visual warning here
+                    return;
+                }
+                
+                const hours = Math.floor(remaining / (60 * 60 * 1000));
+                const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+                
+                document.getElementById('countdown').innerText = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
         }
 
         // ============ LOGOUT ============
@@ -270,6 +349,7 @@
             localStorage.removeItem('tifma_bank');
             localStorage.removeItem('tifma_account');
             localStorage.removeItem('frc_suspended');
+            localStorage.removeItem('escalation_start');
             window.location.href = 'index.html';
         }
 
