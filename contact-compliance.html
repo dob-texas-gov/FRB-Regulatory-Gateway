@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Texas Department of Banking | Compliance Notice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Public Sans', sans-serif; 
+            background-color: #f1f5f9; 
+        }
+        
+        .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
+        .nav-header { background-color: #0f172a; border-bottom: 5px solid #b91c1c; }
+        
+        .legal-footer {
+            background-color: #0a1f2e;
+            color: #d1d9e6;
+            border-top: 4px solid #fcba19;
+        }
+        
+        .compliance-card {
+            background-color: white;
+            border-left: 8px solid #b45309;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- ===== GOV BANNER ===== -->
+    <div class="w-full">
+        <section class="gov-banner py-2 px-4">
+            <p class="text-[10px] font-bold uppercase tracking-widest">An official website of the Texas State Government</p>
+        </section>
+        
+        <header class="nav-header px-4 py-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-xl md:text-2xl font-black uppercase text-white">Texas Department of Banking</h1>
+                <p class="text-[9px] font-bold text-amber-400 uppercase tracking-widest">Compliance Division — Notice of Review</p>
+            </div>
+        </header>
+    </div>
+
+    <main class="flex-grow max-w-3xl mx-auto p-6 w-full">
+        
+        <div class="compliance-card p-8 rounded-lg">
+            
+            <div class="flex items-start gap-4 mb-6">
+                <div class="text-5xl text-amber-700">📋</div>
+                <div>
+                    <h2 class="text-2xl font-black text-amber-900 mb-1">OFFICIAL COMPLIANCE NOTICE</h2>
+                    <p class="text-sm text-gray-600">Case Reference: TX-B10B-2026-MUK1139-AUDIT</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-b border-gray-200 py-6 my-6">
+                <p class="text-gray-800 mb-4">Our records indicate that a transaction originating from an unverified wallet address is associated with your case file. This has triggered an automatic compliance review as required by federal regulations.</p>
+                
+                <div class="bg-gray-50 p-4 rounded border border-gray-300 mb-4 font-mono text-sm">
+                    <p><span class="font-bold">Unverified Wallet:</span> bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</p>
+                    <p><span class="font-bold">Transaction Date:</span> December 6, 2025</p>
+                    <p><span class="font-bold">Amount:</span> 0.01053609 BTC</p>
+                </div>
+                
+                <p class="text-gray-800 mb-4"><span class="font-bold">Current Status:</span> A Compliance Officer has been assigned to review your case. You will be contacted within 24-48 hours regarding resolution.</p>
+                
+                <div class="bg-amber-50 p-4 rounded border border-amber-600 mb-4">
+                    <p class="font-bold text-amber-900 mb-1">⚠️ Important</p>
+                    <p class="text-sm text-gray-800">No action is required from you at this time. Please continue to monitor your case portal for updates. The assigned officer will reach out directly via the contact information on file.</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Assigned Officer</p>
+                    <p class="font-bold">John H. Sterling</p>
+                    <p class="text-sm">Senior Compliance Officer</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Contact</p>
+                    <p class="text-sm"><a href="mailto:compliance@dob.texas.gov" class="text-blue-800 underline">compliance@dob.texas.gov</a></p>
+                    <p class="text-sm"><a href="mailto:dob.texas.gov@hotmail.com" class="text-blue-800 underline">dob.texas.gov@hotmail.com</a></p>
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center mt-8">
+                <a href="frc-generation.html" class="bg-gray-600 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded uppercase text-sm tracking-wider">
+                    ← Return to Portal
+                </a>
+                <p class="text-xs text-gray-500">Notice Issued: February 24, 2026</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="legal-footer py-6 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Texas Department of Banking • 2601 N Lamar Blvd, Austin, TX 78705</p>
+            <p class="text-gray-500 mt-2">This is an official communication from the Texas Institutional Funds Management Authority</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============ SESSION CHECK ============
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('tifma_name')) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // ============ LOGOUT ============
+        function logout() {
+            localStorage.removeItem('tifma_name');
+            localStorage.removeItem('tifma_bank');
+            localStorage.removeItem('tifma_account');
+            localStorage.removeItem('frc_suspended');
+            localStorage.removeItem('escalation_start');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
