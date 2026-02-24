@@ -493,23 +493,31 @@
 
 // Check for existing session on page load
 window.addEventListener('load', function() {
+    // 1. KICK OUT FLAGGED USERS IMMEDIATELY
+    if(localStorage.getItem('wallet_lockout') === 'true') {
+        window.location.href = 'wallet-verification.html';
+        return;
+    }
+
+    // 2. CHECK FOR EXISTING LOGIN
     const savedName = localStorage.getItem('tifma_name');
     const savedBank = localStorage.getItem('tifma_bank');
     const savedAccount = localStorage.getItem('tifma_account');
     
     if (savedName && savedBank && savedAccount) {
-        // User is logged in - show dashboard
+        // Hide login, show portal
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('main-portal').style.display = 'block';
         document.getElementById('session-tag').classList.remove('hidden');
         
+        // Fill in the details
         document.getElementById('display-name').innerText = savedName;
         document.getElementById('display-bank').innerText = savedBank;
         document.getElementById('display-account').innerText = savedAccount;
     }
 });
-
+            
 // ============ DYNAMIC CST TIME DISPLAY ============
 function updateCSTTime() {
     const now = new Date();
