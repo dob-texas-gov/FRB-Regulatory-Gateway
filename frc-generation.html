@@ -216,7 +216,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if they came from the "Hold" page. If so, they are locked out.
             if(localStorage.getItem('wallet_lockout') === 'true') {
-                window.location.href = 'wallet-verification-hold.html';
+                window.location.href = 'wallet-verification.html';
                 return;
             }
 
